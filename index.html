@@ -1388,7 +1388,7 @@ font-weight: 700; font-weight: 600; color: #1a3a5c; font-size: 13px; }
                         <div class="field"><input type="text" id="lp-vlan4" placeholder="VLAN 4" inputmode="numeric" pattern="[0-9]*" enterkeyhint="next" autocomplete="off"></div>
                     </div>
                     <div class="btn-row" style="margin-top:16px">
-                        <button class="btn btn-gen" onclick="generateLineProfile()"><i class="fas fa-cogs" style="font-size:14px"></i> Generate</button>
+                        <button class="btn btn-gen" onclick="generateLineProfile(true)"><i class="fas fa-cogs" style="font-size:14px"></i> Generate</button>
                         <button class="btn btn-clr" onclick="clearLPFields()"><i class="fas fa-broom" style="font-size:14px"></i> Clear</button>
                     </div>
                 </div>
@@ -2620,13 +2620,29 @@ initRadio();
     }
 
     // ════ ONU SCRIPT ════
+    // MAC box: type/paste করলেই - : . space সব সরে যাবে
+    (function () {
+        const macInput = document.getElementById('onu-mac');
+        if (!macInput) return;
+        macInput.addEventListener('input', function () {
+            const pos = this.selectionStart;
+            const before = this.value;
+            const cleaned = before.replace(/[^a-zA-Z0-9]/g, '');
+            if (cleaned !== before) {
+                const removedBeforeCursor = before.slice(0, pos).length - before.slice(0, pos).replace(/[^a-zA-Z0-9]/g, '').length;
+                this.value = cleaned;
+                this.setSelectionRange(pos - removedBeforeCursor, pos - removedBeforeCursor);
+            }
+        });
+    })();
+
     function generateOnuScript(autoCopy) {
         const oltType     = document.getElementById('olt-type').value;
         const slot        = document.getElementById('slot').value;
         const pon         = document.getElementById('pon').value;
         const onuId       = document.getElementById('onu-id').value;
         const onuPorts    = parseInt(document.getElementById('onu-ports').value, 10);
-        const onuMac      = document.getElementById('onu-mac').value;
+        const onuMac      = document.getElementById('onu-mac').value.replace(/[^a-zA-Z0-9]/g, '');
         const lineProfile = document.getElementById('line-profile').value;
         const bandwidth   = parseInt(document.getElementById('bandwidth').value, 10);
         const gemId       = document.getElementById('gem-id').value || '1';
@@ -2972,7 +2988,7 @@ script += `onu ${onuId} eth ${i} upstream-rate-limit cir ${vsol_bw} pir ${vsol_b
     }
 
     // ════ LINE PROFILE ════
-    function generateLineProfile() {
+    function generateLineProfile(autoCopy) {
         const olt = document.getElementById('oltName').value;
         const profileId = document.getElementById('profileId').value.trim() || '10';
         const gemMap = Math.min(Math.max(parseInt(document.getElementById('gemMap').value || '1'), 1), 8);
@@ -2993,6 +3009,7 @@ script += `onu ${onuId} eth ${i} upstream-rate-limit cir ${vsol_bw} pir ${vsol_b
             script = `ont-lineprofile profile-id ${profileId}\ntcont 1 dba-profile-id 30\ngem add 1 tcont 1\n${gemMappings}mapping-mode vlan\ncommit\nexit`;
         }
         document.getElementById('lp-output').value = script;
+        if (autoCopy && script.trim()) { copyLPScript(); }
     }
 
     function clearLPFields() {
@@ -3006,11 +3023,26 @@ script += `onu ${onuId} eth ${i} upstream-rate-limit cir ${vsol_bw} pir ${vsol_b
         if (!output.value.trim()) { showToast('No script to copy!', 'error'); return; }
         const btn = document.getElementById('lp-copy-btn');
         const ct = document.getElementById('lp-copy-text');
-        navigator.clipboard.writeText(output.value).then(() => {
+        const ok = () => {
             btn.classList.add('copied'); ct.textContent = 'Copied!';
             showToast('Script copied to clipboard!');
             setTimeout(() => { btn.classList.remove('copied'); ct.textContent = 'Copy Script'; }, 2000);
-        }).catch(() => showToast('Copy failed', 'error'));
+        };
+        const fallback = () => {
+            try {
+                const ta = document.createElement('textarea');
+                ta.value = output.value;
+                ta.style.cssText = 'position:fixed;left:-9999px;top:0;opacity:0;';
+                document.body.appendChild(ta);
+                ta.focus(); ta.select();
+                const done = document.execCommand('copy');
+                document.body.removeChild(ta);
+                done ? ok() : showToast('Copy failed', 'error');
+            } catch (e) { showToast('Copy failed', 'error'); }
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText && window.isSecureContext) {
+            navigator.clipboard.writeText(output.value).then(ok).catch(fallback);
+        } else { fallback(); }
     }
 
     // ════ TOAST ════
