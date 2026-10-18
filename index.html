@@ -1070,6 +1070,8 @@ font-weight: 700; font-weight: 600; color: #1a3a5c; font-size: 13px; }
             #app-onu .field > label { text-align: center; color: #2e1065; font-family: 'Orbitron', monospace; font-weight: 800; font-size: 0.62em; letter-spacing: 1px; white-space: nowrap; }
         }
         @media (max-width: 700px) {
+            /* ONU ADD / LINE PROFILE panel stays hidden on mobile until the user taps OLT TASK */
+            body:not(.olt-user-open) #olt-children { display: none !important; }
             /* mini back button — top right, level with the page title (takes no layout space) */
             #app-docs { position: relative; }
             .docs-mobile-back { display: block; position: absolute; top: 17px; right: 22px; z-index: 160; }
@@ -1101,7 +1103,7 @@ font-weight: 700; font-weight: 600; color: #1a3a5c; font-size: 13px; }
 
             <!-- OLT TASK GROUP — icon changed to device_hub -->
             <div class="nav-group-wrapper">
-                <button class="nav-group-header open" id="nav-olt-group" onclick="toggleOltGroup(this)">
+                <button class="nav-group-header" id="nav-olt-group" onclick="toggleOltGroup(this)">
                     <div class="nav-btn-glow"></div>
                     <div class="nav-icon-wrap icon-v nav-group-icon">
                         <i class="material-icons" style="font-size:16px">device_hub</i>
@@ -1112,7 +1114,7 @@ font-weight: 700; font-weight: 600; color: #1a3a5c; font-size: 13px; }
                     </div>
                     <span class="nav-group-arrow">▼</span>
                 </button>
-                <div class="nav-group-children open" id="olt-children">
+                <div class="nav-group-children" id="olt-children">
                     <!-- ONU ADD -->
                     <button class="nav-child-btn active" id="nav-onu" onclick="switchTab('app-onu', this)">
                         <div class="nav-child-icon icon-v"><i class="material-icons" style="font-size:13px">settings_input_component</i></div>
@@ -1242,6 +1244,25 @@ font-weight: 700; font-weight: 600; color: #1a3a5c; font-size: 13px; }
             <div class="author-role">Link3 Technologies Ltd.</div>
         </div>
     </aside>
+    <script>
+    // Initial state of the OLT TASK list: desktop = open, mobile = closed (ONU ADD page shows directly)
+    (function () {
+        var mq = window.matchMedia('(max-width: 700px)');
+        var touched = false;
+        function apply() {
+            if (touched) return;
+            var h = document.getElementById('nav-olt-group'), c = document.getElementById('olt-children');
+            if (!h || !c) return;
+            if (mq.matches) { h.classList.remove('open'); c.classList.remove('open'); h.classList.add('active'); }
+            else { h.classList.add('open'); c.classList.add('open'); }
+        }
+        ['pointerdown', 'keydown'].forEach(function (ev) { document.addEventListener(ev, function () { touched = true; }, { once: true, capture: true }); });
+        apply();
+        document.addEventListener('DOMContentLoaded', apply);
+        window.addEventListener('load', apply);
+        window.addEventListener('pageshow', apply);
+    })();
+    </script>
 
     <!-- MAIN -->
     <main class="main-content" id="main-content">
@@ -2123,6 +2144,7 @@ system\configure# pon on 1 1</code>
     }
 
    function toggleOltGroup(header) {
+    document.body.classList.add('olt-user-open');
     const children = document.getElementById('olt-children');
     const isOpen = children.classList.contains('open');
     children.classList.toggle('open', !isOpen);
@@ -3723,6 +3745,13 @@ script += `onu ${onuId} eth ${i} upstream-rate-limit cir ${vsol_bw} pir ${vsol_b
 
     // ════ INIT ════
     document.addEventListener('DOMContentLoaded', () => {
+    // Mobile: don't auto-open the ONU ADD / LINE PROFILE panel on load — go straight to ONU ADD
+    if (window.innerWidth <= 700) {
+        document.getElementById('olt-children').classList.remove('open');
+        const oltHdr = document.getElementById('nav-olt-group');
+        oltHdr.classList.remove('open');
+        oltHdr.classList.add('active');
+    }
     ensureDocsSubnavPlacement();
     loadBtsDataFromStorage();
     renderBtsTable(btsData);
