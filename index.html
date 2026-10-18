@@ -1052,9 +1052,38 @@ font-weight: 700; font-weight: 600; color: #1a3a5c; font-size: 13px; }
         }
 
         @media (max-width: 400px) {
-            .col-3 { grid-template-columns: 1fr 1fr; }
             .col-4 { grid-template-columns: 1fr 1fr; }
             .title-onu, .title-lp { font-size: 1em; letter-spacing: 2px; }
+        }
+
+        .docs-mobile-back { display: none; }
+
+        /* ── Mobile: smaller ONU ADD SCRIPT title + Slot/PON/ONU ID on one line ── */
+        @media (max-width: 700px) {
+            #app-onu .app-header { margin-bottom: 12px; }
+            #app-onu .app-header .title-onu { font-size: 1.1em; letter-spacing: 3px; }
+            #app-onu .app-header .app-subtitle { font-size: 0.68em; letter-spacing: 2px; }
+            #app-onu .input-row.col-3 { grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+            /* text inside boxes: slightly smaller */
+            #app-onu input, #app-onu select { font-size: 14px !important; }
+            /* labels above boxes: centered + deeper color */
+            #app-onu .field > label { text-align: center; color: #2e1065; font-family: 'Orbitron', monospace; font-weight: 800; font-size: 0.62em; letter-spacing: 1px; white-space: nowrap; }
+        }
+        @media (max-width: 700px) {
+            /* mini back button — top right, level with the page title (takes no layout space) */
+            #app-docs { position: relative; }
+            .docs-mobile-back { display: block; position: absolute; top: 17px; right: 22px; z-index: 160; }
+            .docs-mobile-back button { display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; padding: 0; border-radius: 50%; background: linear-gradient(135deg, #0a2557, #1451a3); border: 1px solid rgba(0,212,255,0.55); color: #7dd3fc; box-shadow: 0 3px 10px rgba(0,0,0,0.35), 0 0 8px rgba(0,212,255,0.25); cursor: pointer; }
+            .docs-mobile-back button span:not(.material-icons) { display: none; }
+            .docs-mobile-back button .material-icons { font-size: 19px; }
+            .docs-mobile-back button:active { transform: scale(0.92); }
+            .docs-tab-content .docs-card-header { padding-right: 44px; }
+        }
+        @media (max-width: 400px) {
+            #app-onu .app-header .title-onu { font-size: 1em; letter-spacing: 2px; }
+            #app-onu .input-row.col-3 { grid-template-columns: 1fr 1fr 1fr; }
+            #app-onu .input-row.col-3 label { font-size: 0.58em; letter-spacing: 0.5px; }
+            #app-onu .input-row.col-3 input { padding: 6px 7px; min-width: 0; }
         }
     </style>
 </head>
@@ -1413,6 +1442,9 @@ font-weight: 700; font-weight: 600; color: #1a3a5c; font-size: 13px; }
 
         <!-- APP 3: OLT DOCS -->
         <div id="app-docs" class="app-wrapper">
+            <div class="docs-mobile-back">
+                <button type="button" onclick="openDocsSubnav()" aria-label="Docs menu" title="Docs menu"><span class="material-icons">arrow_back</span><span>DOCS MENU</span></button>
+            </div>
             <div class="docs-content-scroll" id="docs-content-scroll">
                 <!-- OLT IPs -->
                 <div id="d_olt_ips" class="docs-tab-content active">
@@ -2103,7 +2135,8 @@ system\configure# pon on 1 1</code>
 
     function toggleDocsGroup(header) {
         const subnav = document.getElementById('docs-subnav');
-        const isOpen = subnav.classList.contains('open') && document.body.classList.contains('docs-mode');
+        const isMobile = window.innerWidth <= 700;
+        const isOpen = !isMobile && subnav.classList.contains('open') && document.body.classList.contains('docs-mode');
         if (isOpen) {
             subnav.classList.remove('open');
             header.classList.remove('open');
@@ -2131,9 +2164,13 @@ system\configure# pon on 1 1</code>
         // On mobile open as drawer, on desktop open inline
         ensureDocsSubnavPlacement();
         const subnav = document.getElementById('docs-subnav');
-        const backdrop = document.getElementById('docs-subnav-backdrop');
-        subnav.classList.add('open');
-        if (window.innerWidth <= 700 && backdrop) backdrop.classList.add('open');
+        if (window.innerWidth <= 700) {
+            // Mobile: land directly on OLT IPs; the back button reopens the docs menu
+            closeDocsSubnav();
+            showDocsContent('d_olt_ips', null);
+        } else {
+            subnav.classList.add('open');
+        }
         setupAllSearches();
         initEditableDocsSections();
     }
@@ -2580,6 +2617,22 @@ initRadio();
             parent.querySelectorAll('.docs-sub-group-items').forEach(i => i.classList.remove('open'));
         }
         if (!isOpen) { items.classList.add('open'); header.classList.add('open'); }
+    }
+
+    function openDocsSubnav() {
+        const subnav = document.getElementById('docs-subnav');
+        const backdrop = document.getElementById('docs-subnav-backdrop');
+        ensureDocsSubnavPlacement();
+        // Open with GPON OLT expanded (Troubleshoot / Installation visible)
+        const gponHeader = subnav && subnav.querySelector('.docs-subnav-header[onclick^="toggleDocsSub"]');
+        if (gponHeader) {
+            document.querySelectorAll('.docs-subnav-items').forEach(i => i.classList.remove('open'));
+            document.querySelectorAll('.docs-subnav-header').forEach(h => h.classList.remove('open'));
+            gponHeader.classList.add('open');
+            if (gponHeader.nextElementSibling) gponHeader.nextElementSibling.classList.add('open');
+        }
+        if (subnav) subnav.classList.add('open');
+        if (backdrop && window.innerWidth <= 700) backdrop.classList.add('open');
     }
 
     function closeDocsSubnav() {
