@@ -1333,6 +1333,11 @@ font-weight: 700; font-weight: 600; color: #1a3a5c; font-size: 13px; }
         #app-radio .radio-client-panel { background: #faf8ff; border-right: 1px solid rgba(139,92,246,0.16); box-shadow: 4px 0 20px rgba(99,102,241,0.08); }
         #app-radio .radio-panel-header { background: linear-gradient(135deg, #3f3a9e 0%, #5b4fd0 55%, #7c6be0 100%); border-bottom: none; }
         #app-radio .radio-panel-header::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: linear-gradient(90deg, #f59e0b, #ef4444, #ec4899); }
+        .rt-mob { display: none; }
+        @media (max-width: 700px) { .rt-desk { display: none; } .rt-mob { display: inline; } }
+        /* Motijheel Zone title: bigger on web view, client count hidden */
+        #app-radio #r-panel-count { display: none !important; }
+        @media (min-width: 701px) { #app-radio .radio-panel-title { font-size: 24px !important; letter-spacing: 1px !important; line-height: 1.2 !important; margin-top: 0 !important; } }
         #app-radio .radio-panel-bts { color: #fbbf24; letter-spacing: 2.5px; }
         #app-radio .radio-panel-title { font-family: 'Orbitron', monospace; font-size: 15px; letter-spacing: 2px; color: #fff; -webkit-text-fill-color: #fff; text-shadow: 0 1px 3px rgba(49,46,129,0.35); }
         #app-radio .radio-panel-count { color: #a78bfa; }
@@ -1788,7 +1793,36 @@ font-weight: 700; font-weight: 600; color: #1a3a5c; font-size: 13px; }
         .bts-gear { width: 28px; height: 28px; padding: 0; border-radius: 50%; border: 1px solid #cbd5e1; background: #f1f5fb; color: #64748b; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: background .2s, color .2s, transform .25s; }
         .bts-gear .material-icons { font-size: 17px; }
         .bts-act.open .bts-gear { background: #dbeafe; color: #2563eb; border-color: #93b7ee; transform: rotate(60deg); }
-    </style>
+            /* Radio BTS boxes inside one card (like BTS Info) */
+        #app-radio #radioBtsTabs.radio-bts-grid { background: linear-gradient(90deg,#00d4ff,#00ff9d) top / 100% 4px no-repeat, #fff; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 8px 28px rgba(15,23,42,0.12); padding: 22px 16px 16px; margin: 14px auto; width: calc(100% - 28px); max-width: 900px; }
+        @media (max-width: 700px) { #app-radio #radioBtsTabs.radio-bts-grid { padding: 18px 10px 10px; margin: 10px auto; width: calc(100% - 16px); } }
+        @media (min-width: 701px) { #app-radio .radio-panel-title { text-align: center !important; padding: 0 48px !important; width: 100%; } }
+</style>
+
+<style>
+/* ════ HIDDEN EPON MENU: long-press the OLT DOCS button (~1 sec) to show/hide EPON ════ */
+body:not(.show-epon) .docs-grp-epon { display: none !important; }
+@media (max-width: 700px) {
+    /* mobile: hide the "GPON OLT" header, show the 3 GPON models directly */
+    body:not(.show-epon) .docs-grp-gpon > .docs-subnav-header { display: none !important; }
+    body:not(.show-epon) .docs-grp-gpon > .docs-subnav-items { display: flex !important; margin: 0 !important; padding: 2px 0 2px 0 !important; border: none !important; }
+}
+/* ════ MOBILE: model sub-menu -> Troubleshoot/Installation open to the RIGHT (flyout) ════ */
+@media (max-width: 700px) {
+    .docs-subnav { overflow: visible !important; max-height: none !important; }
+    .docs-subnav .docs-sub-group { position: relative; }
+    .docs-subnav .docs-sub-group-items {
+        position: absolute !important; top: 0; left: calc(100% + 8px); right: auto;
+        min-width: 124px; margin: 0 !important; padding: 4px !important;
+        background: #dce9fc; border: 1px solid #b4cbef !important; border-radius: 10px;
+        box-shadow: 0 6px 20px rgba(15,40,100,0.28); z-index: 30;
+    }
+    .docs-subnav .docs-sub-group-header::after { content: '\25B6' !important; font-size: 0.6em !important; }
+    .docs-subnav .docs-sub-group-header.open::after { transform: none !important; }
+}
+#epon-toast { position: fixed; left: 50%; bottom: 90px; transform: translateX(-50%); background: rgba(15,23,42,.92); color: #fff; padding: 9px 16px; border-radius: 20px; font: 600 .85rem 'Exo 2', sans-serif; z-index: 99999; opacity: 0; pointer-events: none; transition: opacity .25s ease; }
+#epon-toast.show { opacity: 1; }
+</style>
 </head>
 <body>
 
@@ -1850,7 +1884,7 @@ font-weight: 700; font-weight: 600; color: #1a3a5c; font-size: 13px; }
                         <button onclick="closeDocsSubnav()" aria-label="Close">✕</button>
                     </div>
                     <div class="docs-subnav-inner">
-<div class="docs-subnav-group">
+<div class="docs-subnav-group docs-grp-epon">
                         <div class="docs-subnav-header" onclick="toggleDocsSub(this)">
                             <span>🟢 EPON OLT</span><span class="sub-arrow">▼</span>
                         </div>
@@ -1878,7 +1912,7 @@ font-weight: 700; font-weight: 600; color: #1a3a5c; font-size: 13px; }
                             </div>
                         </div>
                     </div>
-                    <div class="docs-subnav-group">
+                    <div class="docs-subnav-group docs-grp-gpon">
                         <div class="docs-subnav-header" onclick="toggleDocsSub(this)">
                             <span>🔷 GPON OLT</span><span class="sub-arrow">▼</span>
                         </div>
@@ -2480,7 +2514,7 @@ system\configure# pon on 1 1</code>
             <div class="radio-client-panel">
                 <div class="radio-panel-header">
                     <div class="radio-panel-bts" id="r-panel-bts-name">MALEK BTS</div>
-                    <div class="radio-panel-title">Radio Client Database</div>
+                    <div class="radio-panel-title"><span class="rt-desk">Motijheel Zone Radio Clients</span><span class="rt-mob">Radio Client Database</span></div>
                     <div class="radio-panel-count" id="r-panel-count">0 CLIENTS</div>
                     <div class="radio-tools">
                         <button type="button" class="olt-tool-btn add" id="radio-tool-add" title="Add" onclick="radioToolAdd()"><i class="fa-solid fa-plus"></i> Add</button>
@@ -3013,6 +3047,11 @@ initRadio();
 
     let radioPopId = null; // BTS id (or RADIO_DELETED_ID) whose dropdown is open
 
+    function radioPopFilterHtml(n) {
+        if (n < 7) return '';
+        return '<div class="radio-sub-filter-wrap" style="position:sticky;top:0;z-index:2;background:inherit;padding-bottom:4px;"><span class="material-icons">search</span><input type="text" class="radio-sub-filter" placeholder="Search name..." oninput="filterRadioPop(this)" onclick="event.stopPropagation()"></div>';
+    }
+
     function radioPopItemsHtml(id) {
         if (id === RADIO_DELETED_ID) {
             if (!radioDeleted.length) return '<div class="radio-acc-empty">No deleted radios</div>';
@@ -3020,7 +3059,7 @@ initRadio();
         }
         const clients = radioData[id].clients;
         if (!clients.length) return '<div class="radio-acc-empty">No clients</div>';
-        return clients.map((c, i) => `<div class="radio-sub-item" onclick="selectRadioClient(this, '${escapeHtml(id)}', ${i})"><span class="radio-sub-name">${escapeHtml(c.name)}</span></div>`).join('');
+        return radioPopFilterHtml(clients.length) + clients.map((c, i) => `<div class="radio-sub-item" onclick="selectRadioClient(this, '${escapeHtml(id)}', ${i})"><span class="radio-sub-name">${escapeHtml(c.name)}</span></div>`).join('');
     }
 
     function filterRadioPop(inp) {
@@ -3032,7 +3071,8 @@ initRadio();
             it.style.display = m ? '' : 'none';
             if (m) shown++;
         });
-        const none = pop.querySelector('.radio-pop-none');
+        let none = pop.querySelector('.radio-pop-none');
+        if (!none) { none = document.createElement('div'); none.className = 'radio-acc-empty radio-pop-none'; none.textContent = 'No match'; none.style.display = 'none'; pop.appendChild(none); }
         if (none) none.style.display = shown ? 'none' : '';
     }
 
@@ -3064,12 +3104,14 @@ initRadio();
     function toggleRadioPop(id) {
         radioPopId = (radioPopId === id) ? null : id;
         document.querySelectorAll('#radioBtsTabs .radio-bts-cell').forEach(c => c.classList.toggle('pop-open', c.dataset.id === radioPopId));
+        const tabsEl = document.getElementById('radioBtsTabs');
         if (radioPopId) {
             positionRadioPop();
         }
     }
     function closeRadioPop() {
         radioPopId = null;
+        const tabsEl = document.getElementById('radioBtsTabs');
         document.querySelectorAll('#radioBtsTabs .radio-bts-cell.pop-open').forEach(c => c.classList.remove('pop-open'));
     }
     // float the dropdown over the page, keep it inside the screen
@@ -3080,17 +3122,24 @@ initRadio();
         const vw = document.documentElement.clientWidth, vh = window.innerHeight;
         const w = Math.min(340, vw - 16);
         const r = cell.getBoundingClientRect();
+        // visible area of the page (below top bar, above bottom bar) so the list is never cut off
+        const mc = document.getElementById('main-content');
+        const mr = mc ? mc.getBoundingClientRect() : { top: 0, bottom: vh };
+        const topLimit = Math.max(8, mr.top + 6), bottomLimit = Math.min(vh, mr.bottom) - 8;
+        const below = bottomLimit - r.bottom - 6, above = r.top - topLimit - 6;
+        pop.style.position = 'fixed';
         pop.style.width = w + 'px';
-        pop.style.left = (Math.min(Math.max(r.left, 8), vw - w - 8) - r.left) + 'px';
-        const below = vh - r.bottom, above = r.top;
-        if (below < 260 && above > below) {
-            pop.style.top = 'auto'; pop.style.bottom = 'calc(100% + 6px)';
-            pop.style.maxHeight = Math.max(140, Math.min(above - 12, vh * 0.6)) + 'px';
+        pop.style.left = Math.min(Math.max(r.left, 8), vw - w - 8) + 'px';
+        const forceDown = cell.classList.contains('radio-deleted-cell');
+        if (!forceDown && below < 260 && above > below) {
+            pop.style.top = 'auto'; pop.style.bottom = (vh - r.top + 6) + 'px';
+            pop.style.maxHeight = Math.max(140, above) + 'px';
         } else {
-            pop.style.bottom = 'auto'; pop.style.top = 'calc(100% + 6px)';
-            pop.style.maxHeight = Math.max(160, Math.min(below - 12, vh * 0.6)) + 'px';
+            pop.style.bottom = 'auto'; pop.style.top = (r.bottom + 6) + 'px';
+            pop.style.maxHeight = Math.max(100, Math.min(below, vh * 0.75)) + 'px';
         }
     }
+    window.addEventListener('scroll', () => { if (radioPopId) positionRadioPop(); }, true);
     document.addEventListener('click', e => { if (radioPopId && !e.target.closest('#radioBtsTabs .radio-bts-cell')) closeRadioPop(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeRadioPop(); });
     window.addEventListener('resize', () => { if (radioPopId) positionRadioPop(); });
@@ -3162,7 +3211,7 @@ initRadio();
 }).join('');
     }
 
-    function setRadioPanelTitle(t) { const el = document.querySelector('.radio-panel-title'); if (el) el.textContent = (t === 'Clients') ? 'Radio Client Database' : t; }
+    function setRadioPanelTitle(t) { const el = document.querySelector('.radio-panel-title'); if (el) { if (t === 'Clients') el.innerHTML = '<span class="rt-desk">Motijheel Zone Radio Clients</span><span class="rt-mob">Radio Client Database</span>'; else el.textContent = t; } }
 
     function renderDeletedCards(items) {
         const list = document.getElementById('radioClientList');
@@ -5237,5 +5286,100 @@ document.addEventListener('click', function(e) {
         }, err => { console.error('Cloud listen failed', err); setStatus('☁ No access', 'off'); });
     })();
     </script>
+
+<script>
+/* Long-press (~0.9s) on OLT DOCS button => toggle hidden EPON OLT menu */
+(function () {
+    var btn = document.getElementById('nav-docs-group');
+    if (!btn) return;
+    var timer = null, fired = false, sx = 0, sy = 0;
+    function toast(msg) {
+        var t = document.getElementById('epon-toast');
+        if (!t) { t = document.createElement('div'); t.id = 'epon-toast'; document.body.appendChild(t); }
+        t.textContent = msg; t.classList.add('show');
+        clearTimeout(t._h); t._h = setTimeout(function () { t.classList.remove('show'); }, 1800);
+    }
+    function start(e) {
+        fired = false;
+        var p = (e.touches && e.touches[0]) || e; sx = p.clientX; sy = p.clientY;
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+            fired = true;
+            var on = document.body.classList.toggle('show-epon');
+            document.querySelectorAll('.docs-subnav-items, .docs-subnav-header').forEach(function (n) { n.classList.remove('open'); });
+            if (navigator.vibrate) { try { navigator.vibrate(40); } catch (x) {} }
+            toast(on ? 'EPON menu shown' : 'EPON menu hidden');
+        }, 900);
+    }
+    function cancel() { clearTimeout(timer); }
+    function move(e) {
+        var p = (e.touches && e.touches[0]) || e;
+        if (Math.abs(p.clientX - sx) > 10 || Math.abs(p.clientY - sy) > 10) cancel();
+    }
+    btn.addEventListener('touchstart', start, { passive: true });
+    btn.addEventListener('touchmove', move, { passive: true });
+    btn.addEventListener('touchend', cancel);
+    btn.addEventListener('touchcancel', cancel);
+    btn.addEventListener('mousedown', start);
+    btn.addEventListener('mousemove', move);
+    btn.addEventListener('mouseup', cancel);
+    btn.addEventListener('mouseleave', cancel);
+    btn.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+    // swallow the click that follows a long-press so the menu doesn't toggle too
+    btn.addEventListener('click', function (e) {
+        if (fired) { e.stopImmediatePropagation(); e.preventDefault(); fired = false; }
+    }, true);
+})();
+/* mobile: keep the whole menu far enough left so the right-side flyout always fits */
+(function () {
+    var orig = window.openDocsSubnav;
+    if (typeof orig !== 'function') return;
+    window.openDocsSubnav = function () {
+        orig.apply(this, arguments);
+        if (window.innerWidth > 700) return;
+        var sn = document.getElementById('docs-subnav'); if (!sn) return;
+        var cur = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--docs-menu-left')) || 8;
+        var need = sn.offsetWidth + 8 + 135 + 6;               // menu + gap + flyout + margin
+        var left = Math.max(6, Math.min(cur, window.innerWidth - need));
+        document.documentElement.style.setProperty('--docs-menu-left', left + 'px');
+    };
+})();
+/* MOBILE: single tap = default page, double tap = show sub menu (OLT TASK / OLT DOCS) */
+(function () {
+    var olt = document.getElementById('nav-olt-group'), docs = document.getElementById('nav-docs-group');
+    if (!olt || !docs) return;
+    olt.removeAttribute('onclick'); docs.removeAttribute('onclick');
+    olt.style.touchAction = 'manipulation'; docs.style.touchAction = 'manipulation';
+    var last = { olt: 0, docs: 0 }, GAP = 380;
+
+    function oltSingle() {            // default ONU ADD page, sub menu closed
+        document.getElementById('olt-children').classList.remove('open');
+        closeDocsSubnav();
+        document.getElementById('nav-docs-group').classList.remove('open');
+        switchTab('app-onu', document.getElementById('nav-onu'));
+        olt.classList.remove('open'); olt.classList.add('active');
+    }
+    function docsSingle() {           // default OLT IP Info page, sub menu closed
+        document.getElementById('olt-children').classList.remove('open');
+        document.getElementById('nav-olt-group').classList.remove('open');
+        if (!document.body.classList.contains('docs-mode')) switchToDocsTab(docs);
+        else { ensureDocsSubnavPlacement(); showDocsContent('d_olt_ips', null); }
+        closeDocsSubnav();
+        docs.classList.remove('open'); docs.classList.add('active');
+    }
+    olt.addEventListener('click', function () {
+        if (window.innerWidth > 700) { toggleOltGroup(olt); return; }
+        var now = Date.now();
+        if (now - last.olt < GAP) { last.olt = 0; toggleOltGroup(olt); }   // 2nd tap -> open sub menu
+        else { last.olt = now; oltSingle(); }
+    });
+    docs.addEventListener('click', function () {
+        if (window.innerWidth > 700) { toggleDocsGroup(docs); return; }
+        var now = Date.now();
+        if (now - last.docs < GAP) { last.docs = 0; toggleDocsGroup(docs); }  // 2nd tap -> open sub menu
+        else { last.docs = now; docsSingle(); }
+    });
+})();
+</script>
 </body>
 </html>
