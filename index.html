@@ -56,7 +56,7 @@
         html { height: 100%; overscroll-behavior: none; }
 
         /* ── Click-to-copy IPs ── */
-        .ip-copy { cursor: pointer; border-radius: 6px; padding: 2px 6px; margin: -2px -6px; transition: background-color .2s, color .2s, box-shadow .2s; -webkit-user-select: none; user-select: none; }
+        .ip-copy { -webkit-touch-callout: none; cursor: pointer; border-radius: 6px; padding: 2px 6px; margin: -2px -6px; transition: background-color .2s, color .2s, box-shadow .2s; -webkit-user-select: none; user-select: none; }
         .ip-copy:hover { background: rgba(14,165,233,0.12); box-shadow: 0 0 0 1px rgba(14,165,233,0.35); }
         .ip-copy:active { transform: scale(.96); }
         .ip-copy.ip-copied { background: rgba(16,185,129,0.18) !important; color: #047857 !important; box-shadow: 0 0 0 1px rgba(16,185,129,0.5); }
@@ -5379,6 +5379,44 @@ document.addEventListener('click', function(e) {
         if (now - last.docs < GAP) { last.docs = 0; toggleDocsGroup(docs); }  // 2nd tap -> open sub menu
         else { last.docs = now; docsSingle(); }
     });
+})();
+/* MOBILE ONLY - OLT IP column: TAP = open Termius (telnet://IP), HOLD 1 sec = copy the IP. (Web view: single click copies, as before) */
+(function () {
+    var timer = null, fired = false, sx = 0, sy = 0;
+    function oltIpEl(t) {
+        if (window.innerWidth > 700) return null;      // web view: keep the normal click-to-copy
+        var el = t && t.closest && t.closest('.ip-copy');
+        if (!el) return null;
+        var td = el.closest('td');
+        if (!td || td.cellIndex !== 1) return null;
+        var tb = td.closest('#docs-olt-ip-tbody');
+        if (!tb || tb.classList.contains('mode-edit') || tb.classList.contains('mode-del')) return null;
+        return el;
+    }
+    function ipOf(el) { return (el.dataset.ip || el.textContent).trim(); }
+    document.addEventListener('pointerdown', function (e) {
+        var el = oltIpEl(e.target); if (!el) return;
+        fired = false; sx = e.clientX; sy = e.clientY; clearTimeout(timer);
+        timer = setTimeout(function () {
+            fired = true;
+            if (navigator.vibrate) { try { navigator.vibrate(40); } catch (x) {} }
+            copyIpToClipboard(ipOf(el), el);
+        }, 1000);
+    }, true);
+    ['pointerup', 'pointercancel', 'pointerleave'].forEach(function (n) {
+        document.addEventListener(n, function () { clearTimeout(timer); }, true);
+    });
+    document.addEventListener('pointermove', function (e) {
+        if (Math.abs(e.clientX - sx) > 10 || Math.abs(e.clientY - sy) > 10) clearTimeout(timer);
+    }, true);
+    document.addEventListener('contextmenu', function (e) { if (oltIpEl(e.target)) e.preventDefault(); }, true);
+    document.addEventListener('click', function (e) {
+        var el = oltIpEl(e.target); if (!el) return;
+        e.stopImmediatePropagation(); e.preventDefault();          // no copy on a plain tap
+        if (fired) { fired = false; return; }                      // it was a long-press (already copied)
+        var ip = ipOf(el);
+        if (/^\d{1,3}(\.\d{1,3}){3}$/.test(ip)) window.location.href = 'telnet://' + ip;
+    }, true);
 })();
 </script>
 </body>
