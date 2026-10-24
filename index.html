@@ -500,6 +500,113 @@
         #app-bts > .card { padding: 12px 16px; margin-bottom: 10px !important; }
         #app-bts > .card > .card-head { margin-bottom: 8px; padding-bottom: 8px; }
         #app-bts #bts-search-result-count:empty { display: none; }
+        #app-bts .docs-card { padding: 14px 20px 16px; margin-bottom: 16px; }
+        #app-bts .docs-card-header { margin-bottom: 10px; padding-bottom: 8px; }
+        #app-bts .docs-card-title { font-size: 1.15rem; }
+        #app-bts .docs-card-title::before { height: 20px; }
+        .olt-bts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 10px; margin-top: 4px; }
+        .olt-bts-btn { display: flex; align-items: center; gap: 10px; text-align: left; padding: 14px 14px; background: #fff; border: 2px solid #cbd5e1; border-radius: 10px; cursor: pointer; font-family: 'Exo 2', sans-serif; transition: all .2s ease; }
+        .olt-bts-btn .material-icons { font-size: 22px; color: #00A36C; background: rgba(0,212,255,0.12); border-radius: 8px; padding: 6px; }
+        .olt-bts-btn .obb-name { display: block; font-weight: 700; font-size: 0.95rem; color: #0f172a; line-height: 1.2; }
+        .olt-bts-btn .obb-count { display: block; font-size: 0.72rem; color: #64748b; margin-top: 2px; }
+        .olt-bts-btn:hover { border-color: #00d4ff; box-shadow: 0 4px 14px rgba(0,212,255,0.2); transform: translateY(-1px); }
+        .olt-bts-btn:active { transform: translateY(0); }
+        /* Deep blue-teal BTS name boxes (OLT IP + BTS INFO) */
+        .olt-bts-btn { background: linear-gradient(135deg, #0b3d91 0%, #0e6ba8 55%, #0a8f8f 100%); border: 1.5px solid #0a2f6b; box-shadow: 0 3px 10px rgba(11,61,145,0.28); }
+        .olt-bts-btn .material-icons { color: #fff; background: rgba(255,255,255,0.18); }
+        .olt-bts-btn .obb-name { color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.25); }
+        .olt-bts-btn .obb-count { color: #bfe9ff; }
+        .olt-bts-btn:hover { border-color: #5eead4; box-shadow: 0 6px 18px rgba(14,107,168,0.45); filter: brightness(1.08); transform: translateY(-1px); }
+        .olt-bts-btn:active { transform: scale(0.98); filter: brightness(0.95); }
+        /* ════ OLT IP INFO: tabs pushed down + add/edit/delete tools ════ */
+        #olt-bts-buttons { margin-top: 18px !important; }
+        .olt-tools { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+        .olt-tool-btn { width: 31px; height: 31px; border-radius: 9px; border: none; cursor: pointer; font-size: 12.5px; display: inline-flex; align-items: center; justify-content: center; transition: all .18s ease; color: #fff; box-shadow: 0 2px 8px rgba(15,23,42,0.18); }
+        .olt-tool-btn.add { background: linear-gradient(135deg,#10b981,#059669); }
+        .olt-tool-btn.edit { background: linear-gradient(135deg,#0e6ba8,#0b3d91); }
+        .olt-tool-btn.del { background: linear-gradient(135deg,#f87171,#dc2626); }
+        .olt-tool-btn:hover { transform: translateY(-1px) scale(1.06); filter: brightness(1.1); }
+        .olt-tool-btn.active { outline: 3px solid rgba(245,158,11,0.75); outline-offset: 2px; }
+        .olt-mode-hint { margin-top: 12px; padding: 8px 12px; border-radius: 8px; font-size: 0.82rem; font-weight: 700; font-family: 'Exo 2', sans-serif; }
+        .olt-mode-hint.edit { background: rgba(14,107,168,0.12); color: #0b3d91; }
+        .olt-mode-hint.del { background: rgba(220,38,38,0.12); color: #b91c1c; }
+        #olt-bts-buttons.mode-edit .olt-bts-btn { outline: 2px dashed #38bdf8; outline-offset: 2px; }
+        #olt-bts-buttons.mode-del .olt-bts-btn { outline: 2px dashed #f87171; outline-offset: 2px; }
+        #docs-olt-ip-tbody.mode-edit tr, #docs-olt-ip-tbody.mode-del tr { cursor: pointer; }
+        #docs-olt-ip-tbody.mode-edit tr:hover { background: rgba(56,189,248,0.18) !important; }
+        #docs-olt-ip-tbody.mode-del tr:hover { background: rgba(248,113,113,0.22) !important; }
+        .olt-row-btn { width: 30px; height: 30px; border: none; border-radius: 8px; cursor: pointer; font-size: 13px; margin: 0 2px; background: rgba(14,107,168,0.12); color: #0e6ba8; }
+        .olt-row-btn.del { background: rgba(220,38,38,0.12); color: #dc2626; }
+        .olt-row-btn:hover { filter: brightness(0.92); transform: scale(1.08); }
+        @media (max-width: 700px) { .olt-tool-btn { width: 28px; height: 28px; font-size: 11.5px; } .olt-tools { gap: 6px; } #olt-bts-buttons { margin-top: 14px !important; } }
+        /* ════ BTS INFO + RADIO: add / edit / delete tools ════ */
+        #bts-buttons { margin-top: 18px !important; }
+        #bts-buttons.mode-edit .olt-bts-btn, #radioBtsTabs.mode-edit .radio-bts-cell:not(.radio-deleted-cell) .olt-bts-btn { outline: 2px dashed #38bdf8; outline-offset: 2px; }
+        #bts-buttons.mode-del .olt-bts-btn, #radioBtsTabs.mode-del .radio-bts-cell:not(.radio-deleted-cell) .olt-bts-btn { outline: 2px dashed #f87171; outline-offset: 2px; }
+        #bts-table-body.mode-edit tr, #bts-table-body.mode-del tr, #bts-cards-mobile.mode-edit .bts-mobile-row, #bts-cards-mobile.mode-del .bts-mobile-row { cursor: pointer; }
+        #bts-table-body.mode-edit tr:hover, #bts-cards-mobile.mode-edit .bts-mobile-row:hover { background: rgba(56,189,248,0.2) !important; }
+        #bts-table-body.mode-del tr:hover, #bts-cards-mobile.mode-del .bts-mobile-row:hover { background: rgba(248,113,113,0.24) !important; }
+        #radioClientList.mode-edit .radio-client-card:hover { background: rgba(56,189,248,0.22) !important; }
+        #radioClientList.mode-del .radio-client-card:hover { background: rgba(248,113,113,0.26) !important; }
+        .radio-tools { position: absolute; top: 14px; right: 14px; display: flex; gap: 6px; z-index: 3; }
+        #app-radio .olt-mode-hint { margin: 8px 10px 0; font-size: 0.74rem; padding: 6px 10px; }
+        #app-radio .olt-mode-hint.edit { background: rgba(125,211,252,0.18); color: #0b3d91; }
+        #app-radio .olt-mode-hint.del { background: rgba(248,113,113,0.2); color: #b91c1c; }
+        @media (max-width: 700px) { .radio-tools { top: 50%; transform: translateY(-50%); } }
+        /* ════ GEAR (settings) TOOLS: click ⚙ to reveal Add / Edit / Delete ════ */
+        .gear-tools { display: flex; align-items: center; gap: 8px; flex-wrap: nowrap; }
+        .gear-tools-items { display: none; align-items: center; gap: 8px; padding: 4px 7px; border-radius: 14px; background: rgba(148,163,184,0.16); flex-wrap: wrap; justify-content: flex-end; }
+        .gear-tools.open > .gear-tools-items { display: flex; animation: gearIn .24s ease; }
+        @keyframes gearIn { from { opacity: 0; transform: translateX(14px) scale(.9); } to { opacity: 1; transform: none; } }
+        .gear-toggle { width: 31px; height: 31px; flex-shrink: 0; border-radius: 50%; border: none; cursor: pointer; color: #fff; font-size: 13px; display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(135deg,#64748b,#334155); box-shadow: 0 2px 8px rgba(15,23,42,0.25); transition: transform .4s ease, background .2s ease; }
+        .gear-toggle:hover { filter: brightness(1.12); }
+        .gear-tools.open > .gear-toggle { transform: rotate(120deg); background: linear-gradient(135deg,#f59e0b,#d97706); }
+        .radio-tools .gear-tools-items { background: rgba(255,255,255,0.16); }
+        .radio-tools .gear-toggle { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); }
+        .radio-tools.open .gear-toggle { background: linear-gradient(135deg,#f59e0b,#d97706); border-color: transparent; }
+        .radio-detail-header { position: relative; padding-right: 56px !important; }
+        .radio-tools.radio-detail-tools { top: 50% !important; right: 12px; transform: translateY(-50%) !important; }
+        .radio-detail-tools .gear-tools-items { background: rgba(15,23,42,0.88); }
+        .docs-header-actions.gear-tools { gap: 8px; }
+        .docs-header-actions .gear-tools-items { gap: 8px; }
+        /* ════ Tool buttons: pill style (Add / Edit / Delete) under the ⚙ icon ════ */
+        .olt-tool-btn { width: auto; height: auto; padding: 5px 12px; gap: 5px; border-radius: 14px; font-family: 'Exo 2', sans-serif; font-weight: 700; font-size: 0.75rem; white-space: nowrap; background: transparent; box-shadow: none; border: 1.5px solid currentColor; transition: all .2s ease; }
+        .olt-tool-btn i { font-size: 0.85em; }
+        .olt-tool-btn.add { background: transparent; color: #00A36C; }
+        .olt-tool-btn.edit { background: transparent; color: #0ea5e9; }
+        .olt-tool-btn.del { background: transparent; color: #ef4444; }
+        .olt-tool-btn.add:hover { background: #00A36C; color: #fff; transform: none; filter: none; }
+        .olt-tool-btn.edit:hover { background: #0ea5e9; color: #fff; transform: none; filter: none; }
+        .olt-tool-btn.del:hover { background: #ef4444; color: #fff; transform: none; filter: none; }
+        .olt-tool-btn.active, .olt-tool-btn.active:hover { background: #64748b; color: #fff; border-color: #64748b; outline: none; }
+        .radio-tools .olt-tool-btn.add { color: #6ee7b7; }
+        .radio-tools .olt-tool-btn.edit { color: #7dd3fc; }
+        .radio-tools .olt-tool-btn.del { color: #fca5a5; }
+        .radio-tools .olt-tool-btn.add:hover { background: #10b981; color: #fff; }
+        .radio-tools .olt-tool-btn.edit:hover { background: #0ea5e9; color: #fff; }
+        .radio-tools .olt-tool-btn.del:hover { background: #ef4444; color: #fff; }
+        .radio-tools .olt-tool-btn.active, .radio-tools .olt-tool-btn.active:hover { background: #64748b; color: #fff; border-color: #64748b; }
+        .gear-tools-items { gap: 7px; padding: 5px 9px; }
+        @media (max-width: 700px) { .olt-tool-btn { width: auto; height: auto; padding: 4px 9px; font-size: 0.7rem; } .gear-tools-items { gap: 5px; padding: 4px 6px; } }
+        /* radio list header: when ⚙ is open the tools drop to their own row (no overlap with the title) */
+        /* radio list header: single-line title, "ALL BTS" label hidden */
+        #r-panel-bts-name { display: none !important; }
+        #app-radio .radio-panel-title { white-space: normal; overflow: visible; text-overflow: clip; line-height: 1.25; padding-right: 48px; }
+        .radio-tools:not(.radio-detail-tools) .gear-tools-items { background: rgba(30,27,75,0.96); border: 1px solid rgba(255,255,255,0.22); box-shadow: 0 6px 18px rgba(0,0,0,0.4); }
+        /* mobile radio list header: one-line title with ⚙ beside it; Add/Edit/Delete drop down in a row below (like OLT docs) */
+        @media (max-width: 700px) {
+            #app-radio #r-panel-count { display: none !important; }
+            #app-radio .radio-panel-title { white-space: nowrap; font-size: 11px; letter-spacing: 0.8px; padding-right: 40px; overflow: hidden; text-overflow: ellipsis; }
+            #app-radio .radio-tools:not(.radio-detail-tools) { display: contents; }
+            #app-radio .radio-tools:not(.radio-detail-tools) .gear-toggle { position: absolute; top: 8px; right: 12px; z-index: 4; }
+            #app-radio .radio-tools:not(.radio-detail-tools).open > .gear-tools-items { align-self: flex-end; margin-top: 8px; }
+            #app-radio .radio-panel-header { padding-bottom: 10px; }
+        }
+        .olt-detail-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; flex-wrap: wrap; }
+        .olt-back-btn { display: inline-flex; align-items: center; gap: 4px; padding: 7px 12px; border: 2px solid #cbd5e1; background: #fff; color: #334155; border-radius: 8px; font-weight: 700; font-size: 0.85rem; cursor: pointer; font-family: 'Exo 2', sans-serif; }
+        .olt-back-btn .material-icons { font-size: 18px; }
+        .olt-back-btn:hover { border-color: #00d4ff; color: #0f172a; }
+        .olt-detail-title { font-weight: 700; font-size: 1.05rem; color: #0f172a; font-family: 'Exo 2', sans-serif; }
         .olt-filter-wrap { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
         .olt-filter-label { margin: 0; font-weight: 700; color: #475569; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Exo 2', sans-serif; white-space: nowrap; }
         .olt-filter-wrap .docs-olt-select { flex: 1; min-width: 200px; width: auto; margin-bottom: 0; padding: 8px 14px; font-size: 0.95rem; }
@@ -515,6 +622,14 @@
         .docs-code .cmd-prompt { font-weight: 800; color: inherit; letter-spacing: 0; }
         .docs-code:hover { border-color: #00ff9d; box-shadow: 0 8px 15px rgba(0,0,0,0.4), 0 0 15px rgba(0,255,157,0.2); transform: translateX(2px); }
         .docs-code.highlighted { background: #002200; border-color: #00ff9d; color: #fff; box-shadow: 0 0 20px rgba(0,255,157,0.4); }
+        /* ════ COLLAPSIBLE COMMANDS (click heading to show/hide command) ════ */
+        #app-docs .docs-cmd-label { cursor: pointer; user-select: none; -webkit-user-select: none; display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 8px; margin-bottom: 0; transition: background-color .15s ease, border-color .15s ease; }
+        #app-docs .docs-cmd-label::after { content: '\25B8'; font-size: 0.9em; color: #64748b; flex-shrink: 0; transition: transform .2s ease; }
+        #app-docs .docs-cmd-label:hover { background: #dcfce7; }
+        #app-docs .docs-cmd-label.open { margin-bottom: 6px; margin-top: 12px; }
+        #app-docs .docs-cmd-label.open::after { transform: rotate(90deg); color: #00a86b; }
+        #app-docs .docs-cmd-label + .docs-code { display: none; }
+        #app-docs .docs-cmd-label.open + .docs-code { display: block; margin-bottom: 18px; }
         /* ════ EDITABLE GPON COMMANDS (ADD/REMOVE) ════ */
         .docs-cmd-item { position: relative; }
         .docs-cmd-checkbox { display: none; position: absolute; top: 22px; right: 4px; width: 20px; height: 20px; accent-color: #ef4444; cursor: pointer; z-index: 2; }
@@ -562,6 +677,7 @@
         .docs-olt-table th { background: #f1f5f9; color: #00A36C; font-weight: 700; text-transform: uppercase; font-size: 0.9rem; border-bottom: 2px solid #cbd5e1; }
         .docs-olt-table tr:hover { background-color: #f8fafc; }
         .docs-olt-table td:nth-child(2) { color: #008793; font-weight: 700; }
+        .docs-olt-table .olt-port { color: #008793; font-weight: 700; }
 
         /* ONU compact */
         #app-onu { max-width: 1040px; margin: 0 auto; }
@@ -572,6 +688,11 @@
         .onu-modal-overlay { display:none; position:fixed; inset:0; background:rgba(8,10,30,0.72); backdrop-filter:blur(3px); z-index:900; align-items:center; justify-content:center; padding:24px; }
         .onu-modal-overlay.open { display:flex; }
         .onu-modal-box { background:var(--sb-bg); border:1px solid var(--sb-border); border-radius:16px; width:100%; max-width:640px; max-height:80vh; display:flex; flex-direction:column; box-shadow:0 20px 60px rgba(0,0,0,0.5); overflow:hidden; }
+        .onu-saved-search { position:relative; flex:1; min-width:120px; max-width:260px; display:flex; align-items:center; }
+        .onu-saved-search .material-icons { position:absolute; left:8px; font-size:16px; color:#7dd3fc; pointer-events:none; }
+        .onu-saved-search input { width:100%; padding:7px 10px 7px 30px; border-radius:9px; border:1px solid rgba(125,211,252,0.3); background:rgba(125,211,252,0.1); color:#e0f2fe; font-size:0.85em; outline:none; }
+        .onu-saved-search input::placeholder { color:rgba(186,230,253,0.55); }
+        .onu-saved-search input:focus { border-color:#7dd3fc; box-shadow:0 0 0 3px rgba(125,211,252,0.15); }
         .onu-modal-head { display:flex; align-items:center; justify-content:space-between; padding:16px 18px; border-bottom:1px solid rgba(125,211,252,0.14); flex-shrink:0; }
         .onu-modal-close { background:transparent; border:1px solid rgba(125,211,252,0.25); color:#7dd3fc; border-radius:8px; width:32px; height:32px; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all 0.2s; }
         .onu-modal-close:hover { background:rgba(239,68,68,0.18); border-color:rgba(239,68,68,0.4); color:#f87171; }
@@ -598,6 +719,15 @@
         .onu-modal-box .card-head-text { color: #bae6fd !important; letter-spacing: 2px; }
         .onu-modal-box .ch-icon { background: rgba(125,211,252,0.16) !important; color: #7dd3fc !important; }
         .onu-saved-item .osi-name { color: #e0f2fe; }
+        /* slightly lighter theme for the ONU modals */
+        .onu-modal-box, .onu-script-view-box { background: linear-gradient(160deg, #123a7a 0%, #1b5aab 50%, #2f8ae0 100%); border-color: rgba(147,210,255,0.4); }
+        .onu-modal-head { border-bottom-color: rgba(186,230,253,0.25); }
+        .onu-saved-item { background: rgba(255,255,255,0.1); border-color: rgba(186,230,253,0.28); }
+        .onu-saved-item:hover { background: rgba(255,255,255,0.15); }
+        .onu-saved-item .osi-meta { color: rgba(224,242,254,0.75); }
+        .onu-saved-search input { background: rgba(255,255,255,0.14); border-color: rgba(186,230,253,0.4); }
+        .onu-saved-empty { color: rgba(224,242,254,0.7); }
+        textarea.onu-view-textarea { background: rgba(8,30,70,0.3); }
         .onu-view-meta { color: rgba(186,230,253,0.7); }
         textarea.onu-view-textarea, textarea.onu-view-textarea:read-only { color: #e0f2fe; }
         textarea.onu-view-textarea:not(:read-only) { border-color: rgba(125,211,252,0.55); }
@@ -1087,6 +1217,577 @@ font-weight: 700; font-weight: 600; color: #1a3a5c; font-size: 13px; }
             #app-onu .input-row.col-3 label { font-size: 0.58em; letter-spacing: 0.5px; }
             #app-onu .input-row.col-3 input { padding: 6px 7px; min-width: 0; }
         }
+
+        /* ════ MOBILE: bottom navigation bar + compact OLT TASK sub-menu ════ */
+        @media (max-width: 700px) {
+            /* main bar goes to the bottom of the screen */
+            .sidebar {
+                order: 2;
+                position: relative !important;
+                top: auto !important;
+                border-bottom: none !important;
+                border-top: 1px solid var(--sb-border);
+                box-shadow: 0 -6px 24px rgba(15,10,40,0.35);
+                padding: 0 0 env(safe-area-inset-bottom, 0) !important;
+            }
+            .main-content { order: 1; }
+
+            /* sub-menu pops UP from the bottom bar, much shorter, icon beside label */
+            .nav-group-children {
+                top: auto !important;
+                bottom: var(--mobile-nav-height, 60px) !important;
+                padding: 5px 10px !important;
+                gap: 6px !important;
+                border-radius: 14px 14px 0 0 !important;
+                border-top: 1px solid var(--sb-border) !important;
+                border-bottom: 2px solid rgba(125,211,252,0.4) !important;
+                box-shadow: 0 -8px 24px rgba(0,0,0,0.5) !important;
+            }
+            .nav-child-btn {
+                flex: 1 1 0 !important;
+                max-width: 50% !important;
+                flex-direction: row !important;
+                justify-content: center !important;
+                align-items: center !important;
+                gap: 7px !important;
+                padding: 5px 8px !important;
+                border-radius: 9px !important;
+            }
+            .nav-child-icon { width: 20px !important; height: 20px !important; margin: 0 !important; border-radius: 6px !important; }
+            .nav-child-icon .material-icons, .nav-child-icon i { font-size: 12px !important; }
+            .nav-child-name { font-size: clamp(0.5em, 2.8vw, 0.6em) !important; letter-spacing: 0.4px !important; }
+            .nav-child-btn.active::before { top: 20%; bottom: 20%; }
+
+            /* a little less height used by the main bar buttons too */
+            .nav-group { padding: 3px 8px !important; }
+            .nav-btn, .nav-group-header { padding: 3px 4px 3px !important; gap: 2px !important; }
+            .nav-btn .nav-text, .nav-group-header .nav-text { line-height: 1; }
+
+            /* OLT DOCS back/menu button: top-right -> bottom-right, just above the bottom bar */
+            .docs-mobile-back { top: auto !important; bottom: 14px !important; right: 16px !important; }
+            .docs-tab-content .docs-card-header { padding-right: 0 !important; }
+            body.docs-mode .docs-content-scroll { padding-bottom: 62px; }
+        }
+
+        /* ════ MOBILE: OLT TASK sub-menu as a vertical dropdown (ONU ADD above LINE PROFILE) ════ */
+        @media (max-width: 700px) {
+            .nav-group-children {
+                left: var(--olt-menu-left, 8px) !important;
+                right: auto !important;
+                width: auto !important;
+                min-width: 168px;
+                bottom: calc(var(--mobile-nav-height, 60px) + 6px) !important;
+                flex-direction: column !important;
+                align-items: stretch !important;
+                justify-content: flex-start !important;
+                gap: 4px !important;
+                padding: 6px !important;
+                border: 1px solid rgba(125,211,252,0.35) !important;
+                border-radius: 12px !important;
+                box-shadow: 0 -6px 24px rgba(0,0,0,0.55) !important;
+            }
+            .nav-child-btn {
+                flex: 0 0 auto !important;
+                width: 100% !important;
+                max-width: none !important;
+                justify-content: flex-start !important;
+                padding: 9px 12px !important;
+            }
+        }
+
+        /* ════ MOBILE: compact 2-column BTS buttons so all BTS names fit on one screen ════ */
+        @media (max-width: 700px) {
+            .olt-bts-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 2px; }
+            .olt-bts-btn { gap: 7px; padding: 8px 8px; border-width: 1.5px; border-radius: 9px; min-width: 0; }
+            .olt-bts-btn .material-icons { font-size: 17px; padding: 4px; border-radius: 6px; flex-shrink: 0; }
+            .olt-bts-btn { overflow: hidden; }
+            .olt-bts-btn .material-icons { display: none; }
+            .olt-bts-btn .obb-name { font-size: 0.9rem; line-height: 1.2; overflow-wrap: break-word; word-break: normal; hyphens: none; }
+            .olt-bts-btn .obb-count { font-size: 0.7rem; margin-top: 1px; }
+            .olt-bts-btn > span:not(.material-icons) { min-width: 0; }
+            #bts-table-card { display: none; }
+            #app-bts .docs-card { padding: 10px; }
+            #d_olt_ips .docs-card { padding: 10px; }
+        }
+        @media (max-width: 360px) {
+            .olt-bts-btn .obb-name { font-size: 0.8rem; }
+        }
+
+        .cloud-status { margin-top: 8px; font-family: 'Rajdhani', sans-serif; font-size: 0.72em; font-weight: 700; letter-spacing: 1px; color: rgba(196,181,253,0.6); }
+        .cloud-status.ok { color: #34d399; }
+        .cloud-status.busy { color: #fbbf24; }
+        .cloud-status.off { color: #f87171; }
+
+        /* ════ RADIO TAB — colorful theme (matches BTS INFO) ════ */
+        #app-radio, #radioModalOverlay {
+            --radio-accent: #7c3aed;
+            --radio-primary: linear-gradient(135deg, #1e1b4b 0%, #312e81 55%, #4c1d95 100%);
+            --radio-border: rgba(139,92,246,0.14);
+        }
+        body.radio-mode .main-content {
+            background: radial-gradient(ellipse at 15% 0%, rgba(251,191,36,0.10) 0%, transparent 45%),
+                        radial-gradient(ellipse at 85% 100%, rgba(139,92,246,0.12) 0%, transparent 50%), #f0f4ff;
+        }
+
+        /* left panel */
+        #app-radio .radio-client-panel { background: #faf8ff; border-right: 1px solid rgba(139,92,246,0.16); box-shadow: 4px 0 20px rgba(99,102,241,0.08); }
+        #app-radio .radio-panel-header { background: linear-gradient(135deg, #3f3a9e 0%, #5b4fd0 55%, #7c6be0 100%); border-bottom: none; }
+        #app-radio .radio-panel-header::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: linear-gradient(90deg, #f59e0b, #ef4444, #ec4899); }
+        #app-radio .radio-panel-bts { color: #fbbf24; letter-spacing: 2.5px; }
+        #app-radio .radio-panel-title { font-family: 'Orbitron', monospace; font-size: 15px; letter-spacing: 2px; color: #fff; -webkit-text-fill-color: #fff; text-shadow: 0 1px 3px rgba(49,46,129,0.35); }
+        #app-radio .radio-panel-count { color: #a78bfa; }
+        #app-radio .radio-add-btn { background: linear-gradient(135deg, #10b981, #059669); border: none; font-family: 'Orbitron', monospace; font-size: 9px; letter-spacing: 1px; padding: 7px 11px; box-shadow: 0 3px 12px rgba(16,185,129,0.4); }
+        #app-radio .radio-add-btn:hover { background: linear-gradient(135deg, #34d399, #059669); }
+        #app-radio .radio-search-wrap { background: #fff; border-bottom: 1px solid rgba(139,92,246,0.12); }
+        #app-radio .radio-search { background: #fffbeb; border: 1.5px solid #fde68a; color: #1e1b4b; }
+        #app-radio .radio-search::placeholder { color: #d4a73a; }
+        #app-radio .radio-search:focus { border-color: #f59e0b; box-shadow: 0 0 0 3px rgba(245,158,11,0.15); background: #fff; }
+
+        /* BTS tabs: every tab gets its own color */
+        #app-radio .radio-bts-tabs { background: #f5f3ff; border-bottom: 1px solid rgba(139,92,246,0.14); }
+        #radioBtsTabs .radio-bts-tab { --tc: #f59e0b; --tc2: #ef4444; border: 1.5px solid color-mix(in srgb, var(--tc) 40%, white); color: var(--tc); background: #fff; }
+        #radioBtsTabs .radio-bts-tab:nth-child(5n+2) { --tc: #0ea5e9; --tc2: #6366f1; }
+        #radioBtsTabs .radio-bts-tab:nth-child(5n+3) { --tc: #8b5cf6; --tc2: #ec4899; }
+        #radioBtsTabs .radio-bts-tab:nth-child(5n+4) { --tc: #10b981; --tc2: #0ea5e9; }
+        #radioBtsTabs .radio-bts-tab:nth-child(5n+5) { --tc: #ec4899; --tc2: #f59e0b; }
+        #radioBtsTabs .radio-bts-tab:hover { background: color-mix(in srgb, var(--tc) 10%, white); border-color: var(--tc); color: var(--tc); }
+        #radioBtsTabs .radio-bts-tab.active { background: linear-gradient(135deg, var(--tc), var(--tc2)); border-color: transparent; color: #fff; box-shadow: 0 3px 10px color-mix(in srgb, var(--tc) 45%, transparent); }
+        #radioBtsTabs .radio-deleted-tab { --tc: #dc2626; --tc2: #be123c; }
+
+        /* client cards */
+        #app-radio .radio-client-card { border: 1px solid rgba(139,92,246,0.12); border-radius: 10px; box-shadow: 0 1px 4px rgba(99,102,241,0.05); }
+        #app-radio .radio-client-card::before { background: transparent; width: 4px; border-radius: 0 3px 3px 0; }
+        #app-radio .radio-client-card:hover { border-color: rgba(245,158,11,0.5); background: #fffdf5; box-shadow: 0 4px 14px rgba(245,158,11,0.14); }
+        #app-radio .radio-client-card:hover::before { background: linear-gradient(180deg, #f59e0b, #ef4444); }
+        #app-radio .radio-client-card.active { border-color: #f59e0b; background: linear-gradient(135deg, rgba(251,191,36,0.14), rgba(167,139,250,0.10)); box-shadow: 0 4px 16px rgba(245,158,11,0.2); }
+        #app-radio .radio-client-card.active::before { background: linear-gradient(180deg, #f59e0b, #ef4444, #ec4899); }
+        #app-radio .radio-client-name { color: #1e1b4b; }
+        #app-radio .radio-client-card:hover .radio-client-name { background-color: rgba(245,158,11,0.14); color: #7c2d12; }
+        #app-radio .radio-client-arrow { color: rgba(139,92,246,0.35); }
+        #app-radio .radio-client-card:hover .radio-client-arrow, #app-radio .radio-client-card.active .radio-client-arrow { color: #f59e0b; }
+        #app-radio .radio-card-icon-btn { background: rgba(139,92,246,0.10); color: #7c3aed; }
+        #app-radio .radio-card-icon-btn:hover { background: rgba(139,92,246,0.22); }
+        #app-radio .radio-card-icon-btn.del { color: #ef4444; background: rgba(239,68,68,0.10); }
+        #app-radio .radio-card-icon-btn.del:hover { background: rgba(239,68,68,0.22); color: #dc2626; }
+
+        /* right panel */
+        #app-radio .radio-detail-panel { background: transparent; }
+        #app-radio .radio-detail-header { background: var(--radio-primary); position: relative; box-shadow: 0 4px 24px rgba(30,27,75,0.3); }
+        #app-radio .radio-detail-header::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: linear-gradient(90deg, #f59e0b, #ef4444, #ec4899); }
+        #app-radio .radio-detail-header h1 { font-family: 'Orbitron', monospace; font-size: 17px; letter-spacing: 4px; font-weight: 800; background: none; -webkit-background-clip: border-box; background-clip: border-box; color: #ffffff; -webkit-text-fill-color: #ffffff; text-shadow: 0 1px 3px rgba(0,0,0,0.35); }
+        #app-radio .radio-detail-header p { color: #a78bfa; opacity: 0.85; }
+        #app-radio .radio-header-pulse { background: #fbbf24; box-shadow: 0 0 10px rgba(251,191,36,0.9); animation: pulse-amber 2s infinite; }
+        @keyframes pulse-amber { 0%{box-shadow:0 0 0 0 rgba(251,191,36,0.7)} 70%{box-shadow:0 0 0 8px rgba(251,191,36,0)} 100%{box-shadow:0 0 0 0 rgba(251,191,36,0)} }
+        #app-radio .radio-detail-welcome-icon { opacity: 0.5; filter: drop-shadow(0 4px 14px rgba(245,158,11,0.35)); }
+        #app-radio .radio-detail-welcome-title { font-family: 'Orbitron', monospace; background: linear-gradient(90deg, #f59e0b, #ef4444, #ec4899); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; opacity: 0.75; }
+        #app-radio .radio-detail-welcome-sub { color: #a78bfa; opacity: 0.8; }
+        #app-radio .radio-detail-footer { color: #a78bfa; opacity: 0.75; }
+
+        /* detail card */
+        #app-radio .radio-detail-card { position: relative; border: 1px solid rgba(139,92,246,0.14); border-radius: 14px; box-shadow: 0 8px 30px rgba(99,102,241,0.12); }
+        #app-radio .radio-detail-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; z-index: 2; background: linear-gradient(90deg, #f59e0b, #ef4444, #ec4899); }
+        #app-radio .rdc-header { background: linear-gradient(90deg, #1e1b4b 0%, #312e81 100%); padding-top: 18px; }
+        #app-radio .rdc-client-name { color: #fff; }
+        #app-radio .rdc-bts-label { color: #fbbf24; }
+        #app-radio .rdc-link-badge { font-family: 'Orbitron', monospace; font-size: 10px; border-radius: 20px; padding: 4px 13px; }
+        #app-radio .rdc-link-badge.p2p { background: rgba(56,189,248,0.18); color: #7dd3fc; border: 1px solid rgba(56,189,248,0.5); }
+        #app-radio .rdc-link-badge.p2m { background: rgba(251,191,36,0.18); color: #fcd34d; border: 1px solid rgba(251,191,36,0.5); }
+        #app-radio .rdc-action-btn.edit { background: rgba(167,139,250,0.2); color: #ddd6fe; border-color: rgba(167,139,250,0.5); }
+        #app-radio .rdc-action-btn.edit:hover { background: rgba(167,139,250,0.34); }
+
+        #app-radio .rdc-table { border-top: none; }
+        #app-radio .rdc-cell { border-bottom: 1px solid rgba(139,92,246,0.09); }
+        #app-radio .rdc-cell.lbl, #app-radio .rdc-cell.lbl-wide { background: linear-gradient(90deg, rgba(139,92,246,0.09), rgba(139,92,246,0.03)); color: #6d28d9; border-right: 1px solid rgba(139,92,246,0.10); border-left: 3px solid #a78bfa; }
+        #app-radio .rdc-cell.val, #app-radio .rdc-cell.val-wide { color: #1e1b4b; border-right: 1px solid rgba(139,92,246,0.07); }
+        #app-radio .rdc-cell.lbl:nth-of-type(4n+1) { border-left-color: #f59e0b; }
+        #app-radio .ip-val { color: #0369a1; }
+        #app-radio span.ip-val { background: rgba(56,189,248,0.12); border: 1px solid rgba(56,189,248,0.35); border-radius: 20px; padding: 2px 11px; }
+        #app-radio .radio-ip-link { color: #0369a1; background: rgba(56,189,248,0.12); border: 1px solid rgba(56,189,248,0.35); border-radius: 20px; padding: 3px 11px; margin: 0; }
+        #app-radio .radio-ip-link:hover { background: rgba(56,189,248,0.25); color: #0c4a6e; }
+        #app-radio .vlan-chip { background: linear-gradient(135deg, rgba(251,191,36,0.22), rgba(245,158,11,0.10)); border: 1px solid #fbbf24; color: #b45309; border-radius: 20px; padding: 2px 11px; }
+        #app-radio .na-val { color: rgba(139,92,246,0.4); }
+
+        /* add / edit modal */
+        #radioModalOverlay .radio-modal-header::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: linear-gradient(90deg, #f59e0b, #ef4444, #ec4899); }
+        #radioModalOverlay .radio-modal-header h3 { font-family: 'Orbitron', monospace; letter-spacing: 2px; font-size: 13px; }
+        #radioModalOverlay .radio-form-group input:focus, #radioModalOverlay .radio-form-group select:focus { border-color: #f59e0b; box-shadow: 0 0 0 3px rgba(245,158,11,0.15); }
+        #radioModalOverlay .radio-modal-btn.save { background: linear-gradient(135deg, #10b981, #059669); }
+    
+        /* ════ RADIO — BTS button grid (same style as BTS INFO) ════ */
+        #app-radio .radio-bts-grid { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px; margin: 0; padding: 10px; overflow-y: auto; flex: 1; align-content: start; background: #f5f3ff; }
+        #app-radio .radio-bts-grid .olt-bts-btn { padding: 10px 10px; gap: 8px; min-width: 0; overflow: hidden; border-radius: 10px; }
+        #app-radio .radio-bts-grid .olt-bts-btn .material-icons { display: none; }
+        #app-radio .radio-bts-grid .olt-bts-btn .obb-name { font-size: 0.85rem; line-height: 1.2; overflow-wrap: break-word; }
+        #app-radio .radio-bts-grid .olt-bts-btn .obb-count { font-size: 0.68rem; }
+        #app-radio .radio-bts-grid .olt-bts-btn.radio-deleted-btn { background: linear-gradient(135deg, #7f1d1d 0%, #b91c1c 55%, #dc2626 100%); border-color: #7f1d1d; grid-column: 1 / -1; }
+        #app-radio .radio-back-bar { display: flex; align-items: center; gap: 10px; padding: 8px 10px; background: #f5f3ff; border-bottom: 1px solid rgba(139,92,246,0.14); flex-shrink: 0; }
+
+        /* ════ RADIO — accordion list + full-page detail ════ */
+        #app-radio .radio-client-panel { width: 100%; flex: 1; border-right: none; min-width: 0; }
+        #app-radio .radio-detail-panel { display: none; width: 100%; }
+        #app-radio.detail-open .radio-client-panel { display: none; }
+        #app-radio.detail-open .radio-detail-panel { display: flex; }
+        #app-radio .radio-bts-grid { display: flex; flex-direction: column; gap: 8px; padding: 12px; max-width: 760px; width: 100%; margin: 0 auto; background: transparent; }
+        #app-radio .radio-client-list { max-height: none; width: 100%; max-width: 760px; margin: 0 auto; }
+        #app-radio .radio-acc .olt-bts-btn { width: 100%; justify-content: space-between; }
+        #app-radio .radio-acc .olt-bts-btn .acc-arrow { margin-left: auto; font-size: 0.8em; color: #fff; transition: transform .25s ease; }
+        #app-radio .radio-acc.open .olt-bts-btn .acc-arrow { transform: rotate(180deg); }
+        #app-radio .radio-acc.open > .olt-bts-btn { border-radius: 10px 10px 0 0; }
+        #app-radio .radio-acc-sub { display: none; background: #fff; border: 1px solid rgba(139,92,246,0.18); border-top: none; border-radius: 0 0 10px 10px; padding: 6px; }
+        #app-radio .radio-acc.open > .radio-acc-sub { display: block; }
+        #app-radio .radio-acc-sub .radio-client-card { margin-bottom: 4px; }
+        #app-radio .radio-acc-empty { padding: 12px; text-align: center; color: #a78bfa; font-size: 12px; }
+        #app-radio .radio-detail-back { background: rgba(255,255,255,0.14); color: #fff; border-color: rgba(255,255,255,0.4); flex-shrink: 0; }
+        #app-radio .radio-detail-back:hover { background: rgba(255,255,255,0.26); color: #fff; }
+        @media (max-width: 700px) { #app-radio .radio-bts-grid { padding: 8px; } #app-radio .radio-detail-back { padding: 5px 8px; } }
+
+        /* ════ RADIO — sidebar-style (OLT TASK like) sub menu ════ */
+        #app-radio .radio-acc { background: var(--sb-bg); border: 1px solid var(--sb-border); border-radius: 12px; overflow: hidden; box-shadow: 0 3px 12px rgba(10,37,87,0.22); }
+        #app-radio .radio-acc-head { width: 100%; display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: transparent; border: none; cursor: pointer; text-align: left; color: #7dd3fc; transition: background .25s ease; }
+        #app-radio .radio-acc-head:hover { background: rgba(0,212,255,0.12); }
+        #app-radio .radio-acc.open > .radio-acc-head { background: rgba(0,212,255,0.16); }
+        #app-radio .radio-acc-ico { width: 32px; height: 32px; border-radius: 9px; display: flex; align-items: center; justify-content: center; background: rgba(56,189,248,0.18); color: #7dd3fc; flex-shrink: 0; transition: transform .3s cubic-bezier(.34,1.5,.64,1); }
+        #app-radio .radio-acc-ico .material-icons { font-size: 16px; }
+        #app-radio .radio-acc-head:hover .radio-acc-ico { transform: scale(1.15) rotate(-5deg); }
+        #app-radio .radio-acc-txt { display: flex; flex-direction: column; min-width: 0; }
+        #app-radio .radio-acc-head .obb-name { font-family: 'Orbitron', monospace; font-size: 0.8em; font-weight: 900; letter-spacing: 1.8px; color: #7dd3fc; text-shadow: 0 0 12px rgba(0,212,255,0.35); }
+        #app-radio .radio-acc-head .obb-count { font-family: 'Exo 2', sans-serif; font-size: 0.72em; font-weight: 600; opacity: .6; color: #bae6fd; margin-top: 2px; }
+        #app-radio .radio-acc-head .acc-arrow { margin-left: auto; font-size: 0.65em; color: rgba(125,211,252,0.6); transition: transform .3s cubic-bezier(.34,1.2,.64,1); }
+        #app-radio .radio-acc.open > .radio-acc-head .acc-arrow { transform: rotate(180deg); color: #7dd3fc; }
+        #app-radio .radio-acc-deleted .radio-acc-ico { background: rgba(248,113,113,0.2); color: #fca5a5; }
+        #app-radio .radio-acc-deleted .obb-name { color: #fca5a5; text-shadow: 0 0 12px rgba(248,113,113,0.35); }
+        #app-radio .radio-acc-sub { display: none; flex-direction: column; gap: 3px; background: rgba(167,139,250,0.07); border: none; border-top: 1px solid rgba(167,139,250,0.2); border-radius: 0; padding: 6px 8px 8px; }
+        #app-radio .radio-acc.open > .radio-acc-sub { display: flex; }
+        #app-radio .radio-acc.open > .radio-acc-head { border-radius: 0; }
+        #app-radio .radio-sub-item { position: relative; display: flex; align-items: center; gap: 10px; padding: 8px 10px; border: 1px solid transparent; border-radius: 8px; cursor: pointer; color: rgba(224,242,254,0.85); transition: background .22s ease, border-color .22s ease, color .22s ease, transform .28s cubic-bezier(.34,1.3,.64,1); }
+        #app-radio .radio-sub-item:hover { background: rgba(125,211,252,0.14); border-color: rgba(125,211,252,0.28); color: #fff; transform: translateX(4px); }
+        #app-radio .radio-sub-item.active { background: rgba(167,139,250,0.22); border-color: rgba(167,139,250,0.4); color: #c4b5fd; }
+        #app-radio .radio-sub-item:hover::before, #app-radio .radio-sub-item.active::before { content: ''; position: absolute; left: 0; top: 4px; bottom: 4px; width: 2px; background: #7dd3fc; border-radius: 0 2px 2px 0; }
+        #app-radio .radio-sub-icon { width: 24px; height: 24px; border-radius: 6px; display: flex; align-items: center; justify-content: center; background: rgba(56,189,248,0.15); color: #7dd3fc; flex-shrink: 0; }
+        #app-radio .radio-sub-icon .material-icons { font-size: 13px; }
+        #app-radio .radio-sub-name { flex: 1; min-width: 0; font-family: 'Exo 2', sans-serif; font-size: 0.85em; font-weight: 700; letter-spacing: 0.3px; line-height: 1.3; }
+        #app-radio .radio-sub-name small { display: block; font-size: 0.78em; font-weight: 600; opacity: .6; margin-top: 1px; }
+        #app-radio .radio-sub-item .radio-card-actions { margin: 0; }
+        #app-radio .radio-sub-item .radio-card-icon-btn { background: rgba(125,211,252,0.16); color: #bae6fd; }
+        #app-radio .radio-sub-item .radio-card-icon-btn:hover { background: rgba(125,211,252,0.3); }
+        #app-radio .radio-sub-item .radio-card-icon-btn.del { background: rgba(248,113,113,0.2); color: #fca5a5; }
+        #app-radio .radio-sub-item .radio-card-icon-btn.restore { background: rgba(52,211,153,0.2); color: #6ee7b7; }
+        #app-radio .radio-sub-item:hover .radio-card-icon-btn { opacity: 1; }
+        @media (hover: none) { #app-radio .radio-sub-item .radio-card-icon-btn { opacity: 1; } }
+        #app-radio .radio-acc-empty { color: rgba(224,242,254,0.6); padding: 10px; }
+
+        /* ════ RADIO — extra organisation + mobile ════ */
+        #app-radio .radio-sub-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; margin-top: 4px; }
+        #app-radio .radio-sub-meta em { font-style: normal; font-size: 0.78em; font-weight: 700; padding: 1px 8px; border-radius: 20px; letter-spacing: .4px; }
+        #app-radio .rsm-chip.p2p { background: rgba(56,189,248,0.2); color: #7dd3fc; border: 1px solid rgba(56,189,248,0.4); }
+        #app-radio .rsm-chip.p2m { background: rgba(251,191,36,0.2); color: #fcd34d; border: 1px solid rgba(251,191,36,0.4); }
+        #app-radio .rsm-chip.vl { background: rgba(167,139,250,0.2); color: #c4b5fd; border: 1px solid rgba(167,139,250,0.4); }
+        #app-radio .rsm-ip { font-family: 'Space Mono', monospace !important; color: rgba(224,242,254,0.75); background: rgba(255,255,255,0.08); }
+        #app-radio .radio-sub-filter-wrap { position: relative; margin: 2px 2px 6px; }
+        #app-radio .radio-sub-filter-wrap .material-icons { position: absolute; left: 9px; top: 50%; transform: translateY(-50%); font-size: 16px; color: #7dd3fc; pointer-events: none; }
+        #app-radio .radio-sub-filter { width: 100%; padding: 7px 10px 7px 32px; border-radius: 9px; border: 1px solid rgba(125,211,252,0.3); background: rgba(255,255,255,0.1); color: #e0f2fe; font-size: 0.85em; outline: none; }
+        #app-radio .radio-sub-filter::placeholder { color: rgba(186,230,253,0.55); }
+        #app-radio .radio-sub-filter:focus { border-color: #7dd3fc; box-shadow: 0 0 0 3px rgba(125,211,252,0.15); }
+        #app-radio .radio-search-wrap { position: sticky; top: 0; z-index: 5; }
+        @media (max-width: 700px) {
+            #app-radio .radio-panel-header { padding: 12px 14px; }
+            #app-radio .radio-panel-title { font-size: 14px; }
+            #app-radio .radio-add-btn { top: 50%; transform: translateY(-50%); padding: 8px 12px; }
+            #app-radio .radio-add-btn:hover { transform: translateY(-50%); }
+            #app-radio .radio-bts-grid { padding: 8px; gap: 7px; }
+            #app-radio .radio-acc-head { padding: 9px 11px; gap: 10px; }
+            #app-radio .radio-acc-head .obb-name { font-size: 0.74em; letter-spacing: 1.2px; }
+            #app-radio .radio-acc-head .obb-count { font-size: 0.68em; }
+            #app-radio .radio-acc-sub { padding: 5px 5px 7px; }
+            #app-radio .radio-sub-item { padding: 9px 8px; gap: 8px; }
+            #app-radio .radio-sub-item:hover { transform: none; }
+            #app-radio .radio-sub-name { font-size: 0.82em; }
+            #app-radio .radio-sub-item .radio-card-icon-btn { width: 30px; height: 30px; font-size: 13px; opacity: 1; }
+            #app-radio .radio-sub-item .radio-card-actions { gap: 5px; }
+            #app-radio .radio-client-list { padding: 8px; }
+            #app-radio .radio-detail-header { height: auto; min-height: 46px; padding: 6px 10px; }
+            #app-radio .radio-detail-header h1 { font-size: 11px; letter-spacing: 1.5px; }
+            #app-radio .radio-header-pulse { display: none; }
+            #app-radio .radio-detail-body { padding: 8px; }
+            #app-radio .rdc-header { flex-direction: column; gap: 10px; padding: 14px; }
+            #app-radio .rdc-header > div:last-child { flex-wrap: wrap; gap: 8px; align-items: center !important; }
+            #app-radio .rdc-header .rdc-link-badge, #app-radio .rdc-header .rdc-actions { margin: 0; }
+            #app-radio .rdc-action-btn { padding: 8px 12px; font-size: 12px; }
+            #app-radio .rdc-table { grid-template-columns: 100px 1fr; }
+            #app-radio .rdc-cell { padding: 9px 10px; word-break: break-word; overflow-wrap: anywhere; }
+            #app-radio .rdc-cell.lbl, #app-radio .rdc-cell.lbl-wide { font-size: 9px; letter-spacing: 1px; }
+            #app-radio .radio-ip-link { max-width: 100%; }
+        }
+
+        /* ════ RADIO — final: BTS button grid -> client list -> full-page detail (no overflow) ════ */
+        #app-radio { max-width: 100%; overflow-x: hidden; }
+        #app-radio .radio-client-panel { height: auto; min-height: 100%; min-width: 0; max-width: 100%; }
+        #app-radio .radio-bts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px; padding: 14px; max-width: 900px; width: 100%; margin: 0 auto; align-content: start; background: transparent; overflow: visible; flex: none; }
+        #app-radio .radio-bts-grid .olt-bts-btn { padding: 14px; min-width: 0; overflow: hidden; }
+        #app-radio .radio-bts-grid .olt-bts-btn .material-icons { display: block; }
+        #app-radio .radio-bts-grid .olt-bts-btn .obb-name { overflow-wrap: anywhere; }
+        #app-radio .radio-client-list { overflow: visible; flex: none; padding: 12px; }
+        #app-radio .radio-client-card { min-width: 0; }
+        #app-radio .radio-client-name { overflow-wrap: anywhere; word-break: break-word; min-width: 0; }
+        #app-radio .radio-back-bar { max-width: 760px; width: 100%; margin: 0 auto; background: transparent; border-bottom: none; padding: 12px 12px 0; }
+        #app-radio .radio-detail-panel { min-width: 0; max-width: 100%; }
+        #app-radio .radio-detail-card { max-width: 100%; }
+        #app-radio .rdc-cell { min-width: 0; overflow-wrap: anywhere; }
+        @media (max-width: 700px) {
+            #app-radio .radio-bts-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; padding: 10px; }
+            #app-radio .radio-bts-grid .olt-bts-btn { padding: 11px 10px; gap: 8px; border-radius: 10px; }
+            #app-radio .radio-bts-grid .olt-bts-btn .material-icons { display: none; }
+            #app-radio .radio-bts-grid .olt-bts-btn .obb-name { font-size: 0.88rem; }
+            #app-radio .radio-bts-grid .olt-bts-btn .obb-count { font-size: 0.7rem; }
+            #app-radio .radio-client-list { padding: 8px 10px 14px; }
+            #app-radio .radio-client-card { padding: 12px 12px 12px 14px; }
+            #app-radio .radio-card-icon-btn { opacity: 1; width: 28px; height: 28px; font-size: 13px; }
+            #app-radio .radio-back-bar { padding: 10px 10px 0; }
+            #app-radio .radio-detail-card { overflow: hidden; }
+        }
+
+        /* ════ RADIO — BTS dropdown (floats over the page) ════ */
+        #app-radio { overflow-x: clip; overflow-y: visible; }
+        #app-radio .radio-bts-cell { position: relative; min-width: 0; }
+        #app-radio .radio-bts-cell .olt-bts-btn { width: 100%; }
+        #app-radio .radio-bts-cell.radio-deleted-cell { grid-column: 1 / -1; }
+        #app-radio .radio-bts-cell.pop-open { z-index: 60; }
+        #app-radio .radio-bts-cell.pop-open > .olt-bts-btn { border-color: #5eead4; box-shadow: 0 0 0 3px rgba(94,234,212,0.35), 0 6px 18px rgba(14,107,168,0.45); }
+        #app-radio .radio-pop { display: none; position: absolute; left: 0; top: calc(100% + 6px); z-index: 70; flex-direction: column; gap: 3px; padding: 6px; overflow-y: auto; overscroll-behavior: contain; background: var(--sb-bg); border: 1px solid rgba(125,211,252,0.4); border-radius: 12px; box-shadow: 0 14px 40px rgba(5,11,30,0.55); animation: radioPopIn .18s ease; }
+        #app-radio .radio-bts-cell.pop-open > .radio-pop { display: flex; }
+        @keyframes radioPopIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+        #app-radio .radio-pop-title { font-family: 'Orbitron', monospace; font-size: 0.62em; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: rgba(125,211,252,0.75); padding: 6px 8px 5px; border-bottom: 1px solid rgba(125,211,252,0.2); margin-bottom: 3px; }
+
+        /* ════ RADIO — light dropdown (names only) ════ */
+        #app-radio .radio-pop { background: #f4f8ff; border: 1.5px solid #93c5fd; box-shadow: 0 14px 36px rgba(30,64,175,0.25); gap: 2px; }
+        #app-radio .radio-pop-title { color: #1d4ed8; border-bottom: 1px solid #bfdbfe; }
+        #app-radio .radio-pop .radio-sub-item { color: #1e3a8a; padding: 9px 11px; border-radius: 8px; background: transparent; border: 1px solid transparent; }
+        #app-radio .radio-pop .radio-sub-item:hover { background: #dbeafe; border-color: #93c5fd; color: #1e3a8a; transform: translateX(3px); }
+        #app-radio .radio-pop .radio-sub-item:hover::before { background: #2563eb; }
+        #app-radio .radio-pop .radio-sub-name { font-weight: 700; font-size: 0.86em; }
+        #app-radio .radio-pop .radio-acc-empty { color: #64748b; }
+        #app-radio .radio-pop .radio-sub-filter-wrap .material-icons { color: #2563eb; }
+        #app-radio .radio-pop .radio-sub-filter { background: #fff; border: 1px solid #93c5fd; color: #1e3a8a; }
+        #app-radio .radio-pop .radio-sub-filter::placeholder { color: #94a3b8; }
+        #app-radio .radio-pop .radio-sub-filter:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,0.15); }
+        @media (max-width: 700px) { #app-radio .radio-pop .radio-sub-item { padding: 11px 11px; } #app-radio .radio-pop .radio-sub-item:hover { transform: none; } }
+
+        /* ════ MOBILE: OLT DOCS sub menu = dropdown (like OLT TASK), page stays visible ════ */
+        @media (max-width: 700px) {
+            .docs-subnav-backdrop, .docs-subnav-backdrop.open { display: none !important; }
+            .docs-mobile-back { display: none !important; position: fixed !important; top: auto !important; right: 14px !important; bottom: calc(var(--mobile-nav-height, 60px) + 10px) !important; z-index: 160; }
+            .docs-mobile-back.show { display: block !important; }
+            .docs-mobile-back button { width: 30px !important; height: 30px !important; }
+            .docs-mobile-back button .material-icons { font-size: 17px !important; }
+            .docs-subnav-close-btn { display: none !important; }
+            .docs-subnav {
+                display: none;
+                position: fixed !important;
+                top: auto !important; right: auto !important;
+                left: var(--docs-menu-left, 8px) !important;
+                bottom: calc(var(--mobile-nav-height, 60px) + 6px) !important;
+                width: min(86vw, 300px) !important;
+                max-height: 62vh !important;
+                padding: 6px !important;
+                border: 1px solid rgba(125,211,252,0.35) !important;
+                border-radius: 12px !important;
+                box-shadow: 0 -6px 24px rgba(0,0,0,0.55) !important;
+                transition: none !important;
+                flex-direction: column;
+            }
+            .docs-subnav.open { display: flex !important; right: auto !important; }
+            .docs-subnav-inner { padding: 0 !important; }
+        }
+
+        /* ════ OLT DOCS — GPON OLT / EPON OLT -> models -> Troubleshoot / Installation (all collapsible) ════ */
+        .docs-sub-group-items { display: none !important; }
+        .docs-sub-group-items.open { display: flex !important; }
+        .docs-sub-group-header { cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 8px; border-radius: 8px; padding: 8px 10px; margin: 1px 0; transition: background .2s ease, color .2s ease; }
+        .docs-sub-group-header::after { content: '\25BC'; font-size: 0.7em; color: rgba(0,255,157,0.45); transition: transform .25s ease; }
+        .docs-sub-group-header:hover { background: rgba(0,212,255,0.1); color: #fff; }
+        .docs-sub-group-header.open { background: rgba(0,212,255,0.14); color: #7dd3fc; }
+        .docs-sub-group-header.open::after { transform: rotate(180deg); color: #7dd3fc; }
+        .docs-sub-group-items { padding-top: 4px !important; }
+
+        /* ════ Desktop: BTS buttons 4 per row (OLT IP Info + BTS INFO) ════ */
+        @media (min-width: 701px) {
+            #d_olt_ips .olt-bts-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            #bts-buttons.olt-bts-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+            #d_olt_ips .olt-bts-btn, #bts-buttons .olt-bts-btn { min-width: 0; }
+        }
+
+        /* ════ DESKTOP: OLT DOCS tree menu (GPON/EPON → model → Troubleshoot/Installation) — polished look ════ */
+        @media (min-width: 701px) {
+            .docs-subnav {
+                margin: 6px 0 4px 10px; padding: 8px 8px 8px 10px;
+                background: linear-gradient(180deg, rgba(8,28,64,0.55) 0%, rgba(6,22,52,0.35) 100%);
+                border: 1px solid rgba(125,211,252,0.16);
+                border-left: 3px solid #00d4ff;
+                border-radius: 12px;
+                box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 4px 14px rgba(0,0,0,0.22);
+            }
+            .docs-subnav-inner { display: flex; flex-direction: column; gap: 6px; }
+            /* Level 1: GPON OLT / EPON OLT */
+            .docs-subnav-header {
+                font-size: 0.68em; letter-spacing: 1.8px; color: #8be9ff;
+                padding: 9px 10px; border-radius: 9px;
+                background: rgba(0,212,255,0.08); border: 1px solid rgba(0,212,255,0.18);
+                transition: background .2s ease, border-color .2s ease, color .2s ease;
+            }
+            .docs-subnav-header:hover { background: rgba(0,212,255,0.16); border-color: rgba(0,212,255,0.4); color: #fff; }
+            .docs-subnav-header.open { background: rgba(0,212,255,0.18); border-color: rgba(0,212,255,0.5); color: #fff; }
+            .docs-subnav-header .sub-arrow {
+                width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0;
+                display: inline-flex; align-items: center; justify-content: center;
+                font-size: 0.7em; color: #00ff9d; background: rgba(0,255,157,0.12);
+            }
+            /* Level 2: models — tree line + cards */
+            .docs-subnav-items { padding: 6px 0 4px 6px; gap: 4px; }
+            .docs-subnav-items.open { margin-left: 8px; border-left: 1px dashed rgba(125,211,252,0.3); padding-left: 10px; }
+            .docs-sub-group { margin: 0; position: relative; }
+            .docs-sub-group::before {
+                content: ''; position: absolute; left: -10px; top: 17px; width: 8px; height: 1px;
+                background: rgba(125,211,252,0.3);
+            }
+            .docs-sub-group-header {
+                font-size: 0.84em; font-weight: 700; letter-spacing: 0.7px; color: #d7f6ff;
+                padding: 8px 10px; margin: 0; border-radius: 8px;
+                background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+                border-left: 3px solid rgba(0,212,255,0.55);
+            }
+            .docs-sub-group-header { font-size: 0.78em; letter-spacing: 0.4px; white-space: nowrap; padding: 8px 8px; gap: 4px; }
+            .docs-sub-group-header > span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+            .docs-sub-group-header:hover { background: rgba(0,212,255,0.14); border-left-color: #00d4ff; color: #fff; }
+            .docs-sub-group-header.open { background: rgba(0,212,255,0.2); border-left-color: #00ff9d; color: #fff; }
+            .docs-sub-group-header::after { color: #00ff9d; opacity: .8; }
+            /* Level 3: leaf links — tidy bullets */
+            .docs-sub-group-items { margin-left: 8px !important; border-left: 1px dashed rgba(125,211,252,0.28) !important; padding: 4px 0 4px 10px !important; gap: 3px !important; }
+            .docs-sub-btn-leaf {
+                font-family: 'Rajdhani', sans-serif !important; font-size: 0.86em !important;
+                letter-spacing: 0.6px !important; font-weight: 700 !important;
+                color: rgba(190,235,255,0.85) !important;
+                padding: 6px 10px 6px 22px !important; border-radius: 7px !important;
+                position: relative; border-left: none !important;
+            }
+            .docs-sub-btn-leaf::before {
+                content: ''; position: absolute; left: 9px; top: 50%; width: 6px; height: 6px;
+                border-radius: 50%; transform: translateY(-50%);
+                background: rgba(0,212,255,0.55); transition: all .18s ease;
+            }
+            .docs-sub-btn-leaf:hover { background: rgba(0,255,157,0.1) !important; color: #fff !important; padding-left: 25px !important; }
+            .docs-sub-btn-leaf:hover::before { background: #00ff9d; box-shadow: 0 0 6px #00ff9d; }
+            .docs-sub-btn-leaf.active { background: rgba(0,255,157,0.16) !important; color: #00ff9d !important; }
+            .docs-sub-btn-leaf.active::before { background: #00ff9d; box-shadow: 0 0 6px #00ff9d; }
+        }
+
+        /* ════ MOBILE: OLT DOCS dropdown — light simple list ════ */
+        @media (max-width: 700px) {
+            .docs-subnav {
+                width: max-content !important; min-width: 150px !important; max-width: min(86vw, 300px) !important;
+                background: #dce9fc !important;
+                border: 1px solid #b4cbef !important;
+                box-shadow: 0 -6px 24px rgba(15,40,100,0.25) !important;
+            }
+            .docs-subnav-inner { gap: 0 !important; }
+            .docs-subnav-header { gap: 14px !important; }
+            .docs-sub-group-header { gap: 12px !important; }
+            .docs-subnav-header {
+                color: #1e3a8a !important; background: transparent !important; border: none !important;
+                border-bottom: 1px solid #b9cdee !important; border-radius: 0 !important;
+                padding: 10px 8px !important; font-size: 0.72em !important;
+            }
+            .docs-subnav-header .sub-arrow { color: #2563eb !important; background: none !important; }
+            .docs-subnav-items.open { margin: 0 !important; border: none !important; padding: 2px 0 6px 8px !important; }
+            .docs-sub-group::before { display: none !important; }
+            .docs-sub-group-header {
+                color: #1e3a8a !important; background: transparent !important; border: none !important;
+                border-radius: 6px !important; padding: 9px 8px !important; font-size: 0.82rem !important; white-space: nowrap !important;
+                font-family: 'Exo 2', sans-serif !important; font-weight: 700 !important; letter-spacing: 0 !important; text-transform: none !important;
+            }
+            .docs-sub-group-header.open { background: #bcd3f6 !important; }
+            .docs-sub-group-header::after { color: #2563eb !important; }
+            .docs-sub-group-items { margin: 0 0 4px 10px !important; padding: 2px 0 2px 10px !important; border-left: 2px solid #9db9e6 !important; flex-direction: column !important; flex-wrap: nowrap !important; gap: 0 !important; }
+            .docs-sub-btn-leaf {
+                flex: none !important; width: 100%; text-align: left !important;
+                background: transparent !important; border: none !important; border-radius: 6px !important;
+                color: #334e8c !important; font-family: 'Exo 2', sans-serif !important;
+                font-size: 0.82rem !important; letter-spacing: 0 !important; font-weight: 700 !important;
+                padding: 7px 8px !important; white-space: nowrap;
+            }
+            .docs-sub-btn-leaf::before { display: none !important; }
+            .docs-sub-btn-leaf.active { background: #c4d8f8 !important; color: #1d4ed8 !important; }
+        }
+    
+        /* ════ DESKTOP: GPON above EPON, bigger fixed-size model rows ════ */
+        @media (min-width: 701px) {
+            .docs-subnav-inner > .docs-subnav-group:last-child { order: 1; }
+            .docs-subnav-inner > .docs-subnav-group:first-child { order: 2; }
+            .docs-subnav-items { gap: 6px !important; }
+            .docs-sub-group-header {
+                font-size: 0.9em !important; letter-spacing: 0.3px !important;
+                height: 38px; min-height: 38px; box-sizing: border-box;
+                padding: 0 10px !important; white-space: nowrap !important;
+            }
+            .docs-sub-group-header > span { flex: 1 1 auto; text-align: left; }
+        }
+    
+        /* ════ DESKTOP: sidebar just wide enough for full model names ════ */
+        @media (min-width: 701px) {
+            .sidebar { width: 240px; min-width: 240px; }
+            .docs-subnav { margin-left: 4px !important; padding: 6px 6px 6px 8px !important; }
+            .docs-subnav-items.open { margin-left: 4px !important; padding-left: 8px !important; }
+            .docs-sub-group-items { margin-left: 4px !important; padding-left: 8px !important; }
+            .docs-sub-group-header { padding: 0 8px !important; }
+        }
+    
+        /* ════ SAVED SCRIPTS modal (mobile): 2-line smaller title so search fits in the same row ════ */
+        #onu-saved-modal .sv-br { display: none; }
+        @media (max-width: 700px) {
+            #onu-saved-modal .sv-br { display: inline; }
+            #onu-saved-modal .onu-modal-head { flex-wrap: nowrap; gap: 6px; padding: 12px 12px; }
+            #onu-saved-modal .onu-modal-head > div:first-child { flex: 0 0 auto; gap: 6px !important; }
+            #onu-saved-modal .onu-modal-head .ch-icon { width: 26px; height: 26px; flex-shrink: 0; }
+            #onu-saved-modal .card-head-text { font-size: 0.6em !important; letter-spacing: 1px !important; line-height: 1.35; white-space: nowrap; }
+            #onu-saved-modal .onu-saved-right { flex: 1 1 0; min-width: 0; gap: 5px !important; }
+            #onu-saved-modal .onu-saved-search { flex: 1 1 0; min-width: 0; max-width: calc(100% - 14px); }
+            #onu-saved-modal .onu-saved-search input { font-size: 0.78em; padding: 6px 6px 6px 26px; min-width: 0; }
+            #onu-saved-modal .onu-saved-search .material-icons { left: 6px; font-size: 14px; }
+            #onu-saved-modal .onu-modal-close { flex: 0 0 auto; }
+        }
+    
+        /* ════ MOBILE: OLT TASK dropdown — same light style/size as OLT DOCS ════ */
+        @media (max-width: 700px) {
+            .nav-group-children {
+                width: max-content !important; min-width: 150px !important; max-width: min(86vw, 300px) !important;
+                background: #dce9fc !important;
+                border: 1px solid #b4cbef !important;
+                box-shadow: 0 -6px 24px rgba(15,40,100,0.25) !important;
+                gap: 0 !important; padding: 3px 6px !important;
+            }
+            .nav-child-btn {
+                background: transparent !important; border: none !important;
+                border-bottom: 1px solid #b9cdee !important; border-radius: 0 !important;
+                color: #1e3a8a !important; padding: 6px 8px !important; gap: 9px !important; font-size: 16px !important;
+                transform: none !important;
+            }
+            .nav-child-btn:last-child { border-bottom: none !important; }
+            .nav-child-btn:hover { background: transparent !important; color: #1e3a8a !important; }
+            .nav-child-btn.active { background: #bcd3f6 !important; color: #1e3a8a !important; border-radius: 6px !important; }
+            .nav-child-btn.active::before { display: none !important; }
+            .nav-child-icon { width: 18px !important; height: 18px !important; }
+            .nav-child-name { font-size: 0.72em !important; letter-spacing: 1.5px !important; color: #1e3a8a !important; white-space: nowrap; }
+        }
+    
+        /* ════ BTS INFO: settings icon -> Edit / Delete ════ */
+        .bts-act { display: inline-flex; align-items: center; justify-content: flex-end; gap: 6px; margin-left: auto; }
+        .bts-act-btns { display: none; align-items: center; gap: 5px; }
+        .bts-act.open .bts-act-btns { display: inline-flex; }
+        .bts-act-btn { width: 28px; height: 28px; padding: 0; border: none; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; font-size: 12px; }
+        .bts-act-btn.edit { background: #dbeafe; color: #1d6fd8; }
+        .bts-act-btn.del { background: #ffe1e4; color: #dc2626; }
+        .bts-gear { width: 28px; height: 28px; padding: 0; border-radius: 50%; border: 1px solid #cbd5e1; background: #f1f5fb; color: #64748b; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: background .2s, color .2s, transform .25s; }
+        .bts-gear .material-icons { font-size: 17px; }
+        .bts-act.open .bts-gear { background: #dbeafe; color: #2563eb; border-color: #93b7ee; transform: rotate(60deg); }
     </style>
 </head>
 <body>
@@ -1149,9 +1850,32 @@ font-weight: 700; font-weight: 600; color: #1a3a5c; font-size: 13px; }
                         <button onclick="closeDocsSubnav()" aria-label="Close">✕</button>
                     </div>
                     <div class="docs-subnav-inner">
-                    <div class="docs-subnav-group">
-                        <div class="docs-subnav-header active" onclick="showDocsContent('d_olt_ips', this); closeDocsSubnav();">
-                            <span>📡 OLT IPs</span>
+<div class="docs-subnav-group">
+                        <div class="docs-subnav-header" onclick="toggleDocsSub(this)">
+                            <span>🟢 EPON OLT</span><span class="sub-arrow">▼</span>
+                        </div>
+                        <div class="docs-subnav-items">
+                            <div class="docs-sub-group">
+                                <div class="docs-sub-group-header" onclick="toggleSubGroup(this)"><span>EPON UTSTAR</span></div>
+                                <div class="docs-sub-group-items">
+                                    <button class="docs-sub-btn docs-sub-btn-leaf" onclick="showDocsContent('d_utstar_troubleshoot', this); closeDocsSubnav();">Troubleshoot</button>
+                                    <button class="docs-sub-btn docs-sub-btn-leaf" onclick="showDocsContent('d_utstar_installation', this); closeDocsSubnav();">Installation</button>
+                                </div>
+                            </div>
+                            <div class="docs-sub-group">
+                                <div class="docs-sub-group-header" onclick="toggleSubGroup(this)"><span>EPON PHYHOME</span></div>
+                                <div class="docs-sub-group-items">
+                                    <button class="docs-sub-btn docs-sub-btn-leaf" onclick="showDocsContent('d_phyhome_troubleshoot', this); closeDocsSubnav();">Troubleshoot</button>
+                                    <button class="docs-sub-btn docs-sub-btn-leaf" onclick="showDocsContent('d_phyhome_installation', this); closeDocsSubnav();">Installation</button>
+                                </div>
+                            </div>
+                            <div class="docs-sub-group">
+                                <div class="docs-sub-group-header" onclick="toggleSubGroup(this)"><span>EPON FHNET</span></div>
+                                <div class="docs-sub-group-items">
+                                    <button class="docs-sub-btn docs-sub-btn-leaf" onclick="showDocsContent('d_fhnet_troubleshoot', this); closeDocsSubnav();">Troubleshoot</button>
+                                    <button class="docs-sub-btn docs-sub-btn-leaf" onclick="showDocsContent('d_fhnet_installation', this); closeDocsSubnav();">Installation</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="docs-subnav-group">
@@ -1160,52 +1884,24 @@ font-weight: 700; font-weight: 600; color: #1a3a5c; font-size: 13px; }
                         </div>
                         <div class="docs-subnav-items">
                             <div class="docs-sub-group">
-                                <div class="docs-sub-group-header"><span>CDATA GPON 16</span></div>
+                                <div class="docs-sub-group-header" onclick="toggleSubGroup(this)"><span>CDATA GPON 16</span></div>
                                 <div class="docs-sub-group-items">
                                     <button class="docs-sub-btn docs-sub-btn-leaf" onclick="showDocsContent('d_cdata_troubleshoot', this); closeDocsSubnav();">Troubleshoot</button>
                                     <button class="docs-sub-btn docs-sub-btn-leaf" onclick="showDocsContent('d_cdata_installation', this); closeDocsSubnav();">Installation</button>
                                 </div>
                             </div>
                             <div class="docs-sub-group">
-                                <div class="docs-sub-group-header"><span>VSOL / ATOP</span></div>
+                                <div class="docs-sub-group-header" onclick="toggleSubGroup(this)"><span>VSOL / ATOP</span></div>
                                 <div class="docs-sub-group-items">
                                     <button class="docs-sub-btn docs-sub-btn-leaf" onclick="showDocsContent('d_vsol_troubleshoot', this); closeDocsSubnav();">Troubleshoot</button>
                                     <button class="docs-sub-btn docs-sub-btn-leaf" onclick="showDocsContent('d_vsol_installation', this); closeDocsSubnav();">Installation</button>
                                 </div>
                             </div>
                             <div class="docs-sub-group">
-                                <div class="docs-sub-group-header"><span>CDATA GPON 8</span></div>
+                                <div class="docs-sub-group-header" onclick="toggleSubGroup(this)"><span>CDATA GPON 8</span></div>
                                 <div class="docs-sub-group-items">
                                     <button class="docs-sub-btn docs-sub-btn-leaf" onclick="showDocsContent('d_gpon8_troubleshoot', this); closeDocsSubnav();">Troubleshoot</button>
                                     <button class="docs-sub-btn docs-sub-btn-leaf" onclick="showDocsContent('d_gpon8_installation', this); closeDocsSubnav();">Installation</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="docs-subnav-group">
-                        <div class="docs-subnav-header" onclick="toggleDocsSub(this)">
-                            <span>🟢 EPON OLT</span><span class="sub-arrow">▼</span>
-                        </div>
-                        <div class="docs-subnav-items">
-                            <div class="docs-sub-group">
-                                <div class="docs-sub-group-header"><span>EPON UTSTAR</span></div>
-                                <div class="docs-sub-group-items">
-                                    <button class="docs-sub-btn docs-sub-btn-leaf" onclick="showDocsContent('d_utstar_troubleshoot', this); closeDocsSubnav();">Troubleshoot</button>
-                                    <button class="docs-sub-btn docs-sub-btn-leaf" onclick="showDocsContent('d_utstar_installation', this); closeDocsSubnav();">Installation</button>
-                                </div>
-                            </div>
-                            <div class="docs-sub-group">
-                                <div class="docs-sub-group-header"><span>EPON PHYHOME</span></div>
-                                <div class="docs-sub-group-items">
-                                    <button class="docs-sub-btn docs-sub-btn-leaf" onclick="showDocsContent('d_phyhome_troubleshoot', this); closeDocsSubnav();">Troubleshoot</button>
-                                    <button class="docs-sub-btn docs-sub-btn-leaf" onclick="showDocsContent('d_phyhome_installation', this); closeDocsSubnav();">Installation</button>
-                                </div>
-                            </div>
-                            <div class="docs-sub-group">
-                                <div class="docs-sub-group-header"><span>EPON FHNET</span></div>
-                                <div class="docs-sub-group-items">
-                                    <button class="docs-sub-btn docs-sub-btn-leaf" onclick="showDocsContent('d_fhnet_troubleshoot', this); closeDocsSubnav();">Troubleshoot</button>
-                                    <button class="docs-sub-btn docs-sub-btn-leaf" onclick="showDocsContent('d_fhnet_installation', this); closeDocsSubnav();">Installation</button>
                                 </div>
                             </div>
                         </div>
@@ -1242,6 +1938,7 @@ font-weight: 700; font-weight: 600; color: #1a3a5c; font-size: 13px; }
         <div class="sidebar-footer">
             <div class="author-name">Ahsanul Kabir</div>
             <div class="author-role">Link3 Technologies Ltd.</div>
+            <div id="cloud-status" class="cloud-status" title="Firebase cloud sync status">☁ Local only</div>
         </div>
     </aside>
     <script>
@@ -1360,16 +2057,13 @@ font-weight: 700; font-weight: 600; color: #1a3a5c; font-size: 13px; }
                 <div class="onu-modal-head">
                     <div style="display:flex;align-items:center;gap:10px">
                         <div class="ch-icon chi-v"><i class="material-icons" style="font-size:16px">bookmarks</i></div>
-                        <span class="card-head-text">Saved Scripts (<span id="onu-saved-count">0</span>)</span>
+                        <span class="card-head-text">Saved<br class="sv-br"> Scripts (<span id="onu-saved-count">0</span>)</span>
                     </div>
-                    <div style="display:flex;gap:6px;align-items:center">
-                        <button class="btn" style="padding:5px 10px;font-size:0.72em;background:rgba(125,211,252,0.14);color:#7dd3fc;box-shadow:none" onclick="exportOnuSaved()">
-                            <span class="material-icons" style="font-size:14px">download</span> Export
-                        </button>
-                        <label class="btn" style="padding:5px 10px;font-size:0.72em;background:rgba(125,211,252,0.14);color:#7dd3fc;box-shadow:none;margin:0;cursor:pointer">
-                            <span class="material-icons" style="font-size:14px">upload</span> Import
-                            <input type="file" accept="application/json" onchange="importOnuSaved(this)" style="display:none">
-                        </label>
+                    <div class="onu-saved-right" style="display:flex;gap:6px;align-items:center;flex:1;justify-content:flex-end;min-width:0">
+                        <div class="onu-saved-search">
+                            <span class="material-icons">search</span>
+                            <input type="text" id="onu-saved-search" placeholder="Search saved scripts..." autocomplete="off" oninput="renderOnuSaved()">
+                        </div>
                         <button class="onu-modal-close" onclick="closeOnuSavedModal()"><span class="material-icons">close</span></button>
                     </div>
                 </div>
@@ -1464,51 +2158,51 @@ font-weight: 700; font-weight: 600; color: #1a3a5c; font-size: 13px; }
         <!-- APP 3: OLT DOCS -->
         <div id="app-docs" class="app-wrapper">
             <div class="docs-mobile-back">
-                <button type="button" onclick="openDocsSubnav()" aria-label="Docs menu" title="Docs menu"><span class="material-icons">arrow_back</span><span>DOCS MENU</span></button>
+                <button type="button" onclick="docsGoBack()" aria-label="Back" title="Back"><span class="material-icons">arrow_back</span><span>BACK</span></button>
             </div>
             <div class="docs-content-scroll" id="docs-content-scroll">
                 <!-- OLT IPs -->
                 <div id="d_olt_ips" class="docs-tab-content active">
                     <div class="docs-card">
-                        <div class="docs-card-header"><h2 class="docs-card-title">OLT IP Info</h2></div>
-                        <div class="olt-filter-wrap">
-                            <label class="olt-filter-label">Filter by BTS Location</label>
-                            <select class="docs-olt-select" id="docs-olt-bts-select" onchange="filterDocsOltIps()">
-                                <option value="all">All BTS Info</option>
-                                <option value="Malek Mansion BTS">Malek Mansion BTS</option>
-                                <option value="Dilkusha BTS">Dilkusha BTS</option>
-                                <option value="Jatrabari BTS">Jatrabari BTS</option>
-                                <option value="Wari BTS">Wari BTS</option>
-                                <option value="Segunbagicha BTS">Segunbagicha BTS</option>
-                                <option value="Eskaton BTS">Eskaton BTS</option>
-                                <option value="Imamganj BTS">Imamganj BTS</option>
-                                <option value="Shahjahanpur BTS">Shahjahanpur BTS</option>
-                            </select>
+                        <div class="docs-card-header"><h2 class="docs-card-title">OLT IP Info</h2>
+                            <div class="olt-tools">
+                                <button type="button" class="olt-tool-btn add" id="olt-tool-add" title="Add" onclick="oltToolAdd()"><i class="fa-solid fa-plus"></i> Add</button>
+                                <button type="button" class="olt-tool-btn edit" id="olt-tool-edit" title="Edit" onclick="oltToolEdit()"><i class="fa-solid fa-pen"></i> Edit</button>
+                                <button type="button" class="olt-tool-btn del" id="olt-tool-del" title="Delete" onclick="oltToolDel()"><i class="fa-solid fa-trash"></i> Delete</button>
+                            </div>
                         </div>
+                        <div id="olt-mode-hint" class="olt-mode-hint" style="display:none"></div>
+                        <div id="olt-bts-buttons" class="olt-bts-grid"></div>
+                        <div id="olt-bts-detail" style="display:none">
+                            <div class="olt-detail-head">
+                                <button type="button" class="olt-back-btn" onclick="backToOltBtsList()"><span class="material-icons">arrow_back</span> Back</button>
+                                <span class="olt-detail-title" id="olt-detail-title"></span>
+                            </div>
                         <table class="docs-olt-table">
                             <thead><tr><th>OLT Name</th><th>OLT IP</th><th>Uplink Port</th></tr></thead>
                             <tbody id="docs-olt-ip-tbody">
-                                <tr data-bts="Malek Mansion BTS"><td>Malek_CDATA_1</td><td>10.49.10.162</td><td>100.64.167.14 [Eth1/31]</td></tr>
-                                <tr data-bts="Malek Mansion BTS"><td>Malek_VSOL_2</td><td>10.49.10.166</td><td>100.64.167.14 [Eth1/7]</td></tr>
-                                <tr data-bts="Malek Mansion BTS"><td>Malek_ATOP_3</td><td>10.49.15.138</td><td>100.64.167.14 [Eth1/13]</td></tr>
-                                <tr data-bts="Malek Mansion BTS"><td>Malek_VSOL_4</td><td>10.49.15.126</td><td>100.64.167.14 [Eth1/8]</td></tr>
-                                <tr data-bts="Dilkusha BTS"><td>Dilkusha_CDATA_1</td><td>10.49.8.26</td><td>10.48.2.82 [Gi0/6]</td></tr>
-                                <tr data-bts="Jatrabari BTS"><td>Jatrabari_ATOP_1</td><td>10.49.9.62</td><td>100.64.168.58 [GE0/0/15]</td></tr>
-                                <tr data-bts="Wari BTS"><td>Wari_CDATA_1</td><td>10.49.8.84</td><td>100.64.168.66 [GE0/0/2]</td></tr>
-                                <tr data-bts="Wari BTS"><td>Wari_ATOP_2</td><td>10.49.8.85</td><td>100.64.168.66 [XGE0/0/2]</td></tr>
-                                <tr data-bts="Segunbagicha BTS"><td>Segun_CDATA_1</td><td>10.49.10.130</td><td>10.66.9.250 [Eth1/29]</td></tr>
-                                <tr data-bts="Segunbagicha BTS"><td>Segun_CDATA_2</td><td>10.49.10.131</td><td>10.66.9.250 [Eth1/43]</td></tr>
-                                <tr data-bts="Segunbagicha BTS"><td>Segun_CDATA_3</td><td>10.49.10.132</td><td>10.66.9.250 [Eth1/33]</td></tr>
-                                <tr data-bts="Segunbagicha BTS"><td>Segun_CDATA_18</td><td>10.49.10.150</td><td>10.66.9.250 [Eth1/27]</td></tr>
-                                <tr data-bts="Segunbagicha BTS"><td>Segun_CDATA_19</td><td>10.49.10.151</td><td>10.66.9.250 [Eth1/28]</td></tr>
-                                <tr data-bts="Segunbagicha BTS"><td>Segun_CDATA_20</td><td>10.49.10.152</td><td>10.66.9.250 [Eth1/32]</td></tr>
-                                <tr data-bts="Eskaton BTS"><td>Eskaton_CDATA_1</td><td>10.49.10.172</td><td>10.66.1.250 [Eth1/18]</td></tr>
-                                <tr data-bts="Eskaton BTS"><td>Eskaton_CDATA_2</td><td>10.49.10.171</td><td>10.66.1.250 [Eth1/21]</td></tr>
-                                <tr data-bts="Eskaton BTS"><td>Eskaton_CDATA_3</td><td>10.49.10.173</td><td>10.66.1.250 [Eth1/19]</td></tr>
-                                <tr data-bts="Imamganj BTS"><td>Imamgonj_VSOL_1</td><td>10.49.8.94</td><td>10.66.61.2 [Gi0/42]</td></tr>
+                                <tr data-bts="Malek Mansion BTS"><td>Malek_CDATA_1</td><td>10.49.10.162</td><td>100.64.167.14 <span class="olt-port">[Eth1/31]</span></td></tr>
+                                <tr data-bts="Malek Mansion BTS"><td>Malek_VSOL_2</td><td>10.49.10.166</td><td>100.64.167.14 <span class="olt-port">[Eth1/7]</span></td></tr>
+                                <tr data-bts="Malek Mansion BTS"><td>Malek_ATOP_3</td><td>10.49.15.138</td><td>100.64.167.14 <span class="olt-port">[Eth1/13]</span></td></tr>
+                                <tr data-bts="Malek Mansion BTS"><td>Malek_VSOL_4</td><td>10.49.15.126</td><td>100.64.167.14 <span class="olt-port">[Eth1/8]</span></td></tr>
+                                <tr data-bts="Dilkusha BTS"><td>Dilkusha_CDATA_1</td><td>10.49.8.26</td><td>10.48.2.82 <span class="olt-port">[Gi0/6]</span></td></tr>
+                                <tr data-bts="Jatrabari BTS"><td>Jatrabari_ATOP_1</td><td>10.49.9.62</td><td>100.64.168.58 <span class="olt-port">[GE0/0/15]</span></td></tr>
+                                <tr data-bts="Wari BTS"><td>Wari_CDATA_1</td><td>10.49.8.84</td><td>100.64.168.66 <span class="olt-port">[GE0/0/2]</span></td></tr>
+                                <tr data-bts="Wari BTS"><td>Wari_ATOP_2</td><td>10.49.8.85</td><td>100.64.168.66 <span class="olt-port">[XGE0/0/2]</span></td></tr>
+                                <tr data-bts="Segunbagicha BTS"><td>Segun_CDATA_1</td><td>10.49.10.130</td><td>10.66.9.250 <span class="olt-port">[Eth1/29]</span></td></tr>
+                                <tr data-bts="Segunbagicha BTS"><td>Segun_CDATA_2</td><td>10.49.10.131</td><td>10.66.9.250 <span class="olt-port">[Eth1/43]</span></td></tr>
+                                <tr data-bts="Segunbagicha BTS"><td>Segun_CDATA_3</td><td>10.49.10.132</td><td>10.66.9.250 <span class="olt-port">[Eth1/33]</span></td></tr>
+                                <tr data-bts="Segunbagicha BTS"><td>Segun_CDATA_18</td><td>10.49.10.150</td><td>10.66.9.250 <span class="olt-port">[Eth1/27]</span></td></tr>
+                                <tr data-bts="Segunbagicha BTS"><td>Segun_CDATA_19</td><td>10.49.10.151</td><td>10.66.9.250 <span class="olt-port">[Eth1/28]</span></td></tr>
+                                <tr data-bts="Segunbagicha BTS"><td>Segun_CDATA_20</td><td>10.49.10.152</td><td>10.66.9.250 <span class="olt-port">[Eth1/32]</span></td></tr>
+                                <tr data-bts="Eskaton BTS"><td>Eskaton_CDATA_1</td><td>10.49.10.172</td><td>10.66.1.250 <span class="olt-port">[Eth1/18]</span></td></tr>
+                                <tr data-bts="Eskaton BTS"><td>Eskaton_CDATA_2</td><td>10.49.10.171</td><td>10.66.1.250 <span class="olt-port">[Eth1/21]</span></td></tr>
+                                <tr data-bts="Eskaton BTS"><td>Eskaton_CDATA_3</td><td>10.49.10.173</td><td>10.66.1.250 <span class="olt-port">[Eth1/19]</span></td></tr>
+                                <tr data-bts="Imamganj BTS"><td>Imamgonj_VSOL_1</td><td>10.49.8.94</td><td>10.66.61.2 <span class="olt-port">[Gi0/42]</span></td></tr>
                                 <tr data-bts="Shahjahanpur BTS"><td>Shahjhnpr_CDATA_1</td><td>10.49.11.254</td><td>-</td></tr>
                             </tbody>
                         </table>
+                        </div>
                     </div>
                 </div>
                 <!-- CDATA GPON Troubleshoot -->
@@ -1786,21 +2480,34 @@ system\configure# pon on 1 1</code>
             <div class="radio-client-panel">
                 <div class="radio-panel-header">
                     <div class="radio-panel-bts" id="r-panel-bts-name">MALEK BTS</div>
-                    <div class="radio-panel-title">Clients</div>
+                    <div class="radio-panel-title">Radio Client Database</div>
                     <div class="radio-panel-count" id="r-panel-count">0 CLIENTS</div>
-                    <button class="radio-add-btn" onclick="openRadioModal('add')"><i class="fa-solid fa-plus"></i> Add</button>
+                    <div class="radio-tools">
+                        <button type="button" class="olt-tool-btn add" id="radio-tool-add" title="Add" onclick="radioToolAdd()"><i class="fa-solid fa-plus"></i> Add</button>
+                        <button type="button" class="olt-tool-btn edit" id="radio-tool-edit" title="Edit" onclick="radioToolEdit()"><i class="fa-solid fa-pen"></i> Edit</button>
+                        <button type="button" class="olt-tool-btn del" id="radio-tool-del" title="Delete" onclick="radioToolDel()"><i class="fa-solid fa-trash"></i> Delete</button>
+                    </div>
                 </div>
                 <div class="radio-search-wrap">
                     <input class="radio-search" type="text" id="radioClientSearch" placeholder="🔍  Search ALL BTS radios..." oninput="radioGlobalSearch()">
                 </div>
-                <div class="radio-bts-tabs" id="radioBtsTabs">
-
+                <div id="radio-mode-hint" class="olt-mode-hint" style="display:none"></div>
+                <div class="radio-bts-grid olt-bts-grid" id="radioBtsTabs"></div>
+                                <div class="radio-back-bar" id="radioBackBar" style="display:none">
+                    <button type="button" class="olt-back-btn" onclick="backToRadioBtsList()"><span class="material-icons">arrow_back</span> Back</button>
+                    <span class="olt-detail-title" id="radioBackTitle"></span>
                 </div>
-                <div class="radio-client-list" id="radioClientList"></div>
+                <div class="radio-client-list" id="radioClientList" style="display:none"></div>
             </div>
             <div class="radio-detail-panel">
                 <div class="radio-detail-header">
+                    <div class="radio-tools radio-detail-tools">
+                        <button type="button" class="olt-tool-btn add" title="Add" onclick="radioDetailAdd()"><i class="fa-solid fa-plus"></i> Add</button>
+                        <button type="button" class="olt-tool-btn edit" title="Edit" onclick="radioDetailEdit()"><i class="fa-solid fa-pen"></i> Edit</button>
+                        <button type="button" class="olt-tool-btn del" title="Delete" onclick="radioDetailDel()"><i class="fa-solid fa-trash"></i> Delete</button>
+                    </div>
                     <div style="display:flex;align-items:center;gap:14px;">
+                        <button type="button" class="olt-back-btn radio-detail-back" onclick="showRadioWelcome()"><span class="material-icons">arrow_back</span> Back</button>
                         <div class="radio-header-pulse"></div>
                         <div>
                             <h1>MOTIJHEEL ZONE RADIO</h1>
@@ -1830,7 +2537,13 @@ system\configure# pon on 1 1</code>
                     <div class="radio-form-row full">
                         <div class="radio-form-group">
                             <label>BTS</label>
-                            <select id="rf-bts"></select>
+                            <select id="rf-bts" onchange="rfToggleNewBts()"></select>
+                        </div>
+                    </div>
+                    <div class="radio-form-row full" id="rf-newbts-row" style="display:none">
+                        <div class="radio-form-group">
+                            <label>New BTS Name *</label>
+                            <input type="text" id="rf-newbts" placeholder="e.g. Gulshan BTS">
                         </div>
                     </div>
                     <div class="radio-form-row full">
@@ -1924,27 +2637,24 @@ system\configure# pon on 1 1</code>
                 <div style="font-family:'Orbitron',monospace;font-size:1.7em;font-weight:900;letter-spacing:4px;background:linear-gradient(90deg,#f59e0b 0%,#ef4444 50%,#ec4899 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">BTS INFO</div>
                 <div class="app-subtitle">Router &amp; Switch IP Directory</div>
             </div>
-            <div class="card" style="margin-bottom:14px;border-top:3px solid #f59e0b;">
-                <div class="card-head">
-                    <div class="ch-icon" style="background:rgba(251,191,36,0.15);color:#fbbf24;width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;">
-                        <i class="material-icons" style="font-size:16px">search</i>
+            <div class="docs-card" id="bts-main-card">
+                <div class="docs-card-header"><h2 class="docs-card-title">BTS Info</h2>
+                    <div class="olt-tools">
+                        <button type="button" class="olt-tool-btn add" id="bts-tool-add" title="Add" onclick="btsToolAdd()"><i class="fa-solid fa-plus"></i> Add</button>
+                        <button type="button" class="olt-tool-btn edit" id="bts-tool-edit" title="Edit" onclick="btsToolEdit()"><i class="fa-solid fa-pen"></i> Edit</button>
+                        <button type="button" class="olt-tool-btn del" id="bts-tool-del" title="Delete" onclick="btsToolDel()"><i class="fa-solid fa-trash"></i> Delete</button>
                     </div>
-                    <span class="card-head-text">Search by BTS Name</span>
                 </div>
-                <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-                    <div style="flex:1;min-width:200px;position:relative;">
-                        <select id="bts-select-dropdown" onchange="selectBtsFromDropdown(this.value)" style="width:100%;padding:8px 14px;border-radius:9px;border:1.5px solid #fde68a;background:#fffbeb;color:#1e1b4b;font-family:'Exo 2',sans-serif;font-size:0.88em;cursor:pointer;outline:none;appearance:none;-webkit-appearance:none;">
-                            <option value="">— Select a BTS —</option>
-                        </select>
-                        <span style="position:absolute;right:12px;top:50%;transform:translateY(-50%);pointer-events:none;color:#f59e0b;">▼</span>
-                    </div>
-                    <button onclick="clearBtsSearch()" style="padding:8px 16px;border-radius:9px;border:none;background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;font-family:'Orbitron',monospace;font-size:0.68em;font-weight:700;letter-spacing:1px;cursor:pointer;">CLEAR</button>
-                    <button onclick="openBtsModal('add')" style="padding:8px 16px;border-radius:9px;border:none;background:linear-gradient(135deg,#10b981,#059669);color:#fff;font-family:'Orbitron',monospace;font-size:0.68em;font-weight:700;letter-spacing:1px;cursor:pointer;display:flex;align-items:center;gap:6px;"><i class="fa-solid fa-plus"></i> ADD</button>
-                </div>
-                <div id="bts-search-result-count" style="margin-top:6px;font-size:0.78em;color:#a78bfa;font-family:'Rajdhani',sans-serif;letter-spacing:0.5px;"></div>
+                <div id="bts-mode-hint" class="olt-mode-hint" style="display:none"></div>
+            <!-- BTS buttons (tab style, same as OLT IP) -->
+            <div id="bts-buttons" class="olt-bts-grid"></div>
+            <div id="bts-detail" style="display:none">
+            <div class="olt-detail-head">
+                <button type="button" class="olt-back-btn" onclick="backToBtsList()"><span class="material-icons">arrow_back</span> Back</button>
+                <span class="olt-detail-title" id="bts-detail-title"></span>
             </div>
             <!-- Compact BTS table -->
-            <div class="card" style="border-top:3px solid #ef4444;padding:0;overflow:hidden;">
+            <div class="card" id="bts-table-card" style="border-top:3px solid #ef4444;padding:0;overflow:hidden;">
                 <div style="overflow-x:auto;">
                     <table id="bts-info-table" style="width:100%;border-collapse:collapse;font-family:'Exo 2',sans-serif;">
                         <thead>
@@ -1953,14 +2663,15 @@ system\configure# pon on 1 1</code>
                                 <th style="padding:9px 12px;text-align:left;font-family:'Orbitron',monospace;font-size:0.6em;letter-spacing:2px;color:#a78bfa;font-weight:700;border-bottom:2px solid rgba(167,139,250,0.3);">BTS NAME</th>
                                 <th style="padding:9px 12px;text-align:left;font-family:'Orbitron',monospace;font-size:0.6em;letter-spacing:2px;color:#38bdf8;font-weight:700;border-bottom:2px solid rgba(167,139,250,0.3);">DEVICE TYPE</th>
                                 <th style="padding:9px 12px;text-align:left;font-family:'Orbitron',monospace;font-size:0.6em;letter-spacing:2px;color:#fbbf24;font-weight:700;border-bottom:2px solid rgba(167,139,250,0.3);">IP ADDRESS</th>
-                                <th style="padding:9px 12px;text-align:center;font-family:'Orbitron',monospace;font-size:0.6em;letter-spacing:2px;color:#a78bfa;font-weight:700;border-bottom:2px solid rgba(167,139,250,0.3);">ACTIONS</th>
-                            </tr>
+                                </tr>
                         </thead>
                         <tbody id="bts-table-body"></tbody>
                     </table>
                 </div>
             </div>
             <div id="bts-cards-mobile"></div>
+            </div>
+            </div>
         </div>
 
         <!-- BTS INFO ADD/EDIT MODAL -->
@@ -1992,6 +2703,58 @@ system\configure# pon on 1 1</code>
                 <div class="radio-modal-footer">
                     <button class="radio-modal-btn cancel" onclick="closeBtsModal()">Cancel</button>
                     <button class="radio-modal-btn save" style="background:linear-gradient(135deg,#f59e0b,#ef4444);" onclick="saveBtsDevice()"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- OLT IP INFO ADD/EDIT MODAL -->
+        <div class="radio-modal-overlay" id="oltIpModalOverlay">
+            <div class="radio-modal">
+                <div class="radio-modal-header" style="background:linear-gradient(135deg,#0b3d91 0%,#0a8f8f 100%);">
+                    <h3 id="oltIpModalTitle">ADD OLT</h3>
+                    <button class="radio-modal-close" onclick="closeOltIpModal()"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="radio-modal-body">
+                    <div class="radio-form-row full">
+                        <div class="radio-form-group">
+                            <label>BTS Name *</label>
+                            <input type="text" id="of-bts" list="of-bts-list" placeholder="e.g. Malek Mansion BTS">
+                            <datalist id="of-bts-list"></datalist>
+                        </div>
+                    </div>
+                    <div id="of-olt-fields">
+                        <div class="radio-form-row">
+                            <div class="radio-form-group"><label>OLT Name *</label><input type="text" id="of-name" placeholder="e.g. Malek_CDATA_1"></div>
+                            <div class="radio-form-group"><label>OLT IP *</label><input type="text" id="of-ip" placeholder="e.g. 10.49.10.162"></div>
+                        </div>
+                        <div class="radio-form-row">
+                            <div class="radio-form-group"><label>Uplink IP</label><input type="text" id="of-uplink" placeholder="e.g. 100.64.167.14"></div>
+                            <div class="radio-form-group"><label>Uplink Port</label><input type="text" id="of-port" placeholder="e.g. Eth1/31"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="radio-modal-footer">
+                    <button class="radio-modal-btn cancel" onclick="closeOltIpModal()">Cancel</button>
+                    <button class="radio-modal-btn save" style="background:linear-gradient(135deg,#0b3d91,#0a8f8f);" onclick="saveOltIpModal()"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- GENERIC RENAME MODAL -->
+        <div class="radio-modal-overlay" id="nameModalOverlay">
+            <div class="radio-modal">
+                <div class="radio-modal-header" style="background:linear-gradient(135deg,#0b3d91 0%,#0a8f8f 100%);">
+                    <h3 id="nameModalTitle">EDIT BTS NAME</h3>
+                    <button class="radio-modal-close" onclick="closeNameModal()"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="radio-modal-body">
+                    <div class="radio-form-row full">
+                        <div class="radio-form-group"><label>BTS Name *</label><input type="text" id="nm-input" placeholder="BTS name" onkeydown="if(event.key==='Enter')saveNameModal()"></div>
+                    </div>
+                </div>
+                <div class="radio-modal-footer">
+                    <button class="radio-modal-btn cancel" onclick="closeNameModal()">Cancel</button>
+                    <button class="radio-modal-btn save" style="background:linear-gradient(135deg,#0b3d91,#0a8f8f);" onclick="saveNameModal()"><i class="fa-solid fa-floppy-disk"></i> Save</button>
                 </div>
             </div>
         </div>
@@ -2141,10 +2904,25 @@ system\configure# pon on 1 1</code>
         document.getElementById(id).classList.add('active');
         document.querySelectorAll('.nav-btn, .nav-child-btn, .nav-group-header').forEach(b => b.classList.remove('active'));
         if (btn) btn.classList.add('active');
+        // every tab starts again from its first page
+        if (id === 'app-bts') backToBtsList();
+        closeGears(document.getElementById(id));
+        mc.scrollTop = 0;
     }
 
    function toggleOltGroup(header) {
+    // Coming from another tab (OLT DOCS / RADIO / BTS INFO): show the default ONU ADD page first
+    const activeApp = document.querySelector('.app-wrapper.active');
+    const inOltTask = activeApp && (activeApp.id === 'app-onu' || activeApp.id === 'app-lp');
+    if (!inOltTask) {
+        switchTab('app-onu', document.getElementById('nav-onu'));
+        header.classList.add('active');
+    }
     document.body.classList.add('olt-user-open');
+    try { // mobile: align the dropdown with the OLT TASK button
+        const r = header.getBoundingClientRect();
+        document.documentElement.style.setProperty('--olt-menu-left', Math.max(6, Math.min(r.left, window.innerWidth - 176)) + 'px');
+    } catch (e) {}
     const children = document.getElementById('olt-children');
     const isOpen = children.classList.contains('open');
     children.classList.toggle('open', !isOpen);
@@ -2157,13 +2935,19 @@ system\configure# pon on 1 1</code>
 
     function toggleDocsGroup(header) {
         const subnav = document.getElementById('docs-subnav');
-        const isMobile = window.innerWidth <= 700;
-        const isOpen = !isMobile && subnav.classList.contains('open') && document.body.classList.contains('docs-mode');
-        if (isOpen) {
-            subnav.classList.remove('open');
+        const inDocs = document.body.classList.contains('docs-mode');
+        const isOpen = subnav.classList.contains('open');
+        if (inDocs && isOpen) {                       // open -> close
+            closeDocsSubnav();
             header.classList.remove('open');
-            document.getElementById('docs-subnav-backdrop')?.classList.remove('open');
-        } else {
+        } else if (inDocs) {                          // already on OLT DOCS: just show the sub menu again
+            document.getElementById('olt-children').classList.remove('open');
+            document.getElementById('nav-olt-group').classList.remove('open');
+            ensureDocsSubnavPlacement();
+            showDocsContent('d_olt_ips', null);       // default page again
+            openDocsSubnav();
+            header.classList.add('open');
+        } else {                                      // coming from another tab: OLT IP Info page + sub menu
             document.getElementById('olt-children').classList.remove('open');
             document.getElementById('nav-olt-group').classList.remove('open');
             switchToDocsTab(header);
@@ -2183,16 +2967,11 @@ system\configure# pon on 1 1</code>
         mc.style.padding = '0';
         mc.style.display = 'flex';
         mc.style.flexDirection = 'column';
-        // On mobile open as drawer, on desktop open inline
+        // default page = OLT IP Info, and the sub menu opens together with it
         ensureDocsSubnavPlacement();
-        const subnav = document.getElementById('docs-subnav');
-        if (window.innerWidth <= 700) {
-            // Mobile: land directly on OLT IPs; the back button reopens the docs menu
-            closeDocsSubnav();
-            showDocsContent('d_olt_ips', null);
-        } else {
-            subnav.classList.add('open');
-        }
+        showDocsContent('d_olt_ips', null);
+        closeGears(document.getElementById('app-docs'));
+        openDocsSubnav();
         setupAllSearches();
         initEditableDocsSections();
     }
@@ -2214,6 +2993,7 @@ mc.style.overflowY = 'auto';
 mc.style.overflowX = 'hidden';
 mc.style.display = 'block';
 initRadio();
+        resetRadioView();
     }
 
     // ════ RADIO FUNCTIONS ════
@@ -2229,56 +3009,142 @@ initRadio();
         populateRadioBtsSelect();
     }
 
+    let radioOpenId = null; // null = BTS button grid, else BTS id (or RADIO_DELETED_ID) whose client list is shown
+
+    let radioPopId = null; // BTS id (or RADIO_DELETED_ID) whose dropdown is open
+
+    function radioPopItemsHtml(id) {
+        if (id === RADIO_DELETED_ID) {
+            if (!radioDeleted.length) return '<div class="radio-acc-empty">No deleted radios</div>';
+            return radioDeleted.map((d, i) => `<div class="radio-sub-item" onclick="selectDeletedRadio(this, ${i})"><span class="radio-sub-name">${escapeHtml(d.client.name)}</span></div>`).join('');
+        }
+        const clients = radioData[id].clients;
+        if (!clients.length) return '<div class="radio-acc-empty">No clients</div>';
+        return clients.map((c, i) => `<div class="radio-sub-item" onclick="selectRadioClient(this, '${escapeHtml(id)}', ${i})"><span class="radio-sub-name">${escapeHtml(c.name)}</span></div>`).join('');
+    }
+
+    function filterRadioPop(inp) {
+        const q = inp.value.toLowerCase().trim();
+        const pop = inp.closest('.radio-pop');
+        let shown = 0;
+        pop.querySelectorAll('.radio-sub-item').forEach(it => {
+            const m = !q || it.textContent.toLowerCase().includes(q);
+            it.style.display = m ? '' : 'none';
+            if (m) shown++;
+        });
+        const none = pop.querySelector('.radio-pop-none');
+        if (none) none.style.display = shown ? 'none' : '';
+    }
+
     function renderRadioBtsTabs() {
         const tabs = document.getElementById('radioBtsTabs');
-        tabs.innerHTML = '';
-        Object.entries(radioData).forEach(([id, bts]) => {
-            const btn = document.createElement('button');
-            btn.className = 'radio-bts-tab' + (id === currentRadioBTS ? ' active' : '');
-            btn.textContent = bts.name.replace(' BTS', '');
-            btn.onclick = () => selectRadioBTS(id, btn);
-            tabs.appendChild(btn);
+        if (radioPopId && radioPopId !== RADIO_DELETED_ID && !radioData[radioPopId]) radioPopId = null;
+        const parts = Object.entries(radioData).map(([id, bts]) => {
+            const n = bts.clients.length, eid = escapeHtml(id);
+            return `<div class="radio-bts-cell${radioPopId === id ? ' pop-open' : ''}" data-id="${eid}">
+                <button type="button" class="olt-bts-btn" onclick="toggleRadioPop('${eid}')">
+                    <span class="material-icons">settings_input_antenna</span>
+                    <span><span class="obb-name">${escapeHtml(bts.name)}</span><span class="obb-count">${n} radio${n !== 1 ? 's' : ''}</span></span>
+                </button>
+                <div class="radio-pop">${radioPopItemsHtml(id)}</div>
+            </div>`;
         });
-        tabs.querySelectorAll('.radio-deleted-tab').forEach(e => e.remove());
-        const dBtn = document.createElement('button');
-        dBtn.className = 'radio-bts-tab radio-deleted-tab' + (currentRadioBTS === RADIO_DELETED_ID ? ' active' : '');
-        dBtn.innerHTML = '<i class="fa-solid fa-trash-can"></i> Deleted Radio' + (radioDeleted.length ? ' (' + radioDeleted.length + ')' : '');
-        dBtn.onclick = () => selectRadioBTS(RADIO_DELETED_ID, dBtn);
-        tabs.appendChild(dBtn);
+        parts.push(`<div class="radio-bts-cell radio-deleted-cell${radioPopId === RADIO_DELETED_ID ? ' pop-open' : ''}" data-id="${RADIO_DELETED_ID}">
+            <button type="button" class="olt-bts-btn radio-deleted-btn" onclick="toggleRadioPop('${RADIO_DELETED_ID}')">
+                <span class="material-icons">delete</span>
+                <span><span class="obb-name"><i class="fa-solid fa-trash-can" style="font-size:0.85em"></i> Deleted Radio</span><span class="obb-count">${radioDeleted.length} radio${radioDeleted.length !== 1 ? 's' : ''}</span></span>
+            </button>
+            <div class="radio-pop">${radioPopItemsHtml(RADIO_DELETED_ID)}</div>
+        </div>`);
+        tabs.innerHTML = parts.join('');
+        applyRadioView();
+        if (radioPopId) positionRadioPop();
+    }
+
+    function toggleRadioPop(id) {
+        radioPopId = (radioPopId === id) ? null : id;
+        document.querySelectorAll('#radioBtsTabs .radio-bts-cell').forEach(c => c.classList.toggle('pop-open', c.dataset.id === radioPopId));
+        if (radioPopId) {
+            positionRadioPop();
+        }
+    }
+    function closeRadioPop() {
+        radioPopId = null;
+        document.querySelectorAll('#radioBtsTabs .radio-bts-cell.pop-open').forEach(c => c.classList.remove('pop-open'));
+    }
+    // float the dropdown over the page, keep it inside the screen
+    function positionRadioPop() {
+        const cell = document.querySelector('#radioBtsTabs .radio-bts-cell.pop-open');
+        if (!cell) return;
+        const pop = cell.querySelector('.radio-pop');
+        const vw = document.documentElement.clientWidth, vh = window.innerHeight;
+        const w = Math.min(340, vw - 16);
+        const r = cell.getBoundingClientRect();
+        pop.style.width = w + 'px';
+        pop.style.left = (Math.min(Math.max(r.left, 8), vw - w - 8) - r.left) + 'px';
+        const below = vh - r.bottom, above = r.top;
+        if (below < 260 && above > below) {
+            pop.style.top = 'auto'; pop.style.bottom = 'calc(100% + 6px)';
+            pop.style.maxHeight = Math.max(140, Math.min(above - 12, vh * 0.6)) + 'px';
+        } else {
+            pop.style.bottom = 'auto'; pop.style.top = 'calc(100% + 6px)';
+            pop.style.maxHeight = Math.max(160, Math.min(below - 12, vh * 0.6)) + 'px';
+        }
+    }
+    document.addEventListener('click', e => { if (radioPopId && !e.target.closest('#radioBtsTabs .radio-bts-cell')) closeRadioPop(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeRadioPop(); });
+    window.addEventListener('resize', () => { if (radioPopId) positionRadioPop(); });
+
+    // grid <-> client list (search results also use the list)
+    function applyRadioView() {
+        const searching = !!(document.getElementById('radioClientSearch').value || '').trim();
+        const showList = !!radioOpenId || searching;
+        document.getElementById('radioBtsTabs').style.display = showList ? 'none' : '';
+        document.getElementById('radioClientList').style.display = showList ? '' : 'none';
+        document.getElementById('radioBackBar').style.display = (radioOpenId && !searching) ? 'flex' : 'none';
+        if (radioOpenId && !searching) {
+            const isDel = radioOpenId === RADIO_DELETED_ID;
+            const nm = isDel ? 'Deleted Radio' : radioData[radioOpenId].name;
+            const cnt = isDel ? radioDeleted.length : radioData[radioOpenId].clients.length;
+            document.getElementById('radioBackTitle').textContent = nm;
+            document.getElementById('r-panel-bts-name').textContent = isDel ? 'ALL BTS' : nm.toUpperCase();
+            setRadioPanelTitle(isDel ? 'Deleted Radio' : 'Clients');
+            document.getElementById('r-panel-count').textContent = cnt + ' CLIENT' + (cnt !== 1 ? 'S' : '');
+        } else if (!showList) {
+            let total = 0; Object.values(radioData).forEach(b => total += b.clients.length);
+            document.getElementById('r-panel-bts-name').textContent = 'ALL BTS';
+            setRadioPanelTitle('Clients');
+            document.getElementById('r-panel-count').textContent = total + ' CLIENT' + (total !== 1 ? 'S' : '');
+        }
+    }
+
+    function renderRadioListFor(id) {
+        if (id === RADIO_DELETED_ID) renderDeletedCards(radioDeleted.map((d, i) => ({ d, i })));
+        else renderRadioCards(radioData[id].clients, id);
+    }
+
+    function backToRadioBtsList() {
+        radioOpenId = null;
+        document.getElementById('radioClientSearch').value = '';
+        showRadioWelcome();
+        renderRadioBtsTabs();
+        const mc = document.getElementById('main-content'); if (mc) mc.scrollTop = 0;
     }
 
     function populateRadioBtsSelect() {
         const sel = document.getElementById('rf-bts');
         if (!sel) return;
         sel.innerHTML = Object.entries(radioData).map(([id, bts]) =>
-            `<option value="${id}">${bts.name}</option>`).join('');
+            `<option value="${id}">${bts.name}</option>`).join('') + '<option value="__new__">➕ New BTS...</option>';
     }
 
-    function selectRadioBTS(id, btn) {
-        document.querySelectorAll('.radio-bts-tab').forEach(t => t.classList.remove('active'));
-        btn.classList.add('active');
-        currentRadioBTS = id;
-        document.getElementById('radioClientSearch').value = '';
-        // Update firmware link for selected BTS
-        const fw = document.querySelector('.firmware-btn');
-        if (fw) fw.href = (radioData[id] && radioData[id].firmware) || '#';
-        renderRadioClientPanel(id);
-        showRadioWelcome();
-    }
+    function selectRadioBTS(id) { toggleRadioPop(id); }
 
-    function renderRadioClientPanel(id) {
-        if (id === RADIO_DELETED_ID) {
-            document.getElementById('r-panel-bts-name').textContent = 'ALL BTS';
-            setRadioPanelTitle('Deleted Radio');
-            document.getElementById('r-panel-count').textContent = radioDeleted.length + ' CLIENT' + (radioDeleted.length !== 1 ? 'S' : '');
-            renderDeletedCards(radioDeleted.map((d, i) => ({ d, i })));
-            return;
-        }
-        const bts = radioData[id];
-        setRadioPanelTitle('Clients');
-        document.getElementById('r-panel-bts-name').textContent = bts.name.toUpperCase();
-        document.getElementById('r-panel-count').textContent = bts.clients.length + ' CLIENT' + (bts.clients.length !== 1 ? 'S' : '');
-        renderRadioCards(bts.clients, id);
+    function renderRadioClientPanel() {
+        if ((document.getElementById('radioClientSearch').value || '').trim()) { radioGlobalSearch(); return; }
+        if (radioOpenId && radioOpenId !== RADIO_DELETED_ID && !radioData[radioOpenId]) radioOpenId = null;
+        if (radioOpenId) renderRadioListFor(radioOpenId);
+        renderRadioBtsTabs();
     }
 
     function renderRadioCards(clients, btsId) {
@@ -2289,18 +3155,14 @@ initRadio();
         }
         list.innerHTML = clients.map((c, i) => {
     const realIdx = btsId ? radioData[btsId].clients.indexOf(c) : i;
-    return `<div class="radio-client-card" onclick="selectRadioClient(this, '${btsId}', ${realIdx})">
+    return `<div class="radio-client-card" data-bts="${btsId}" data-idx="${realIdx}" onclick="selectRadioClient(this, '${btsId}', ${realIdx})">
         <div class="radio-client-name">${c.name}</div>
-        <div class="radio-card-actions">
-            <button class="radio-card-icon-btn edit" title="Edit" onclick="event.stopPropagation(); openRadioModal('edit', '${btsId}', ${realIdx})"><i class="fa-solid fa-pen"></i></button>
-            <button class="radio-card-icon-btn del" title="Delete" onclick="event.stopPropagation(); openRadioConfirm('${btsId}', ${realIdx})"><i class="fa-solid fa-trash"></i></button>
-        </div>
         <span class="radio-client-arrow">›</span>
     </div>`;
 }).join('');
     }
 
-    function setRadioPanelTitle(t) { const el = document.querySelector('.radio-panel-title'); if (el) el.textContent = t; }
+    function setRadioPanelTitle(t) { const el = document.querySelector('.radio-panel-title'); if (el) el.textContent = (t === 'Clients') ? 'Radio Client Database' : t; }
 
     function renderDeletedCards(items) {
         const list = document.getElementById('radioClientList');
@@ -2322,7 +3184,7 @@ initRadio();
     }
 
     function selectDeletedRadio(el, idx) {
-        document.querySelectorAll('.radio-client-card').forEach(c => c.classList.remove('active'));
+        document.querySelectorAll('.radio-client-card, .radio-sub-item').forEach(c => c.classList.remove('active'));
         el.classList.add('active');
         currentDetailBtsId = null; currentDetailIdx = null;
         const d = radioDeleted[idx];
@@ -2357,15 +3219,9 @@ initRadio();
     }
 
     function radioGlobalSearch() {
-        if (currentRadioBTS === RADIO_DELETED_ID) {
-            const dq = document.getElementById('radioClientSearch').value.toLowerCase().trim();
-            const items = radioDeleted.map((d, i) => ({ d, i })).filter(x => !dq || x.d.client.name.toLowerCase().includes(dq));
-            document.getElementById('r-panel-count').textContent = items.length + ' CLIENT' + (items.length !== 1 ? 'S' : '');
-            renderDeletedCards(items);
-            return;
-        }
+        applyRadioView();
         const q = document.getElementById('radioClientSearch').value.toLowerCase().trim();
-        if (!q) { renderRadioClientPanel(currentRadioBTS); return; }
+        if (!q) { renderRadioClientPanel(); return; }
         let matches = [];
         for (let [btsId, bts] of Object.entries(radioData)) {
             bts.clients.forEach(c => { if (c.name.toLowerCase().includes(q)) matches.push({...c, _btsId: btsId}); });
@@ -2379,14 +3235,10 @@ initRadio();
         }
         list.innerHTML = matches.map((c) => {
             const realIdx = radioData[c._btsId].clients.findIndex(x => x.name === c.name && x.apip === c.apip);
-            return `<div class="radio-client-card" onclick="selectRadioClient(this, '${c._btsId}', ${realIdx})">
+            return `<div class="radio-client-card" data-bts="${c._btsId}" data-idx="${realIdx}" onclick="selectRadioClient(this, '${c._btsId}', ${realIdx})">
                 <div class="radio-client-name">${c.name}</div>
                 <div class="radio-client-meta">
                   <span style="margin-left:auto;font-size:8px;color:var(--radio-accent);background:rgba(26,127,203,0.08);padding:2px 6px;border-radius:12px;">${radioData[c._btsId].name}</span>
-                </div>
-                <div class="radio-card-actions">
-                    <button class="radio-card-icon-btn edit" title="Edit" onclick="event.stopPropagation(); openRadioModal('edit', '${c._btsId}', ${realIdx})"><i class="fa-solid fa-pen"></i></button>
-                    <button class="radio-card-icon-btn del" title="Delete" onclick="event.stopPropagation(); openRadioConfirm('${c._btsId}', ${realIdx})"><i class="fa-solid fa-trash"></i></button>
                 </div>
                 <span class="radio-client-arrow">›</span>
             </div>`;
@@ -2396,7 +3248,7 @@ initRadio();
     let currentDetailBtsId = null, currentDetailIdx = null;
 
     function selectRadioClient(el, btsId, idx) {
-        document.querySelectorAll('.radio-client-card').forEach(c => c.classList.remove('active'));
+        document.querySelectorAll('.radio-client-card, .radio-sub-item').forEach(c => c.classList.remove('active'));
         el.classList.add('active');
         currentDetailBtsId = btsId;
         currentDetailIdx = idx;
@@ -2406,12 +3258,11 @@ initRadio();
     function showRadioWelcome() {
         currentDetailBtsId = null;
         currentDetailIdx = null;
-        document.getElementById('radioDetailBody').innerHTML = `
-            <div class="radio-detail-welcome">
-                <div class="radio-detail-welcome-icon">📡</div>
-                <div class="radio-detail-welcome-title">Select a Client</div>
-                <div class="radio-detail-welcome-sub">Choose a BTS tab then select a client</div>
-            </div>`;
+        const wasOpen = document.getElementById('app-radio').classList.contains('detail-open');
+        document.getElementById('app-radio').classList.remove('detail-open');
+        document.getElementById('radioDetailBody').innerHTML = '';
+        if (wasOpen) { const mcB = document.getElementById('main-content'); if (mcB) requestAnimationFrame(() => { mcB.scrollTop = radioListScroll; }); }
+        document.querySelectorAll('.radio-client-card.active, .radio-sub-item.active').forEach(c => c.classList.remove('active'));
     }
 
     function rv(val, isIp) {
@@ -2429,7 +3280,14 @@ initRadio();
         return `<a class="ip-val radio-ip-link" href="${url}" target="_blank" rel="noopener noreferrer" title="Open ${m[2]} in browser">${raw.replace(/^https?:\/\//i, '')}<i class="fa-solid fa-arrow-up-right-from-square"></i></a>`;
     }
 
+    let radioListScroll = 0;
     function showRadioDetail(c, btsName, firmwareUrl, opts) {
+        const appR = document.getElementById('app-radio');
+        const mcEl = document.getElementById('main-content');
+        if (!appR.classList.contains('detail-open') && mcEl) radioListScroll = mcEl.scrollTop;
+        closeRadioPop();
+        appR.classList.add('detail-open');
+        if (mcEl) mcEl.scrollTop = 0;
         const lt = c.linktype.toLowerCase();
         const vlan = (c.vlan && c.vlan !== 'N/A') ? `<span class="vlan-chip">${c.vlan}</span>` : `<span class="na-val">N/A</span>`;
         const fwLink = c.firmware || firmwareUrl;
@@ -2448,10 +3306,7 @@ initRadio();
                         ${(opts && opts.deletedIdx !== undefined) ? `<div class="rdc-actions">
                             <button class="rdc-action-btn restore" onclick="restoreDeletedRadio(${opts.deletedIdx})"><i class="fa-solid fa-rotate-left"></i> Restore</button>
                             <button class="rdc-action-btn del" onclick="purgeDeletedRadio(${opts.deletedIdx})"><i class="fa-solid fa-trash"></i> Delete Forever</button>
-                        </div>` : `<div class="rdc-actions">
-                            <button class="rdc-action-btn edit" onclick="openRadioModal('edit', currentDetailBtsId, currentDetailIdx)"><i class="fa-solid fa-pen"></i> Edit</button>
-                            <button class="rdc-action-btn del" onclick="openRadioConfirm(currentDetailBtsId, currentDetailIdx)"><i class="fa-solid fa-trash"></i> Delete</button>
-                        </div>`}
+                        </div>` : ''}
                     </div>
                 </div>
                 <div class="rdc-table">
@@ -2488,6 +3343,7 @@ initRadio();
         radioModalBtsId = btsId || (currentRadioBTS === RADIO_DELETED_ID ? Object.keys(radioData)[0] : currentRadioBTS);
         radioModalIdx = (idx === undefined) ? null : idx;
         populateRadioBtsSelect();
+        document.getElementById('rf-newbts').value = '';
 
         const title = document.getElementById('radioModalTitle');
         const btsSel = document.getElementById('rf-bts');
@@ -2516,7 +3372,12 @@ initRadio();
                 .forEach(id => document.getElementById(id).value = '');
             document.getElementById('rf-linktype').value = 'P2P';
         }
+        rfToggleNewBts();
         document.getElementById('radioModalOverlay').classList.add('open');
+    }
+    function rfToggleNewBts() {
+        const v = document.getElementById('rf-bts').value;
+        document.getElementById('rf-newbts-row').style.display = (v === '__new__') ? '' : 'none';
     }
 
     function closeRadioModal() {
@@ -2526,7 +3387,16 @@ initRadio();
     function saveRadioClient() {
         const name = document.getElementById('rf-name').value.trim();
         if (!name) { showToast('Client / Site name is required', 'error'); return; }
-        const targetBts = document.getElementById('rf-bts').value;
+        let targetBts = document.getElementById('rf-bts').value;
+        if (targetBts === '__new__') {
+            const nn = document.getElementById('rf-newbts').value.trim();
+            if (!nn) { showToast('New BTS name din', 'error'); return; }
+            let base = nn.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '') || 'bts';
+            let id = base, k = 2;
+            while (radioData[id]) id = base + '_' + (k++);
+            radioData[id] = { name: nn, firmware: '', clients: [] };
+            targetBts = id;
+        }
 
         const clientObj = {
             name: name,
@@ -2560,6 +3430,7 @@ initRadio();
         saveRadioDataToStorage();
         closeRadioModal();
         currentRadioBTS = targetBts;
+        radioPopId = targetBts;
         renderRadioBtsTabs();
         renderRadioClientPanel(targetBts);
         showRadioWelcome();
@@ -2600,6 +3471,140 @@ initRadio();
             }
         );
     }
+
+    // ════ RADIO: header tools (add / edit / delete) ════
+    let radioToolMode = null;   // null | 'edit' | 'del'
+    function setRadioToolMode(mode) {
+        radioToolMode = mode;
+        if (mode) closeRadioPop();
+        ['radioBtsTabs', 'radioClientList'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) { el.classList.toggle('mode-edit', mode === 'edit'); el.classList.toggle('mode-del', mode === 'del'); }
+        });
+        const e = document.getElementById('radio-tool-edit'), d = document.getElementById('radio-tool-del'), h = document.getElementById('radio-mode-hint');
+        toolLabels(e, d, mode);
+        if (e) e.classList.toggle('active', mode === 'edit');
+        if (d) d.classList.toggle('active', mode === 'del');
+        if (h) {
+            h.style.display = mode ? '' : 'none';
+            h.className = 'olt-mode-hint ' + (mode || '');
+            h.textContent = !mode ? '' : (mode === 'edit'
+                ? 'Edit mode: BTS tab e click korle BTS er nam, client e click korle client edit hobe'
+                : 'Delete mode: BTS tab e click korle BTS, client e click korle client delete hobe');
+        }
+    }
+    function radioToolAdd() { setRadioToolMode(null); openRadioModal('add'); }
+    function radioToolEdit() { setRadioToolMode(radioToolMode === 'edit' ? null : 'edit'); }
+    function radioToolDel() { setRadioToolMode(radioToolMode === 'del' ? null : 'del'); }
+
+    (function () {
+        const tabs = document.getElementById('radioBtsTabs');
+        if (tabs) tabs.addEventListener('click', function (e) {
+            if (!radioToolMode) return;
+            const cell = e.target.closest('.radio-bts-cell');
+            if (!cell || cell.classList.contains('radio-deleted-cell') || !e.target.closest('.olt-bts-btn')) return;
+            e.stopPropagation();
+            const id = cell.dataset.id;
+            if (radioToolMode === 'edit') renameRadioBts(id); else deleteRadioBts(id);
+        }, true);
+        const list = document.getElementById('radioClientList');
+        if (list) list.addEventListener('click', function (e) {
+            if (!radioToolMode) return;
+            const card = e.target.closest('.radio-client-card[data-bts]');
+            if (!card) return;
+            e.stopPropagation();
+            const bts = card.getAttribute('data-bts'), idx = parseInt(card.getAttribute('data-idx'), 10);
+            if (radioToolMode === 'edit') openRadioModal('edit', bts, idx); else openRadioConfirm(bts, idx);
+        }, true);
+    })();
+
+    function renameRadioBts(id) {
+        if (!radioData[id]) return;
+        openNameModal('EDIT BTS NAME', radioData[id].name, v => {
+            radioData[id].name = v;
+            radioDeleted.forEach(d => { if (d.btsId === id) d.btsName = v; });
+            saveRadioDataToStorage(); saveRadioDeleted();
+            setRadioToolMode(null);
+            renderRadioBtsTabs(); renderRadioClientPanel(); populateRadioBtsSelect();
+            showToast('BTS renamed');
+        });
+    }
+    function deleteRadioBts(id) {
+        const b = radioData[id];
+        if (!b) return;
+        if (Object.keys(radioData).length <= 1) { showToast('Last BTS delete kora jabe na', 'error'); return; }
+        const n = b.clients.length;
+        showAppConfirm('Delete BTS?', `"${b.name}" and its ${n} radio client${n !== 1 ? 's' : ''} will be deleted. This cannot be undone.`, () => {
+            delete radioData[id];
+            if (currentRadioBTS === id) currentRadioBTS = Object.keys(radioData)[0];
+            if (radioOpenId === id) radioOpenId = null;
+            if (radioPopId === id) radioPopId = null;
+            saveRadioDataToStorage();
+            setRadioToolMode(null);
+            showRadioWelcome(); renderRadioBtsTabs(); renderRadioClientPanel(); populateRadioBtsSelect();
+            showToast('BTS deleted');
+        });
+    }
+
+    function toolLabels(e, d, mode) {
+        if (e) e.innerHTML = mode === 'edit' ? '<i class="fa-solid fa-xmark"></i> Cancel' : '<i class="fa-solid fa-pen"></i> Edit';
+        if (d) d.innerHTML = mode === 'del' ? '<i class="fa-solid fa-xmark"></i> Cancel' : '<i class="fa-solid fa-trash"></i> Delete';
+    }
+    // ════ RESET A TAB TO ITS START PAGE (used by the bottom nav) ════
+    function closeGears(root) {
+        (root || document).querySelectorAll('.gear-tools.open').forEach(c => { c.classList.remove('open'); gearResetModes(c); });
+    }
+    function resetRadioView() {
+        closeRadioPop();
+        setRadioToolMode(null);
+        closeGears(document.getElementById('app-radio'));
+        radioOpenId = null;
+        const srch = document.getElementById('radioClientSearch'); if (srch) srch.value = '';
+        radioListScroll = 0;
+        showRadioWelcome();
+        renderRadioBtsTabs();
+        applyRadioView();
+        const mc = document.getElementById('main-content'); if (mc) mc.scrollTop = 0;
+    }
+
+    // ════ GEAR (settings) TOOLS ════
+    function initGearTools() {
+        document.querySelectorAll('.olt-tools, .radio-tools, .docs-header-actions').forEach(c => {
+            if (c.classList.contains('gear-tools')) return;
+            c.classList.add('gear-tools');
+            const items = document.createElement('div');
+            items.className = 'gear-tools-items';
+            while (c.firstChild) items.appendChild(c.firstChild);
+            const g = document.createElement('button');
+            g.type = 'button'; g.className = 'gear-toggle'; g.title = 'Settings';
+            g.innerHTML = '<i class="fa-solid fa-gear"></i>';
+            g.addEventListener('click', () => gearToggle(c));
+            c.appendChild(items); c.appendChild(g);
+        });
+    }
+    function gearToggle(c) {
+        const open = !c.classList.contains('open');
+        c.classList.toggle('open', open);
+        if (!open) gearResetModes(c);
+    }
+    function gearResetModes(c) {
+        if (c.querySelector('#olt-tool-add')) setOltToolMode(null);
+        else if (c.querySelector('#bts-tool-add')) setBtsToolMode(null);
+        else if (c.querySelector('#radio-tool-add')) setRadioToolMode(null);
+        else c.querySelectorAll('.docs-edit-toggle-btn.active, .docs-del-toggle-btn.active').forEach(b => b.click());
+    }
+
+    // radio detail page: tools act on the client being viewed
+    function radioDetailAdd() { openRadioModal('add', currentDetailBtsId || undefined); }
+    function radioDetailEdit() {
+        if (currentDetailBtsId === null || currentDetailBtsId === undefined) { showToast('Deleted radio edit kora jabe na — Restore button use korun', 'error'); return; }
+        openRadioModal('edit', currentDetailBtsId, currentDetailIdx);
+    }
+    function radioDetailDel() {
+        if (currentDetailBtsId === null || currentDetailBtsId === undefined) { showToast('Deleted radio e "Delete Forever" button use korun', 'error'); return; }
+        openRadioConfirm(currentDetailBtsId, currentDetailIdx);
+    }
+    initGearTools();
 
     // ════ DOCS FUNCTIONS ════
     // On mobile, .sidebar has backdrop-filter, which makes it the "containing
@@ -2643,18 +3648,17 @@ initRadio();
 
     function openDocsSubnav() {
         const subnav = document.getElementById('docs-subnav');
-        const backdrop = document.getElementById('docs-subnav-backdrop');
         ensureDocsSubnavPlacement();
-        // Open with GPON OLT expanded (Troubleshoot / Installation visible)
-        const gponHeader = subnav && subnav.querySelector('.docs-subnav-header[onclick^="toggleDocsSub"]');
-        if (gponHeader) {
-            document.querySelectorAll('.docs-subnav-items').forEach(i => i.classList.remove('open'));
-            document.querySelectorAll('.docs-subnav-header').forEach(h => h.classList.remove('open'));
-            gponHeader.classList.add('open');
-            if (gponHeader.nextElementSibling) gponHeader.nextElementSibling.classList.add('open');
+        if (window.innerWidth <= 700) { // dropdown above the bottom bar, lined up with the OLT DOCS button
+            try {
+                const h = document.getElementById('nav-docs-group').getBoundingClientRect();
+                const w = Math.min(300, window.innerWidth * 0.86);
+                document.documentElement.style.setProperty('--docs-menu-left', Math.max(6, Math.min(h.left, window.innerWidth - w - 6)) + 'px');
+            } catch (e) {}
         }
         if (subnav) subnav.classList.add('open');
-        if (backdrop && window.innerWidth <= 700) backdrop.classList.add('open');
+        const dh = document.getElementById('nav-docs-group');
+        if (dh) dh.classList.add('open');
     }
 
     function closeDocsSubnav() {
@@ -2674,7 +3678,27 @@ initRadio();
         if (!isOpen) { items.classList.add('open'); header.classList.add('open'); }
     }
 
-    function showDocsContent(id, btn) {
+    // ════ OLT DOCS: history + back button (mobile) ════
+    let docsHistory = [];
+    function currentDocsId() {
+        const a = document.querySelector('.docs-tab-content.active');
+        return a ? a.id : 'd_olt_ips';
+    }
+    function updateDocsBackBtn() {
+        const el = document.querySelector('.docs-mobile-back');
+        if (el) el.classList.toggle('show', currentDocsId() !== 'd_olt_ips');
+    }
+    function docsGoBack() {
+        const prev = docsHistory.pop() || 'd_olt_ips';
+        const b = document.querySelector('.docs-sub-btn[onclick*="\'' + prev + '\'"]');
+        showDocsContent(prev, b, true);
+    }
+
+    function showDocsContent(id, btn, isBack) {
+        const prevId = currentDocsId();
+        if (id === 'd_olt_ips') docsHistory = [];
+        else if (!isBack && prevId !== id) docsHistory.push(prevId);
+        if (id === 'd_olt_ips' && typeof backToOltBtsList === 'function') backToOltBtsList();
         document.querySelectorAll('.docs-tab-content').forEach(c => c.classList.remove('active'));
         const target = document.getElementById(id);
         if (target) {
@@ -2684,15 +3708,198 @@ initRadio();
         }
         document.querySelectorAll('.docs-sub-btn').forEach(b => b.classList.remove('active'));
         if (btn) btn.classList.add('active');
+        updateDocsBackBtn();
     }
 
-    function filterDocsOltIps() {
-        const sel = document.getElementById('docs-olt-bts-select').value;
-        const rows = document.getElementById('docs-olt-ip-tbody').getElementsByTagName('tr');
-        for (let r of rows) {
-            r.style.display = (sel === 'all' || r.getAttribute('data-bts') === sel) ? '' : 'none';
+    // ════ OLT IP INFO: data + BTS buttons -> details (add / edit / delete) ════
+    const OLT_IP_KEY = 'mzr_olt_ips_v1';
+    let oltIpData = [];
+    let currentOltBts = null;
+    let oltToolMode = null;        // null | 'edit' | 'del'  (list view only)
+    let oltModalMode = 'add';      // add | edit | rename
+    let oltModalIdx = null;
+    let oltRenameFrom = null;
+
+    function oltSeedFromHtml() {
+        const tbody = document.getElementById('docs-olt-ip-tbody');
+        return Array.from(tbody.rows).map(r => {
+            const portEl = r.cells[2].querySelector('.olt-port');
+            const port = portEl ? portEl.textContent.replace(/[\[\]]/g, '').trim() : '';
+            const uplink = r.cells[2].textContent.replace(portEl ? portEl.textContent : '', '').trim();
+            return { bts: r.getAttribute('data-bts'), name: r.cells[0].textContent.trim(), ip: r.cells[1].textContent.trim(), uplink: uplink === '-' ? '' : uplink, port: port };
+        });
+    }
+    function loadOltIpData() {
+        try {
+            const raw = localStorage.getItem(OLT_IP_KEY);
+            if (raw) { const saved = JSON.parse(raw); if (Array.isArray(saved)) { oltIpData = saved; return; } }
+        } catch (e) { console.error('Could not load OLT IP data', e); }
+        oltIpData = oltSeedFromHtml();
+    }
+    function saveOltIpData() {
+        try { localStorage.setItem(OLT_IP_KEY, JSON.stringify(oltIpData)); }
+        catch (e) { console.error('Could not save OLT IP data', e); }
+    }
+    function ipSpan(ip) { return '<span class="ip-copy" data-ip="' + escapeHtml(ip) + '" title="Click to copy">' + escapeHtml(ip) + '</span>'; }
+
+    function renderOltIpTable() {
+        const tbody = document.getElementById('docs-olt-ip-tbody');
+        if (!tbody) return;
+        tbody.innerHTML = oltIpData.map((o, i) => {
+            const uplink = o.uplink ? ipSpan(o.uplink) + (o.port ? ' <span class="olt-port">[' + escapeHtml(o.port) + ']</span>' : '') : (o.port ? '<span class="olt-port">[' + escapeHtml(o.port) + ']</span>' : '-');
+            return '<tr data-bts="' + escapeHtml(o.bts) + '" data-idx="' + i + '"><td>' + escapeHtml(o.name) + '</td><td>' + ipSpan(o.ip) + '</td><td>' + uplink + '</td></tr>';
+        }).join('');
+        if (currentOltBts) filterOltRows(currentOltBts);
+    }
+    function filterOltRows(name) {
+        const rows = document.getElementById('docs-olt-ip-tbody').rows;
+        for (const r of rows) r.style.display = (r.getAttribute('data-bts') === name) ? '' : 'none';
+    }
+
+    function renderOltBtsButtons() {
+        const wrap = document.getElementById('olt-bts-buttons');
+        if (!wrap) return;
+        const counts = {};
+        oltIpData.forEach(o => { counts[o.bts] = (counts[o.bts] || 0) + 1; });
+        wrap.innerHTML = Object.keys(counts).map(name => {
+            const n = escapeHtml(name);
+            return `<button type="button" class="olt-bts-btn" data-bts="${n}" onclick="showOltBts(this.getAttribute('data-bts'))">
+                <span class="material-icons">router</span>
+                <span><span class="obb-name">${n}</span><span class="obb-count">${counts[name]} OLT${counts[name] > 1 ? 's' : ''}</span></span>
+            </button>`;
+        }).join('');
+    }
+    function refreshOltIpView() {
+        renderOltIpTable();
+        renderOltBtsButtons();
+        if (currentOltBts && !oltIpData.some(o => o.bts === currentOltBts)) backToOltBtsList();
+        else if (currentOltBts) document.getElementById('olt-detail-title').textContent = currentOltBts;
+    }
+
+    function showOltBts(name) {
+        if (!currentOltBts && oltToolMode === 'edit') { openOltIpModal('rename', null, name); return; }
+        if (!currentOltBts && oltToolMode === 'del') { deleteOltBts(name); return; }
+        currentOltBts = name;
+        filterOltRows(name);
+        document.getElementById('olt-detail-title').textContent = name;
+        document.getElementById('olt-bts-buttons').style.display = 'none';
+        document.getElementById('olt-bts-detail').style.display = 'block';
+        setOltToolMode(null);
+        const scroll = document.getElementById('docs-content-scroll');
+        if (scroll) scroll.scrollTop = 0;
+    }
+
+    function backToOltBtsList() {
+        currentOltBts = null;
+        const d = document.getElementById('olt-bts-detail'), b = document.getElementById('olt-bts-buttons');
+        if (d) d.style.display = 'none';
+        if (b) b.style.display = '';
+        setOltToolMode(null);
+    }
+
+    // ---- header tools ----
+    function setOltToolMode(mode) {
+        oltToolMode = mode;
+        const wrap = document.getElementById('olt-bts-buttons'), hint = document.getElementById('olt-mode-hint');
+        if (wrap) { wrap.classList.toggle('mode-edit', mode === 'edit'); wrap.classList.toggle('mode-del', mode === 'del'); }
+        const tbm = document.getElementById('docs-olt-ip-tbody');
+        if (tbm) { tbm.classList.toggle('mode-edit', mode === 'edit'); tbm.classList.toggle('mode-del', mode === 'del'); }
+        const e = document.getElementById('olt-tool-edit'), d = document.getElementById('olt-tool-del');
+        toolLabels(e, d, mode);
+        if (e) e.classList.toggle('active', mode === 'edit');
+        if (d) d.classList.toggle('active', mode === 'del');
+        if (hint) {
+            hint.style.display = mode ? '' : 'none';
+            hint.className = 'olt-mode-hint ' + (mode || '');
+            hint.textContent = !mode ? '' : currentOltBts
+                ? (mode === 'edit' ? 'Edit mode: je OLT edit korben oi row te click korun' : 'Delete mode: je OLT delete korben oi row te click korun')
+                : (mode === 'edit' ? 'Edit mode: kon BTS er nam change korte chaile oi BTS tab e click korun' : 'Delete mode: kon BTS (sob OLT soho) delete korte chaile oi BTS tab e click korun');
         }
     }
+    function oltToolAdd() { setOltToolMode(null); openOltIpModal('add'); }
+    function oltToolEdit() { setOltToolMode(oltToolMode === 'edit' ? null : 'edit'); }
+    function oltToolDel() { setOltToolMode(oltToolMode === 'del' ? null : 'del'); }
+
+    // detail view: click a row while Edit / Delete mode is on
+    (function () {
+        const tb = document.getElementById('docs-olt-ip-tbody');
+        if (!tb) return;
+        tb.addEventListener('click', function (e) {
+            if (!oltToolMode) return;
+            const tr = e.target.closest('tr');
+            if (!tr) return;
+            e.stopPropagation();
+            const i = parseInt(tr.getAttribute('data-idx'), 10);
+            if (oltToolMode === 'edit') openOltIpModal('edit', i);
+            else deleteOltRow(i);
+        }, true);
+    })();
+
+    // ---- modal ----
+    function openOltIpModal(mode, idx, btsName) {
+        oltModalMode = mode; oltModalIdx = (idx === undefined) ? null : idx; oltRenameFrom = btsName || null;
+        const dl = document.getElementById('of-bts-list');
+        dl.innerHTML = Array.from(new Set(oltIpData.map(o => o.bts))).map(b => '<option value="' + escapeHtml(b) + '"></option>').join('');
+        const title = document.getElementById('oltIpModalTitle'), fields = document.getElementById('of-olt-fields');
+        fields.style.display = (mode === 'rename') ? 'none' : '';
+        const set = (id, v) => { document.getElementById(id).value = v || ''; };
+        if (mode === 'edit' && oltModalIdx !== null) {
+            const o = oltIpData[oltModalIdx];
+            title.textContent = 'EDIT OLT';
+            set('of-bts', o.bts); set('of-name', o.name); set('of-ip', o.ip); set('of-uplink', o.uplink); set('of-port', o.port);
+        } else if (mode === 'rename') {
+            title.textContent = 'EDIT BTS NAME';
+            set('of-bts', btsName);
+        } else {
+            oltModalMode = 'add';
+            title.textContent = 'ADD OLT';
+            set('of-bts', currentOltBts || ''); set('of-name', ''); set('of-ip', ''); set('of-uplink', ''); set('of-port', '');
+        }
+        document.getElementById('oltIpModalOverlay').classList.add('open');
+    }
+    function closeOltIpModal() { document.getElementById('oltIpModalOverlay').classList.remove('open'); }
+
+    function saveOltIpModal() {
+        const v = id => document.getElementById(id).value.trim();
+        const bts = v('of-bts');
+        if (!bts) { showToast('BTS name din', 'error'); return; }
+        if (oltModalMode === 'rename') {
+            oltIpData.forEach(o => { if (o.bts === oltRenameFrom) o.bts = bts; });
+            if (currentOltBts === oltRenameFrom) currentOltBts = bts;
+        } else {
+            const name = v('of-name'), ip = v('of-ip');
+            if (!name || !ip) { showToast('OLT name ar OLT IP din', 'error'); return; }
+            const rec = { bts: bts, name: name, ip: ip, uplink: v('of-uplink'), port: v('of-port') };
+            if (oltModalMode === 'edit' && oltModalIdx !== null) oltIpData[oltModalIdx] = rec;
+            else oltIpData.push(rec);
+            if (currentOltBts && currentOltBts !== bts && oltModalMode === 'edit') currentOltBts = bts;
+        }
+        saveOltIpData();
+        closeOltIpModal();
+        setOltToolMode(null);
+        refreshOltIpView();
+        showToast(oltModalMode === 'add' ? 'OLT added' : 'Saved');
+    }
+
+    function deleteOltRow(i) {
+        const o = oltIpData[i];
+        if (!o || !confirm('"' + o.name + '" delete korben?')) return;
+        oltIpData.splice(i, 1);
+        saveOltIpData(); refreshOltIpView(); showToast('OLT deleted');
+    }
+    function deleteOltBts(name) {
+        const n = oltIpData.filter(o => o.bts === name).length;
+        if (!confirm('"' + name + '" ar ' + n + 'ti OLT delete korben?')) return;
+        oltIpData = oltIpData.filter(o => o.bts !== name);
+        saveOltIpData();
+        if (currentOltBts === name) backToOltBtsList();
+        setOltToolMode(null);
+        refreshOltIpView(); showToast('BTS deleted');
+    }
+
+    loadOltIpData();
+    renderOltIpTable();
+    renderOltBtsButtons();
 
     // ════ ONU SCRIPT ════
     // MAC box: type/paste করলেই - : . space সব সরে যাবে
@@ -2791,7 +3998,16 @@ script += `onu ${onuId} eth ${i} upstream-rate-limit cir ${vsol_bw} pir ${vsol_b
     const ONU_SAVED_KEY = 'nms_onu_saved_scripts_v1';
 
     function getOnuSaved() {
-        try { return JSON.parse(localStorage.getItem(ONU_SAVED_KEY) || '[]'); }
+        try {
+            const list = JSON.parse(localStorage.getItem(ONU_SAVED_KEY) || '[]');
+            // old entries were saved as AA:BB:CC:DD:EE:FF — show/keep them as AABBCCDDEEFF
+            const macRe = /^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$/;
+            return list.map(it => {
+                if (it && macRe.test(it.name || '')) it.name = it.name.replace(/:/g, '');
+                if (it && macRe.test(it.macKey || '')) it.macKey = it.macKey.replace(/:/g, '');
+                return it;
+            });
+        }
         catch (e) { return []; }
     }
 
@@ -2807,7 +4023,7 @@ script += `onu ${onuId} eth ${i} upstream-rate-limit cir ${vsol_bw} pir ${vsol_b
         const macClean = (onuMac || '').replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
         if (!macClean) return; // need a MAC to use as the heading/key
         const list = getOnuSaved();
-        const macKey = macClean.match(/.{1,2}/g).join(':');
+        const macKey = macClean; // no colons, e.g. D01150177F75
         const idx = list.findIndex(s => s.macKey === macKey);
         const entry = {
             id: idx !== -1 ? list[idx].id : (Date.now().toString(36) + Math.random().toString(36).slice(2, 7)),
@@ -2865,6 +4081,8 @@ script += `onu ${onuId} eth ${i} upstream-rate-limit cir ${vsol_bw} pir ${vsol_b
     }
 
     function openOnuSavedModal() {
+        const sInp = document.getElementById('onu-saved-search');
+        if (sInp) sInp.value = '';
         renderOnuSaved();
         document.getElementById('onu-saved-modal').classList.add('open');
     }
@@ -2885,7 +4103,14 @@ script += `onu ${onuId} eth ${i} upstream-rate-limit cir ${vsol_bw} pir ${vsol_b
             wrap.innerHTML = '<div class="onu-saved-empty">No saved scripts yet — click Generate to auto-save one (needs a MAC address).</div>';
             return;
         }
-        wrap.innerHTML = list.map(item => {
+        const sq = ((document.getElementById('onu-saved-search') || {}).value || '').toLowerCase().trim();
+        const shown = sq ? list.filter(item => [item.name, item.oltType, 'pon ' + item.pon, 'onu ' + item.onuId, item.script]
+            .some(v => String(v == null ? '' : v).toLowerCase().includes(sq))) : list;
+        if (!shown.length) {
+            wrap.innerHTML = '<div class="onu-saved-empty">No matching scripts found.</div>';
+            return;
+        }
+        wrap.innerHTML = shown.map(item => {
             const d = new Date(item.savedAt);
             const dateStr = isNaN(d) ? '' : d.toLocaleString();
             const nameEsc = escapeHtml(item.name);
@@ -3208,6 +4433,12 @@ script += `onu ${onuId} eth ${i} upstream-rate-limit cir ${vsol_bw} pir ${vsol_b
         if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run); else run();
     })();
 
+    // ════ COLLAPSIBLE DOCS COMMANDS ════
+    document.addEventListener('click', function(e) {
+        const lbl = e.target && e.target.closest ? e.target.closest('#app-docs .docs-cmd-label') : null;
+        if (lbl) lbl.classList.toggle('open');
+    });
+
     // ════ DOCS SEARCH ════
     let searchesInit = false;
     function setupAllSearches() {
@@ -3226,11 +4457,11 @@ script += `onu ${onuId} eth ${i} upstream-rate-limit cir ${vsol_bw} pir ${vsol_b
                     if (!code) return;
                     if (q.length > 0) {
                         const match = lbl.textContent.toLowerCase().includes(q) || code.textContent.toLowerCase().includes(q);
-                        lbl.style.display = match ? 'block' : 'none';
-                        code.style.display = match ? 'block' : 'none';
-                        if (match) code.classList.add('highlighted'); else code.classList.remove('highlighted');
+                        lbl.style.display = match ? 'flex' : 'none';
+                        lbl.classList.toggle('open', match);   // matching commands open automatically
+                        code.classList.toggle('highlighted', match);
                     } else {
-                        lbl.style.display = 'block'; code.style.display = 'block'; code.classList.remove('highlighted');
+                        lbl.style.display = 'flex'; lbl.classList.remove('open'); code.classList.remove('highlighted');
                     }
                 });
             });
@@ -3317,6 +4548,7 @@ script += `onu ${onuId} eth ${i} upstream-rate-limit cir ${vsol_bw} pir ${vsol_b
                 const code = lbl.nextElementSibling;
                 if (!code || !code.classList.contains('docs-code')) return;
                 const uid = sectionId + '_d' + idx;
+                lbl.dataset.orig = lbl.textContent; code.dataset.orig = code.textContent; // snapshot for cloud-sync refresh
                 const override = edited.find(e => e.uid === uid);
                 if (override) { lbl.textContent = override.label; code.textContent = override.code; }
                 const item = document.createElement('div');
@@ -3571,11 +4803,34 @@ script += `onu ${onuId} eth ${i} upstream-rate-limit cir ${vsol_bw} pir ${vsol_b
         return { bg:'rgba(100,100,100,0.08)', color:'#6b7280', border:'rgba(100,100,100,0.18)' };
     }
 
+    // settings (gear) icon -> reveals Edit / Delete icons for that row
+    function btsActHtml(idx) {
+        return `<span class="bts-act">
+            <span class="bts-act-btns">
+                <button type="button" class="bts-act-btn edit" title="Edit" onclick="btsActClose(); openBtsModal('edit', ${idx})"><i class="fa-solid fa-pen"></i></button>
+                <button type="button" class="bts-act-btn del" title="Delete" onclick="btsActClose(); openBtsConfirm(${idx})"><i class="fa-solid fa-trash"></i></button>
+            </span>
+            <button type="button" class="bts-gear" title="Settings" onclick="btsActToggle(this)"><span class="material-icons">settings</span></button>
+        </span>`;
+    }
+    function btsActClose() {
+        document.querySelectorAll('.bts-act.open').forEach(a => a.classList.remove('open'));
+    }
+    function btsActToggle(btn) {
+        const act = btn.closest('.bts-act');
+        const wasOpen = act.classList.contains('open');
+        btsActClose();
+        if (!wasOpen) act.classList.add('open');
+    }
+    document.addEventListener('click', function (e) {
+        if (!e.target.closest('.bts-act')) btsActClose();
+    });
+
     function renderBtsTable(data) {
         const tbody = document.getElementById('bts-table-body');
         const mobileContainer = document.getElementById('bts-cards-mobile');
         if (!data.length) {
-            tbody.innerHTML = '<tr><td colspan="5" style="padding:24px;text-align:center;color:#a78bfa;font-family:\'Rajdhani\',sans-serif;">No results found</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="4" style="padding:24px;text-align:center;color:#a78bfa;font-family:\'Rajdhani\',sans-serif;">No results found</td></tr>';
             mobileContainer.innerHTML = '<div style="padding:24px;text-align:center;color:#a78bfa;font-family:\'Rajdhani\',sans-serif;">No results found</div>';
             return;
         }
@@ -3590,7 +4845,7 @@ script += `onu ${onuId} eth ${i} upstream-rate-limit cir ${vsol_bw} pir ${vsol_b
                 ? `<span style="display:flex;align-items:center;gap:5px;font-family:'Orbitron',monospace;font-size:0.65em;font-weight:700;letter-spacing:1.2px;color:#1e1b4b;"><i class="material-icons" style="font-size:12px;color:#f59e0b;">cell_tower</i>${row.bts}</span>`
                 : `<span style="color:rgba(0,0,0,0.1);font-size:0.65em;padding-left:16px;">└─</span>`;
             const realIdx = btsData.indexOf(row);
-            return `<tr style="background:${rowBg};${topBorder}" onmouseover="this.style.background='rgba(167,139,250,0.08)'" onmouseout="this.style.background='${rowBg}'">
+            return `<tr data-idx="${realIdx}" style="background:${rowBg};${topBorder}" onmouseover="this.style.background='rgba(167,139,250,0.08)'" onmouseout="this.style.background='${rowBg}'">
                 <td style="padding:7px 10px;font-family:'Space Mono',monospace;font-size:0.7em;color:#c4b5fd;border-bottom:1px solid #e8eaff;text-align:center;width:36px;">${rowNum}</td>
                 <td style="padding:7px 10px;border-bottom:1px solid #e8eaff;border-right:1.5px solid rgba(251,191,36,0.15);">${btsDisplay}</td>
                 <td style="padding:7px 10px;border-bottom:1px solid #e8eaff;">
@@ -3598,10 +4853,6 @@ script += `onu ${onuId} eth ${i} upstream-rate-limit cir ${vsol_bw} pir ${vsol_b
                 </td>
                 <td style="padding:7px 10px;font-family:'Outfit',sans-serif;font-size:0.85em;color:#1e1b4b;border-bottom:1px solid #e8eaff;font-weight:700;">
                     <span style="display:inline-flex;align-items:center;gap:5px;"><i class="material-icons" style="font-size:12px;color:#38bdf8;">lan</i><span class="ip-copy" data-ip="${row.ip}" title="Click to copy">${row.ip}</span></span>
-                </td>
-                <td style="padding:7px 10px;border-bottom:1px solid #e8eaff;text-align:center;white-space:nowrap;">
-                    <button class="radio-card-icon-btn edit" style="opacity:1;display:inline-flex;" title="Edit" onclick="openBtsModal('edit', ${realIdx})"><i class="fa-solid fa-pen"></i></button>
-                    <button class="radio-card-icon-btn del" style="opacity:1;display:inline-flex;" title="Delete" onclick="openBtsConfirm(${realIdx})"><i class="fa-solid fa-trash"></i></button>
                 </td>
             </tr>`;
         }).join('');
@@ -3612,13 +4863,9 @@ script += `onu ${onuId} eth ${i} upstream-rate-limit cir ${vsol_bw} pir ${vsol_b
             const rowsHtml = rows.map(row => {
                 const dc = getDeviceColor(row.device);
                 const realIdx = btsData.indexOf(row);
-                return `<div class="bts-mobile-row">
+                return `<div class="bts-mobile-row" data-idx="${realIdx}">
                     <span class="bts-mobile-device" style="background:${dc.bg};color:${dc.color};border:1px solid ${dc.border};">${row.device}</span>
                     <span class="bts-mobile-ip"><i class="material-icons" style="font-size:12px;color:#38bdf8;">lan</i><span class="ip-copy" data-ip="${row.ip}" title="Tap to copy">${row.ip}</span></span>
-                    <span style="margin-left:auto;display:flex;gap:4px;">
-                        <button class="radio-card-icon-btn edit" style="opacity:1;display:inline-flex;" title="Edit" onclick="openBtsModal('edit', ${realIdx})"><i class="fa-solid fa-pen"></i></button>
-                        <button class="radio-card-icon-btn del" style="opacity:1;display:inline-flex;" title="Delete" onclick="openBtsConfirm(${realIdx})"><i class="fa-solid fa-trash"></i></button>
-                    </span>
                 </div>`;
             }).join('');
             return `<div class="bts-mobile-site"><div class="bts-mobile-site-header"><i class="material-icons" style="font-size:14px;color:#f59e0b;">cell_tower</i><span class="bts-mobile-site-name">${btsName}</span></div>${rowsHtml}</div>`;
@@ -3668,7 +4915,7 @@ script += `onu ${onuId} eth ${i} upstream-rate-limit cir ${vsol_bw} pir ${vsol_b
         } else {
             btsModalMode = 'add';
             title.textContent = 'ADD DEVICE';
-            document.getElementById('bf-bts').value = '';
+            document.getElementById('bf-bts').value = btsOpen || '';
             document.getElementById('bf-device').value = '';
             document.getElementById('bf-ip').value = '';
         }
@@ -3712,35 +4959,116 @@ script += `onu ${onuId} eth ${i} upstream-rate-limit cir ${vsol_bw} pir ${vsol_b
         );
     }
 
-    function refreshBtsView() {
-        const sel = document.getElementById('bts-select-dropdown');
-        const currentVal = sel ? sel.value : '';
-        if (sel) {
-            sel.innerHTML = '<option value="">— Select a BTS —</option>';
-            const uniqueBts = [...new Set(btsData.map(r => r.bts))];
-            uniqueBts.forEach(b => { const opt = document.createElement('option'); opt.value = b; opt.textContent = b; sel.appendChild(opt); });
-            if (uniqueBts.includes(currentVal)) sel.value = currentVal;
+    // ════ BTS INFO: BTS buttons -> details (same as OLT IP) ════
+    let btsOpen = '';
+    function renderBtsButtons() {
+        const wrap = document.getElementById('bts-buttons');
+        if (!wrap) return;
+        const counts = {};
+        btsData.forEach(r => { counts[r.bts] = (counts[r.bts] || 0) + 1; });
+        const names = Object.keys(counts);
+        if (!names.length) { wrap.innerHTML = '<div style="padding:24px;text-align:center;color:#a78bfa;font-family:\'Rajdhani\',sans-serif;grid-column:1/-1;">No BTS found</div>'; return; }
+        wrap.innerHTML = names.map(name => {
+            const n = escapeHtml(name);
+            return `<button type="button" class="olt-bts-btn" data-bts="${n}" onclick="showBtsDetail(this.getAttribute('data-bts'))">
+                <span class="material-icons">cell_tower</span>
+                <span><span class="obb-name">${n}</span><span class="obb-count">${counts[name]} device${counts[name] > 1 ? 's' : ''}</span></span>
+            </button>`;
+        }).join('');
+    }
+    function applyBtsView() {
+        if (btsOpen && !btsData.some(r => r.bts === btsOpen)) btsOpen = '';
+        renderBtsButtons();
+        document.getElementById('bts-buttons').style.display = btsOpen ? 'none' : '';
+        document.getElementById('bts-detail').style.display = btsOpen ? 'block' : 'none';
+        if (btsOpen) {
+            const filtered = btsData.filter(r => r.bts === btsOpen);
+            document.getElementById('bts-detail-title').textContent = btsOpen;
+            renderBtsTable(filtered);
         }
-        selectBtsFromDropdown(sel ? sel.value : '');
+    }
+    function showBtsDetail(name) {
+        if (!btsOpen && btsToolMode === 'edit') { renameBts(name); return; }
+        if (!btsOpen && btsToolMode === 'del') { deleteBtsGroup(name); return; }
+        setBtsToolMode(null);
+        btsOpen = name;
+        applyBtsView();
+        const scroll = document.querySelector('.main-content');
+        if (scroll) scroll.scrollTop = 0;
+        window.scrollTo(0, 0);
+    }
+    function backToBtsList() { setBtsToolMode(null); btsOpen = ''; applyBtsView(); }
+
+    // ════ BTS INFO: header tools (add / edit / delete) ════
+    let btsToolMode = null;   // null | 'edit' | 'del'
+    function setBtsToolMode(mode) {
+        btsToolMode = mode;
+        ['bts-buttons', 'bts-table-body', 'bts-cards-mobile'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) { el.classList.toggle('mode-edit', mode === 'edit'); el.classList.toggle('mode-del', mode === 'del'); }
+        });
+        const e = document.getElementById('bts-tool-edit'), d = document.getElementById('bts-tool-del'), h = document.getElementById('bts-mode-hint');
+        toolLabels(e, d, mode);
+        if (e) e.classList.toggle('active', mode === 'edit');
+        if (d) d.classList.toggle('active', mode === 'del');
+        if (h) {
+            h.style.display = mode ? '' : 'none';
+            h.className = 'olt-mode-hint ' + (mode || '');
+            h.textContent = !mode ? '' : btsOpen
+                ? (mode === 'edit' ? 'Edit mode: je device edit korben oi row te click korun' : 'Delete mode: je device delete korben oi row te click korun')
+                : (mode === 'edit' ? 'Edit mode: kon BTS er nam change korte chaile oi BTS tab e click korun' : 'Delete mode: kon BTS (sob device soho) delete korte chaile oi BTS tab e click korun');
+        }
+    }
+    function btsToolAdd() { setBtsToolMode(null); openBtsModal('add'); }
+    function btsToolEdit() { setBtsToolMode(btsToolMode === 'edit' ? null : 'edit'); }
+    function btsToolDel() { setBtsToolMode(btsToolMode === 'del' ? null : 'del'); }
+    ['bts-table-body', 'bts-cards-mobile'].forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener('click', function (e) {
+            if (!btsToolMode) return;
+            const row = e.target.closest('[data-idx]');
+            if (!row) return;
+            e.stopPropagation();
+            const idx = parseInt(row.getAttribute('data-idx'), 10);
+            if (btsToolMode === 'edit') openBtsModal('edit', idx); else openBtsConfirm(idx);
+        }, true);
+    });
+    function renameBts(name) {
+        openNameModal('EDIT BTS NAME', name, v => {
+            btsData.forEach(r => { if (r.bts === name) r.bts = v; });
+            saveBtsDataToStorage(); setBtsToolMode(null); refreshBtsView(); showToast('BTS renamed');
+        });
+    }
+    function deleteBtsGroup(name) {
+        const n = btsData.filter(r => r.bts === name).length;
+        showAppConfirm('Delete BTS?', `"${name}" and its ${n} device${n !== 1 ? 's' : ''} will be deleted. This cannot be undone.`, () => {
+            for (let i = btsData.length - 1; i >= 0; i--) if (btsData[i].bts === name) btsData.splice(i, 1);
+            saveBtsDataToStorage(); setBtsToolMode(null); refreshBtsView(); showToast('BTS deleted');
+        });
     }
 
-    function initBtsSearch() {
-        const sel = document.getElementById('bts-select-dropdown');
-        const uniqueBts = [...new Set(btsData.map(r => r.bts))];
-        uniqueBts.forEach(b => { const opt = document.createElement('option'); opt.value = b; opt.textContent = b; sel.appendChild(opt); });
+    // ════ SHARED RENAME MODAL ════
+    let nameModalCb = null;
+    function openNameModal(title, value, cb) {
+        nameModalCb = cb;
+        document.getElementById('nameModalTitle').textContent = title;
+        const inp = document.getElementById('nm-input');
+        inp.value = value || '';
+        document.getElementById('nameModalOverlay').classList.add('open');
+        setTimeout(() => inp.focus(), 50);
+    }
+    function closeNameModal() { document.getElementById('nameModalOverlay').classList.remove('open'); nameModalCb = null; }
+    function saveNameModal() {
+        const v = document.getElementById('nm-input').value.trim();
+        if (!v) { showToast('BTS name din', 'error'); return; }
+        const cb = nameModalCb;
+        closeNameModal();
+        if (cb) cb(v);
     }
 
-    function selectBtsFromDropdown(val) {
-        if (!val) { renderBtsTable(btsData); document.getElementById('bts-search-result-count').textContent = ''; return; }
-        const filtered = btsData.filter(r => r.bts === val);
-        renderBtsTable(filtered);
-        document.getElementById('bts-search-result-count').textContent = `${filtered.length} device(s) found for "${val}"`;
-    }
-
-    function clearBtsSearch() {
-        document.getElementById('bts-select-dropdown').value = '';
-        document.getElementById('bts-search-result-count').textContent = '';
-        renderBtsTable(btsData);
+    function refreshBtsView() {
+        applyBtsView();
     }
 
     // ════ INIT ════
@@ -3754,8 +5082,7 @@ script += `onu ${onuId} eth ${i} upstream-rate-limit cir ${vsol_bw} pir ${vsol_b
     }
     ensureDocsSubnavPlacement();
     loadBtsDataFromStorage();
-    renderBtsTable(btsData);
-    initBtsSearch();
+    applyBtsView();
     document.getElementById('olt-type').value = 'cdata-gpon-16';
     document.getElementById('bandwidth').value = '256';
     generateOnuScript();
@@ -3778,7 +5105,7 @@ document.addEventListener('click', function(e) {
     document.getElementById('nav-olt-group').classList.remove('open');
     document.getElementById('nav-docs-group').classList.remove('open');
     // Only auto-close subnav on desktop (mobile has backdrop for that)
-    if (window.innerWidth > 700) closeDocsSubnav();
+    closeDocsSubnav();
 });
 
     // Mobile: dynamically position child panel below the sidebar tab row
@@ -3801,6 +5128,114 @@ document.addEventListener('click', function(e) {
         }
     });
     setTimeout(updateMobilePanelPositions, 150);
+    </script>
+
+    <!-- ════ FIREBASE CLOUD SYNC (Realtime Database) ════ -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+    <script>
+    // 1) Firebase Console > Project settings > Your apps > Web app > copy the config here.
+    // 2) Make sure databaseURL is filled (Build > Realtime Database > Create database).
+    // Leave apiKey empty to keep the page in "local only" mode.
+    const FIREBASE_CONFIG = {
+        apiKey: "AIzaSyB41TptBY9INk_6ON_L66yn3fxAVbtrjE4",
+        authDomain: "oltnbtsnradio.firebaseapp.com",
+        databaseURL: "https://oltnbtsnradio-default-rtdb.firebaseio.com",
+        projectId: "oltnbtsnradio",
+        storageBucket: "oltnbtsnradio.firebasestorage.app",
+        messagingSenderId: "460686201365",
+        appId: "1:460686201365:web:052a60b486966b6b7d741c"
+    };
+
+    (function cloudSync() {
+        const statusEl = document.getElementById('cloud-status');
+        const setStatus = (txt, cls) => { if (statusEl) { statusEl.textContent = txt; statusEl.className = 'cloud-status ' + (cls || ''); } };
+        const SYNC_KEY = /^(mzr_radio_data_v1|mzr_radio_deleted_v1|mzr_bts_data_v1|mzr_olt_ips_v1|nms_onu_saved_scripts_v1|docsDeleted_.+|docsCustom_.+|docsEdited_.+)$/;
+
+        if (!FIREBASE_CONFIG.apiKey || !FIREBASE_CONFIG.databaseURL || typeof firebase === 'undefined') {
+            setStatus('☁ Local only');
+            return;
+        }
+
+        const origSet = Storage.prototype.setItem;
+        let db;
+        try {
+            firebase.initializeApp(FIREBASE_CONFIG);
+            db = firebase.database();
+        } catch (e) { console.error('Firebase init failed', e); setStatus('☁ Config error', 'off'); return; }
+        setStatus('☁ Connecting…', 'busy');
+
+        // every local save of a synced key is also pushed to the cloud
+        Storage.prototype.setItem = function (k, v) {
+            origSet.call(this, k, v);
+            if (this === window.localStorage && SYNC_KEY.test(k)) {
+                db.ref('nms/' + k).set(String(v)).catch(err => { console.error('Cloud save failed', err); setStatus('☁ Save failed', 'off'); });
+            }
+        };
+
+        db.ref('.info/connected').on('value', s => { if (s.val() === true) setStatus('☁ Synced', 'ok'); else setStatus('☁ Offline', 'off'); });
+
+        function refreshDocsFromStorage() {
+            EDITABLE_DOCS_SECTIONS.forEach(sectionId => {
+                const section = document.getElementById(sectionId);
+                const card = section && section.querySelector('.docs-card');
+                if (!card || card.dataset.docsEditInit !== '1') return;
+                const deleted = getDocsDeleted(sectionId), edited = getDocsEdited(sectionId), custom = getDocsCustom(sectionId);
+                card.querySelectorAll('.docs-cmd-item').forEach(item => {
+                    if (item.dataset.custom === '1') { item.remove(); return; }
+                    const lbl = item.querySelector('.docs-cmd-label'), code = item.querySelector('.docs-code');
+                    const ov = edited.find(e => e.uid === item.dataset.uid);
+                    if (lbl && lbl.dataset.orig !== undefined) lbl.textContent = ov ? ov.label : lbl.dataset.orig;
+                    if (code && code.dataset.orig !== undefined) code.textContent = ov ? ov.code : code.dataset.orig;
+                    item.style.display = deleted.includes(item.dataset.uid) ? 'none' : '';
+                });
+                custom.forEach(c => card.appendChild(buildDocsCmdItem(c.uid, c.label, c.code, true, sectionId)));
+            });
+        }
+
+        function applyRemote(key) {
+            try {
+                if (key === 'mzr_radio_data_v1') {
+                    loadRadioDataFromStorage();
+                    if (!radioData[currentRadioBTS] && currentRadioBTS !== RADIO_DELETED_ID) currentRadioBTS = Object.keys(radioData)[0];
+                    if (radioInited) { renderRadioBtsTabs(); populateRadioBtsSelect(); renderRadioClientPanel(currentRadioBTS); showRadioWelcome(); }
+                } else if (key === 'mzr_radio_deleted_v1') {
+                    loadRadioDeleted();
+                    if (radioInited) { renderRadioBtsTabs(); if (currentRadioBTS === RADIO_DELETED_ID) { renderRadioClientPanel(RADIO_DELETED_ID); showRadioWelcome(); } }
+                } else if (key === 'mzr_bts_data_v1') {
+                    loadBtsDataFromStorage(); refreshBtsView();
+                } else if (key === 'mzr_olt_ips_v1') {
+                    loadOltIpData(); refreshOltIpView();
+                } else if (key === 'nms_onu_saved_scripts_v1') {
+                    renderOnuSaved();
+                } else {
+                    refreshDocsFromStorage();
+                }
+            } catch (e) { console.error('Apply remote failed for', key, e); }
+        }
+
+        let firstSnapshot = true;
+        db.ref('nms').on('value', snap => {
+            const remote = snap.val() || {};
+            let changed = 0;
+            if (firstSnapshot) {
+                // keys that exist only on this device are uploaded once
+                for (let i = 0; i < localStorage.length; i++) {
+                    const k = localStorage.key(i);
+                    if (SYNC_KEY.test(k) && !(k in remote)) db.ref('nms/' + k).set(localStorage.getItem(k));
+                }
+                firstSnapshot = false;
+            }
+            Object.keys(remote).forEach(k => {
+                if (!SYNC_KEY.test(k)) return;
+                if (localStorage.getItem(k) !== remote[k]) {
+                    origSet.call(localStorage, k, remote[k]);
+                    applyRemote(k);
+                    changed++;
+                }
+            });
+        }, err => { console.error('Cloud listen failed', err); setStatus('☁ No access', 'off'); });
+    })();
     </script>
 </body>
 </html>
