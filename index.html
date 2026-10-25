@@ -5482,7 +5482,7 @@ document.addEventListener('click', function(e) {
     }
     .docs-subnav .docs-sub-group-header {
         font-family: 'Orbitron', monospace !important;
-        font-size: 0.68em !important;
+        font-size: 10px !important;
         font-weight: 700 !important;
         letter-spacing: 1.8px !important;
         text-transform: uppercase;
@@ -5549,7 +5549,7 @@ document.addEventListener('click', function(e) {
 /* ════ DESKTOP: OLT TASK sub menu (ONU ADD / LINE PROFILE) - original font, slightly bigger + lighter ════ */
 @media (min-width: 701px) {
     .nav-group-children .nav-child-btn .nav-child-name {
-        font-size: 9.8px !important;
+        font-size: 9.5px !important;
         color: #bae6fd !important;
         text-shadow: 0 0 10px rgba(125,211,252,0.3);
     }
@@ -5560,5 +5560,71 @@ document.addEventListener('click', function(e) {
     }
 }
 </style>
+
+<style>
+/* ════ DESKTOP: EPON hidden -> OLT DOCS directly shows the 3 GPON models (no "GPON OLT" header) ════ */
+@media (min-width: 701px) {
+    body:not(.show-epon) .docs-grp-gpon > .docs-subnav-header { display: none !important; }
+    body:not(.show-epon) .docs-grp-gpon > .docs-subnav-items {
+        display: flex !important;
+        margin: 0 !important;
+        padding: 2px 0 !important;
+        border: none !important;
+    }
+}
+</style>
+
+<style>
+/* ════ DESKTOP: card headings (CONFIGURATION INPUTS, GENERATED SCRIPT ...) slightly bolder ════ */
+@media (min-width: 701px) {
+    .card-head-text { -webkit-text-stroke: 0.45px currentColor; }
+}
+</style>
+
+<style>
+/* ════ DESKTOP: RADIO tab BTS boxes (incl. Deleted Radio) in 2 columns, 3 per column ════ */
+@media (min-width: 701px) {
+    #app-radio #radioBtsTabs.radio-bts-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+    #app-radio .radio-bts-cell.radio-deleted-cell { grid-column: auto !important; }
+    #app-radio .radio-bts-grid .olt-bts-btn.radio-deleted-btn { grid-column: auto; }
+}
+</style>
+
+<script>
+/* DESKTOP: RADIO BTS dropdown always opens DOWNWARD (page scrolls a little if there is not enough room) */
+(function () {
+    var orig = window.positionRadioPop;
+    if (typeof orig !== 'function') return;
+    var busy = false;
+    window.positionRadioPop = function () {
+        if (window.innerWidth <= 700) return orig.apply(this, arguments);
+        if (busy) return;
+        var cell = document.querySelector('#radioBtsTabs .radio-bts-cell.pop-open');
+        if (!cell) return;
+        var pop = cell.querySelector('.radio-pop');
+        var vw = document.documentElement.clientWidth, vh = window.innerHeight;
+        var w = Math.min(340, vw - 16);
+        var mc = document.getElementById('main-content');
+        var r = cell.getBoundingClientRect();
+        var mr = mc ? mc.getBoundingClientRect() : { top: 0, bottom: vh };
+        var bottomLimit = Math.min(vh, mr.bottom) - 8;
+        var below = bottomLimit - r.bottom - 6;
+        var want = Math.min(pop.scrollHeight + 14, vh * 0.6, 340);
+        if (below < want && mc) {            // not enough room below -> scroll the page a bit
+            busy = true;
+            mc.scrollTop += (want - below);
+            setTimeout(function () { busy = false; }, 60);
+            r = cell.getBoundingClientRect();
+            below = bottomLimit - r.bottom - 6;
+        }
+        pop.style.position = 'fixed';
+        pop.style.width = w + 'px';
+        pop.style.left = Math.min(Math.max(r.left, 8), vw - w - 8) + 'px';
+        pop.style.bottom = 'auto';
+        pop.style.top = (r.bottom + 6) + 'px';
+        pop.style.maxHeight = Math.max(120, Math.min(below, vh * 0.75)) + 'px';
+    };
+})();
+</script>
 </body>
 </html>
