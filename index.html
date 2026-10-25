@@ -5772,5 +5772,178 @@ document.addEventListener('click', function(e) {
     new MutationObserver(reset).observe(grid, { subtree: true, childList: true, attributes: true, attributeFilter: ['class'] });
 })();
 </script>
+<style>
+/* ════ FLOATING WINDOW (whole app) ════ */
+#fw-fab { position: fixed; right: 6px; bottom: 6px; z-index: 2147483000; display: flex; align-items: center; justify-content: center;
+    width: 30px; height: 30px; padding: 0; border: 0; border-radius: 50%; cursor: pointer; color: #fff; opacity: .45;
+    background: rgba(13,71,161,.85); box-shadow: 0 2px 8px rgba(0,0,0,.3); transition: opacity .2s, transform .2s; }
+#fw-fab:hover, #fw-fab:focus-visible, #fw-fab.fw-on { opacity: 1; transform: scale(1.08); }
+#fw-fab.fw-on { background: rgba(198,40,40,.92); }
+#fw-fab svg { width: 16px; height: 16px; flex: none; }
+#fw-fab .fw-lbl { display: none; }
+#fw-win { position: fixed; z-index: 2147482999; display: none; flex-direction: column; min-width: 280px; min-height: 140px;
+    background: #0b1f3a; border: 1px solid rgba(255,255,255,.22); border-radius: 14px; overflow: hidden;
+    box-shadow: 0 18px 50px rgba(0,0,0,.5); animation: fwPop .28s cubic-bezier(.22,.61,.36,1); }
+#fw-win.fw-open { display: flex; }
+@keyframes fwPop { from { opacity: 0; transform: scale(.92) translateY(14px); } to { opacity: 1; transform: none; } }
+#fw-bar { display: flex; align-items: center; gap: 6px; padding: 8px 10px; cursor: move; user-select: none; touch-action: none;
+    color: #fff; font: 700 13px/1 inherit; background: linear-gradient(135deg, #0d47a1, #0a8a8a); flex: none; }
+#fw-bar .fw-title { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#fw-bar button { width: 28px; height: 28px; border: 0; border-radius: 8px; cursor: pointer; color: #fff; font-size: 14px; line-height: 1;
+    background: rgba(255,255,255,.18); display: flex; align-items: center; justify-content: center; }
+#fw-bar button:hover { background: rgba(255,255,255,.34); }
+#fw-bar button.fw-x:hover { background: #e53935; }
+#fw-body { position: relative; flex: 1; min-height: 0; background: #fff; }
+#fw-frame { width: 100%; height: 100%; border: 0; display: block; background: #fff; }
+#fw-shield { position: absolute; inset: 0; display: none; z-index: 2; }
+#fw-win.fw-busy #fw-shield { display: block; }
+#fw-win.fw-min { min-height: 0; height: auto !important; }
+#fw-win.fw-min #fw-body, #fw-win.fw-min #fw-grip { display: none; }
+#fw-grip { position: absolute; right: 0; bottom: 0; width: 26px; height: 26px; cursor: nwse-resize; z-index: 3; touch-action: none;
+    background: linear-gradient(135deg, transparent 50%, rgba(13,71,161,.85) 50%); border-bottom-right-radius: 14px; }
+@media (max-width: 700px) {
+    #fw-fab { right: 4px; bottom: calc(var(--mobile-nav-height, 60px) + 4px); }
+    .docs-mobile-back { bottom: calc(var(--mobile-nav-height, 60px) + 44px) !important; }   /* keep clear of the small float icon */
+}
+@media (prefers-reduced-motion: reduce) { #fw-win { animation: none; } }
+</style>
+<script>
+/* Floating window: a button opens the whole app in a draggable, resizable window that stays on screen */
+(function () {
+    if (window.self !== window.top) return;            // never create it inside the floating window itself
+    var fab = document.createElement('button');
+    fab.id = 'fw-fab'; fab.type = 'button'; fab.title = 'Floating window (drag, resize, keep on screen)';
+    fab.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="13" height="11" rx="2"/><path d="M8 19h13V9"/></svg><span class="fw-lbl">Float</span>';
+    var win = document.createElement('div');
+    win.id = 'fw-win';
+    win.innerHTML = '<div id="fw-bar"><span class="fw-title">Floating Window</span>' +
+        '<button type="button" class="fw-pop" title="Pop out: keep visible even when the browser is minimized">&#8599;</button>' +
+        '<button type="button" class="fw-reload" title="Reload">&#10227;</button>' +
+        '<button type="button" class="fw-minb" title="Minimize">&#8211;</button>' +
+        '<button type="button" class="fw-max" title="Maximize / Restore">&#9633;</button>' +
+        '<button type="button" class="fw-x" title="Close">&#10005;</button></div>' +
+        '<div id="fw-body"><div id="fw-shield"></div></div><div id="fw-grip"></div>';
+    document.body.appendChild(win); document.body.appendChild(fab);
+    var bar = win.querySelector('#fw-bar'), body = win.querySelector('#fw-body'), grip = win.querySelector('#fw-grip'), frame = null;
+    var saved = null;
+
+    function vw() { return window.innerWidth; } function vh() { return window.innerHeight; }
+    function clampPos() {
+        var r = win.getBoundingClientRect();
+        var l = Math.min(Math.max(0, r.left), Math.max(0, vw() - 90));
+        var t = Math.min(Math.max(0, r.top), Math.max(0, vh() - 40));
+        win.style.left = l + 'px'; win.style.top = t + 'px';
+    }
+    function place() {
+        var mobile = vw() <= 700;
+        var w = mobile ? Math.round(vw() * 0.94) : Math.min(430, vw() - 40);
+        var h = mobile ? Math.round(vh() * 0.62) : Math.min(660, vh() - 60);
+        win.style.width = w + 'px'; win.style.height = h + 'px';
+        win.style.left = Math.max(0, vw() - w - (mobile ? Math.round(vw() * 0.03) : 24)) + 'px';
+        win.style.top = Math.max(0, mobile ? 56 : vh() - h - 76) + 'px';
+    }
+    function open() {
+        if (!frame) {
+            frame = document.createElement('iframe'); frame.id = 'fw-frame';
+            frame.src = window.location.href.split('#')[0] + '#floating';
+            body.insertBefore(frame, body.firstChild);
+        }
+        if (!win.style.width) place();
+        win.classList.add('fw-open'); fab.classList.add('fw-on');
+        fab.querySelector('.fw-lbl').textContent = 'Close';
+        fab.title = 'Close floating window';
+    }
+    function close() {
+        win.classList.remove('fw-open', 'fw-min'); fab.classList.remove('fw-on');
+        fab.querySelector('.fw-lbl').textContent = 'Float';
+        fab.title = 'Floating window (stays on top of other apps)';
+        if (frame) { frame.remove(); frame = null; }
+    }
+    /* ── TRUE always-on-top window (stays visible even when the browser is minimized / other apps are in front) ── */
+    var pip = null;
+    var appUrl = function () { return window.location.href.split('#')[0] + '#floating'; };
+    function setFabState(on) {
+        fab.classList.toggle('fw-on', on);
+        fab.querySelector('.fw-lbl').textContent = on ? 'Close' : 'Float';
+        fab.title = on ? 'Close floating window' : 'Floating window (stays on top of other apps)';
+    }
+    function openPip() {
+        var w = Math.min(440, screen.availWidth - 40), h = Math.min(680, screen.availHeight - 80);
+        return window.documentPictureInPicture.requestWindow({ width: w, height: h }).then(function (pw) {
+            pip = pw;
+            var d = pw.document;
+            d.title = document.title + ' — Floating';
+            d.documentElement.style.cssText = 'height:100%';
+            d.body.style.cssText = 'margin:0;height:100%;overflow:hidden;background:#0b1f3a';
+            var fr = d.createElement('iframe');
+            fr.src = appUrl();
+            fr.style.cssText = 'border:0;width:100%;height:100%;display:block;background:#fff';
+            d.body.appendChild(fr);
+            setFabState(true);
+            pw.addEventListener('pagehide', function () { pip = null; setFabState(false); });
+        });
+    }
+    function openPopup() {                              // fallback: separate OS window (works in most browsers)
+        var w = 440, h = 680;
+        var p = window.open(appUrl(), 'fw_popup', 'popup=yes,width=' + w + ',height=' + h + ',left=' + Math.max(0, screen.availWidth - w - 20) + ',top=60');
+        if (!p) alert('Popup blocked — please allow popups for this page.');
+        return p;
+    }
+    fab.addEventListener('click', function () {
+        if (pip) { pip.close(); return; }
+        if (win.classList.contains('fw-open')) { close(); return; }
+        if ('documentPictureInPicture' in window) {
+            openPip().catch(function () { open(); });   // if the browser refuses, use the in-page window
+        } else { open(); }
+    });
+    win.querySelector('.fw-pop').addEventListener('click', function () {
+        if (pip) return;
+        if ('documentPictureInPicture' in window) { openPip().then(close).catch(function () { openPopup(); }); }
+        else { openPopup(); }
+    });
+    win.querySelector('.fw-x').addEventListener('click', close);
+    win.querySelector('.fw-reload').addEventListener('click', function () { if (frame) frame.src = frame.src; });
+    win.querySelector('.fw-minb').addEventListener('click', function () {
+        if (!win.classList.contains('fw-min')) win.dataset.h = win.style.height;   // remember height
+        win.classList.toggle('fw-min');
+        win.style.height = win.classList.contains('fw-min') ? 'auto' : (win.dataset.h || '60vh');
+    });
+    win.querySelector('.fw-max').addEventListener('click', function () {
+        if (saved) { win.style.left = saved.l; win.style.top = saved.t; win.style.width = saved.w; win.style.height = saved.h; saved = null; }
+        else {
+            saved = { l: win.style.left, t: win.style.top, w: win.style.width, h: win.style.height };
+            win.classList.remove('fw-min');
+            win.style.left = '8px'; win.style.top = '8px'; win.style.width = (vw() - 16) + 'px'; win.style.height = (vh() - 16) + 'px';
+        }
+    });
+
+    function track(handle, onMove) {                    // mouse + touch via pointer events
+        handle.addEventListener('pointerdown', function (e) {
+            if (e.target.closest && e.target.closest('button')) return;
+            e.preventDefault(); handle.setPointerCapture(e.pointerId);
+            win.classList.add('fw-busy');
+            var sx = e.clientX, sy = e.clientY, r = win.getBoundingClientRect();
+            function mv(ev) { onMove(ev.clientX - sx, ev.clientY - sy, r); }
+            function up() {
+                win.classList.remove('fw-busy');
+                handle.removeEventListener('pointermove', mv); handle.removeEventListener('pointerup', up); handle.removeEventListener('pointercancel', up);
+                if (!win.classList.contains('fw-min')) win.dataset.h = win.style.height;
+            }
+            handle.addEventListener('pointermove', mv); handle.addEventListener('pointerup', up); handle.addEventListener('pointercancel', up);
+        });
+    }
+    track(bar, function (dx, dy, r) {
+        saved = null;
+        win.style.left = Math.min(Math.max(-r.width + 90, r.left + dx), vw() - 90) + 'px';
+        win.style.top = Math.min(Math.max(0, r.top + dy), vh() - 40) + 'px';
+    });
+    track(grip, function (dx, dy, r) {
+        saved = null;
+        win.style.width = Math.max(280, Math.min(r.width + dx, vw() - r.left)) + 'px';
+        win.style.height = Math.max(160, Math.min(r.height + dy, vh() - r.top)) + 'px';
+    });
+    window.addEventListener('resize', function () { if (win.classList.contains('fw-open') && !saved) clampPos(); });
+})();
+</script>
 </body>
 </html>
