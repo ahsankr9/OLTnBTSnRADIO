@@ -1943,6 +1943,19 @@ body:not(.show-epon) .docs-grp-epon { display: none !important; }
     #app-radio .radio-bts-grid .olt-bts-btn.radio-deleted-btn { grid-column: auto !important; }
 }
 </style>
+<style>
+/* ════ OLT DOCS: command heading click -> black code box slides DOWN from the top ════ */
+@keyframes cmdBoxDrop {
+    from { opacity: 0; transform: translateY(-16px); clip-path: inset(0 -12px 100% -12px); }
+    to   { opacity: 1; transform: translateY(0);     clip-path: inset(-12px -12px -12px -12px); }
+}
+#app-docs .docs-cmd-label.open + .docs-code {
+    animation: cmdBoxDrop 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) backwards;
+}
+@media (prefers-reduced-motion: reduce) {
+    #app-docs .docs-cmd-label.open + .docs-code { animation: none; }
+}
+</style>
 </head>
 <body>
 
