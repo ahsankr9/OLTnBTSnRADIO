@@ -5802,8 +5802,7 @@ document.addEventListener('click', function(e) {
 #fw-grip { position: absolute; right: 0; bottom: 0; width: 26px; height: 26px; cursor: nwse-resize; z-index: 3; touch-action: none;
     background: linear-gradient(135deg, transparent 50%, rgba(13,71,161,.85) 50%); border-bottom-right-radius: 14px; }
 @media (max-width: 700px) {
-    #fw-fab { right: 4px; bottom: calc(var(--mobile-nav-height, 60px) + 4px); }
-    .docs-mobile-back { bottom: calc(var(--mobile-nav-height, 60px) + 44px) !important; }   /* keep clear of the small float icon */
+    #fw-fab, #fw-win { display: none !important; }      /* floating window is WEB VIEW only */
 }
 @media (prefers-reduced-motion: reduce) { #fw-win { animation: none; } }
 </style>
@@ -5811,6 +5810,7 @@ document.addEventListener('click', function(e) {
 /* Floating window: a button opens the whole app in a draggable, resizable window that stays on screen */
 (function () {
     if (window.self !== window.top) return;            // never create it inside the floating window itself
+    var mq = window.matchMedia('(max-width: 700px)');
     var fab = document.createElement('button');
     fab.id = 'fw-fab'; fab.type = 'button'; fab.title = 'Floating window (drag, resize, keep on screen)';
     fab.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="13" height="11" rx="2"/><path d="M8 19h13V9"/></svg><span class="fw-lbl">Float</span>';
@@ -5943,6 +5943,7 @@ document.addEventListener('click', function(e) {
         win.style.height = Math.max(160, Math.min(r.height + dy, vh() - r.top)) + 'px';
     });
     window.addEventListener('resize', function () { if (win.classList.contains('fw-open') && !saved) clampPos(); });
+    mq.addEventListener && mq.addEventListener('change', function (e) { if (e.matches) { if (pip) pip.close(); close(); } });
 })();
 </script>
 </body>
