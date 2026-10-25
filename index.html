@@ -1985,7 +1985,7 @@ body:not(.show-epon) .docs-grp-epon { display: none !important; }
             var h = document.getElementById('nav-olt-group'), c = document.getElementById('olt-children');
             if (!h || !c) return;
             if (mq.matches) { h.classList.remove('open'); c.classList.remove('open'); h.classList.add('active'); }
-            else { h.classList.add('open'); c.classList.add('open'); }
+            else { h.classList.remove('open'); c.classList.remove('open'); }
         }
         ['pointerdown', 'keydown'].forEach(function (ev) { document.addEventListener(ev, function () { touched = true; }, { once: true, capture: true }); });
         apply();
@@ -5419,5 +5419,146 @@ document.addEventListener('click', function(e) {
     }, true);
 })();
 </script>
+
+<style>
+/* ════ DESKTOP: Troubleshoot / Installation open as a flyout to the RIGHT of the model name ════ */
+@media (min-width: 701px) {
+    .docs-subnav .docs-sub-group-items.open {
+        position: fixed !important;
+        margin: 0 !important;
+        padding: 6px !important;
+        min-width: 160px;
+        gap: 3px !important;
+        background: linear-gradient(160deg, #0a2557 0%, #1451a3 100%);
+        border: 1px solid rgba(0,212,255,0.45) !important;
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(5,11,30,0.55);
+        z-index: 400;
+        animation: flyoutIn .16s ease;
+    }
+    @keyframes flyoutIn { from { opacity: 0; transform: translateX(-6px); } to { opacity: 1; transform: none; } }
+    .docs-subnav .docs-sub-group-header::after { content: '\25B6' !important; font-size: 0.65em; }
+    .docs-subnav .docs-sub-group-header.open::after { transform: none !important; }
+    .docs-subnav .docs-sub-group-items.open .docs-sub-btn-leaf { white-space: nowrap; }
+}
+</style>
+<script>
+(function () {
+    function isDesk() { return window.innerWidth > 700; }
+    function placeFlyout(header) {
+        if (!isDesk() || !header) return;
+        var items = header.nextElementSibling;
+        if (!items || !items.classList.contains('open')) return;
+        var r = header.getBoundingClientRect();
+        items.style.left = (r.right + 8) + 'px';
+        items.style.top = r.top + 'px';
+        var h = items.offsetHeight;
+        if (r.top + h > window.innerHeight - 8) items.style.top = Math.max(8, window.innerHeight - h - 8) + 'px';
+    }
+    function placeAll() { document.querySelectorAll('.docs-sub-group-header.open').forEach(placeFlyout); }
+    var origToggle = window.toggleSubGroup;
+    window.toggleSubGroup = function (header) {
+        origToggle.apply(this, arguments);
+        if (!isDesk()) return;
+        document.querySelectorAll('.docs-sub-group-items').forEach(function (i) {
+            if (!i.classList.contains('open')) { i.style.left = ''; i.style.top = ''; }
+        });
+        placeFlyout(header);
+    };
+    var origOpen = window.openDocsSubnav;
+    window.openDocsSubnav = function () { origOpen.apply(this, arguments); setTimeout(placeAll, 0); };
+    window.addEventListener('resize', placeAll);
+    var sb = document.querySelector('.sidebar');
+    if (sb) sb.addEventListener('scroll', placeAll, { passive: true });
+})();
+</script>
+
+<style>
+/* ════ DESKTOP: sub menu uses the "GPON OLT" font + lighter background ════ */
+@media (min-width: 701px) {
+    .docs-subnav {
+        background: linear-gradient(180deg, rgba(38,104,190,0.62) 0%, rgba(28,88,168,0.5) 100%) !important;
+        border-color: rgba(147,210,255,0.35) !important;
+    }
+    .docs-subnav .docs-sub-group-header {
+        font-family: 'Orbitron', monospace !important;
+        font-size: 0.68em !important;
+        font-weight: 700 !important;
+        letter-spacing: 1.8px !important;
+        text-transform: uppercase;
+        color: #bdf0ff !important;
+        background: rgba(255,255,255,0.13) !important;
+        border: 1px solid rgba(186,230,253,0.28) !important;
+        border-left: 3px solid rgba(125,211,252,0.85) !important;
+    }
+    .docs-subnav .docs-sub-group-header:hover { background: rgba(255,255,255,0.22) !important; color: #fff !important; }
+    .docs-subnav .docs-sub-group-header.open { background: rgba(0,212,255,0.28) !important; color: #fff !important; border-left-color: #00ff9d !important; }
+    .docs-subnav .docs-sub-group-items.open {
+        background: linear-gradient(160deg, #1b5aab 0%, #2f8ae0 100%) !important;
+        border-color: rgba(186,230,253,0.5) !important;
+    }
+}
+</style>
+
+<style>
+/* ════ DESKTOP: darker text for Troubleshoot / Installation ════ */
+@media (min-width: 701px) {
+    .docs-subnav .docs-sub-group-items.open .docs-sub-btn-leaf {
+        color: #06204a !important;
+        font-weight: 800 !important;
+    }
+    .docs-subnav .docs-sub-group-items.open .docs-sub-btn-leaf::before { background: #06204a !important; box-shadow: none !important; }
+    .docs-subnav .docs-sub-group-items.open .docs-sub-btn-leaf:hover { color: #021433 !important; background: rgba(255,255,255,0.28) !important; }
+    .docs-subnav .docs-sub-group-items.open .docs-sub-btn-leaf.active { color: #021433 !important; background: rgba(255,255,255,0.4) !important; }
+}
+</style>
+
+<style>
+/* ════ DESKTOP: Troubleshoot / Installation use the OLT TASK colour ════ */
+@media (min-width: 701px) {
+    .docs-subnav .docs-sub-group-items.open {
+        background: linear-gradient(160deg, #0a2557 0%, #1451a3 100%) !important;
+    }
+    .docs-subnav .docs-sub-group-items.open .docs-sub-btn-leaf {
+        color: #7dd3fc !important;
+        text-shadow: 0 0 12px rgba(0,212,255,0.35);
+    }
+    .docs-subnav .docs-sub-group-items.open .docs-sub-btn-leaf::before { background: #7dd3fc !important; }
+    .docs-subnav .docs-sub-group-items.open .docs-sub-btn-leaf:hover { color: #22e0ff !important; background: rgba(0,212,255,0.14) !important; }
+    .docs-subnav .docs-sub-group-items.open .docs-sub-btn-leaf.active { color: #22e0ff !important; background: rgba(0,212,255,0.2) !important; text-shadow: 0 0 16px rgba(0,212,255,0.6); }
+}
+</style>
+
+<style>
+/* ════ DESKTOP: narrower Troubleshoot / Installation flyout ════ */
+@media (min-width: 701px) {
+    .docs-subnav .docs-sub-group-items.open {
+        min-width: 0 !important;
+        width: max-content !important;
+        padding: 4px !important;
+    }
+    .docs-subnav .docs-sub-group-items.open .docs-sub-btn-leaf {
+        padding: 5px 10px 5px 20px !important;
+    }
+    .docs-subnav .docs-sub-group-items.open .docs-sub-btn-leaf::before { left: 8px !important; }
+    .docs-subnav .docs-sub-group-items.open .docs-sub-btn-leaf:hover { padding-left: 22px !important; }
+}
+</style>
+
+<style>
+/* ════ DESKTOP: OLT TASK sub menu (ONU ADD / LINE PROFILE) - original font, slightly bigger + lighter ════ */
+@media (min-width: 701px) {
+    .nav-group-children .nav-child-btn .nav-child-name {
+        font-size: 9.8px !important;
+        color: #bae6fd !important;
+        text-shadow: 0 0 10px rgba(125,211,252,0.3);
+    }
+    .nav-group-children .nav-child-btn:hover .nav-child-name,
+    .nav-group-children .nav-child-btn.active .nav-child-name {
+        color: #f0faff !important;
+        text-shadow: 0 0 14px rgba(125,211,252,0.55);
+    }
+}
+</style>
 </body>
 </html>
