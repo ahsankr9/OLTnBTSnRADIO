@@ -1952,8 +1952,17 @@ body:not(.show-epon) .docs-grp-epon { display: none !important; }
 #app-docs .docs-cmd-label.open + .docs-code {
     animation: cmdBoxDrop 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) backwards;
 }
+/* closing: black box slides back UP (bottom -> top) */
+@keyframes cmdBoxRise {
+    from { opacity: 1; transform: translateY(0);     clip-path: inset(-12px -12px -12px -12px); }
+    to   { opacity: 0; transform: translateY(-16px); clip-path: inset(0 -12px 100% -12px); }
+}
+#app-docs .docs-cmd-label.open.closing + .docs-code {
+    animation: cmdBoxRise 0.45s cubic-bezier(0.55, 0.06, 0.68, 0.19) forwards;
+}
+#app-docs .docs-cmd-label.closing { pointer-events: auto; }
 @media (prefers-reduced-motion: reduce) {
-    #app-docs .docs-cmd-label.open + .docs-code { animation: none; }
+    #app-docs .docs-cmd-label.open + .docs-code, #app-docs .docs-cmd-label.open.closing + .docs-code { animation: none; }
 }
 </style>
 </head>
@@ -4618,7 +4627,28 @@ script += `onu ${onuId} eth ${i} upstream-rate-limit cir ${vsol_bw} pir ${vsol_b
     // ════ COLLAPSIBLE DOCS COMMANDS ════
     document.addEventListener('click', function(e) {
         const lbl = e.target && e.target.closest ? e.target.closest('#app-docs .docs-cmd-label') : null;
-        if (lbl) lbl.classList.toggle('open');
+        if (!lbl) return;
+        const code = lbl.nextElementSibling;
+        const animated = code && code.classList.contains('docs-code') &&
+            !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+        if (lbl.classList.contains('closing')) {            // clicked again while closing -> keep it open
+            lbl.classList.remove('closing');
+            return;
+        }
+        if (lbl.classList.contains('open') && animated) {   // 2nd click: slide the black box UP, then close
+            lbl.classList.add('closing');
+            let done = false;
+            const finish = () => {
+                if (done) return; done = true;
+                code.removeEventListener('animationend', onEnd);
+                if (lbl.classList.contains('closing')) lbl.classList.remove('open', 'closing');
+            };
+            const onEnd = (ev) => { if (ev.target === code) finish(); };
+            code.addEventListener('animationend', onEnd);
+            setTimeout(finish, 700);                         // safety net
+        } else {
+            lbl.classList.toggle('open');
+        }
     });
 
     // ════ DOCS SEARCH ════
