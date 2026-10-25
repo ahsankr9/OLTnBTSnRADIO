@@ -1823,6 +1823,126 @@ body:not(.show-epon) .docs-grp-epon { display: none !important; }
 #epon-toast { position: fixed; left: 50%; bottom: 90px; transform: translateX(-50%); background: rgba(15,23,42,.92); color: #fff; padding: 9px 16px; border-radius: 20px; font: 600 .85rem 'Exo 2', sans-serif; z-index: 99999; opacity: 0; pointer-events: none; transition: opacity .25s ease; }
 #epon-toast.show { opacity: 1; }
 </style>
+<style>
+/* ════ WEB VIEW ONLY: OLT TASK & OLT DOCS sub menu — slow LEFT → RIGHT slide-open ════ */
+@media (min-width: 701px) {
+    @keyframes subMenuSlideLR {
+        from { opacity: 0; transform: translateX(-40px); clip-path: inset(-30px 100% -30px -30px); }
+        to   { opacity: 1; transform: translateX(0);     clip-path: inset(-30px -30px -30px -30px); }
+    }
+    @keyframes subItemSlideLR {
+        from { opacity: 0; transform: translateX(-26px); }
+        to   { opacity: 1; transform: translateX(0); }
+    }
+
+    /* main dropdown panels (OLT TASK list / OLT DOCS tree) */
+    .nav-group-children.open,
+    .docs-subnav.open {
+        animation: subMenuSlideLR 1s cubic-bezier(0.22, 0.61, 0.36, 1) backwards;
+    }
+    /* nested levels (GPON/EPON -> models -> Troubleshoot / Installation) */
+    .docs-subnav-items.open,
+    .docs-sub-group-items.open {
+        animation: subMenuSlideLR 0.85s cubic-bezier(0.22, 0.61, 0.36, 1) backwards;
+    }
+    /* items glide in one after another, still left -> right */
+    .nav-group-children.open > .nav-child-btn {
+        animation: subItemSlideLR 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) backwards;
+    }
+    .nav-group-children.open > .nav-child-btn:nth-child(1) { animation-delay: 0.20s; }
+    .nav-group-children.open > .nav-child-btn:nth-child(2) { animation-delay: 0.38s; }
+    .docs-subnav.open .docs-subnav-group { animation: subItemSlideLR 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) backwards; }
+    .docs-subnav.open .docs-subnav-group:nth-child(1) { animation-delay: 0.20s; }
+    .docs-subnav.open .docs-subnav-group:nth-child(2) { animation-delay: 0.38s; }
+    .docs-subnav-items.open > .docs-sub-group { animation: subItemSlideLR 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) backwards; }
+    .docs-subnav-items.open > .docs-sub-group:nth-child(1) { animation-delay: 0.10s; }
+    .docs-subnav-items.open > .docs-sub-group:nth-child(2) { animation-delay: 0.22s; }
+    .docs-subnav-items.open > .docs-sub-group:nth-child(3) { animation-delay: 0.34s; }
+    .docs-sub-group-items.open > .docs-sub-btn { animation: subItemSlideLR 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) backwards; }
+    .docs-sub-group-items.open > .docs-sub-btn:nth-child(1) { animation-delay: 0.10s; }
+    .docs-sub-group-items.open > .docs-sub-btn:nth-child(2) { animation-delay: 0.24s; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .nav-group-children.open, .docs-subnav.open, .docs-subnav-items.open, .docs-sub-group-items.open,
+    .nav-group-children.open > *, .docs-subnav.open *, .docs-subnav-items.open > * { animation: none !important; }
+}
+</style>
+<style>
+/* ════ OLT IP INFO / RADIO / BTS INFO: BTS cards rise from the bottom, one by one ════ */
+@keyframes btsRiseUp {
+    from { opacity: 0; transform: translateY(46px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+#olt-bts-buttons.olt-bts-grid > .olt-bts-btn,
+#bts-buttons.olt-bts-grid > .olt-bts-btn,
+#radioBtsTabs > .radio-bts-cell {
+    animation: btsRiseUp 0.65s cubic-bezier(0.22, 0.61, 0.36, 1) backwards;
+}
+#olt-bts-buttons.olt-bts-grid > .olt-bts-btn:nth-child(1),
+#bts-buttons.olt-bts-grid > .olt-bts-btn:nth-child(1),
+#radioBtsTabs > .radio-bts-cell:nth-child(1) { animation-delay: 0.00s; }
+#olt-bts-buttons.olt-bts-grid > .olt-bts-btn:nth-child(2),
+#bts-buttons.olt-bts-grid > .olt-bts-btn:nth-child(2),
+#radioBtsTabs > .radio-bts-cell:nth-child(2) { animation-delay: 0.08s; }
+#olt-bts-buttons.olt-bts-grid > .olt-bts-btn:nth-child(3),
+#bts-buttons.olt-bts-grid > .olt-bts-btn:nth-child(3),
+#radioBtsTabs > .radio-bts-cell:nth-child(3) { animation-delay: 0.16s; }
+#olt-bts-buttons.olt-bts-grid > .olt-bts-btn:nth-child(4),
+#bts-buttons.olt-bts-grid > .olt-bts-btn:nth-child(4),
+#radioBtsTabs > .radio-bts-cell:nth-child(4) { animation-delay: 0.24s; }
+#olt-bts-buttons.olt-bts-grid > .olt-bts-btn:nth-child(5),
+#bts-buttons.olt-bts-grid > .olt-bts-btn:nth-child(5),
+#radioBtsTabs > .radio-bts-cell:nth-child(5) { animation-delay: 0.32s; }
+#olt-bts-buttons.olt-bts-grid > .olt-bts-btn:nth-child(6),
+#bts-buttons.olt-bts-grid > .olt-bts-btn:nth-child(6),
+#radioBtsTabs > .radio-bts-cell:nth-child(6) { animation-delay: 0.40s; }
+#olt-bts-buttons.olt-bts-grid > .olt-bts-btn:nth-child(7),
+#bts-buttons.olt-bts-grid > .olt-bts-btn:nth-child(7),
+#radioBtsTabs > .radio-bts-cell:nth-child(7) { animation-delay: 0.48s; }
+#olt-bts-buttons.olt-bts-grid > .olt-bts-btn:nth-child(8),
+#bts-buttons.olt-bts-grid > .olt-bts-btn:nth-child(8),
+#radioBtsTabs > .radio-bts-cell:nth-child(8) { animation-delay: 0.56s; }
+#olt-bts-buttons.olt-bts-grid > .olt-bts-btn:nth-child(9),
+#bts-buttons.olt-bts-grid > .olt-bts-btn:nth-child(9),
+#radioBtsTabs > .radio-bts-cell:nth-child(9) { animation-delay: 0.64s; }
+#olt-bts-buttons.olt-bts-grid > .olt-bts-btn:nth-child(10),
+#bts-buttons.olt-bts-grid > .olt-bts-btn:nth-child(10),
+#radioBtsTabs > .radio-bts-cell:nth-child(10) { animation-delay: 0.72s; }
+#olt-bts-buttons.olt-bts-grid > .olt-bts-btn:nth-child(11),
+#bts-buttons.olt-bts-grid > .olt-bts-btn:nth-child(11),
+#radioBtsTabs > .radio-bts-cell:nth-child(11) { animation-delay: 0.80s; }
+#olt-bts-buttons.olt-bts-grid > .olt-bts-btn:nth-child(12),
+#bts-buttons.olt-bts-grid > .olt-bts-btn:nth-child(12),
+#radioBtsTabs > .radio-bts-cell:nth-child(12) { animation-delay: 0.88s; }
+#olt-bts-buttons.olt-bts-grid > .olt-bts-btn:nth-child(13),
+#bts-buttons.olt-bts-grid > .olt-bts-btn:nth-child(13),
+#radioBtsTabs > .radio-bts-cell:nth-child(13) { animation-delay: 0.96s; }
+#olt-bts-buttons.olt-bts-grid > .olt-bts-btn:nth-child(14),
+#bts-buttons.olt-bts-grid > .olt-bts-btn:nth-child(14),
+#radioBtsTabs > .radio-bts-cell:nth-child(14) { animation-delay: 1.04s; }
+#olt-bts-buttons.olt-bts-grid > .olt-bts-btn:nth-child(15),
+#bts-buttons.olt-bts-grid > .olt-bts-btn:nth-child(15),
+#radioBtsTabs > .radio-bts-cell:nth-child(15) { animation-delay: 1.12s; }
+#olt-bts-buttons.olt-bts-grid > .olt-bts-btn:nth-child(16),
+#bts-buttons.olt-bts-grid > .olt-bts-btn:nth-child(16),
+#radioBtsTabs > .radio-bts-cell:nth-child(16) { animation-delay: 1.20s; }
+#olt-bts-buttons.olt-bts-grid > .olt-bts-btn:nth-child(n+17),
+#bts-buttons.olt-bts-grid > .olt-bts-btn:nth-child(n+17),
+#radioBtsTabs > .radio-bts-cell:nth-child(n+17) { animation-delay: 1.2s; }
+@media (prefers-reduced-motion: reduce) {
+    #olt-bts-buttons.olt-bts-grid > .olt-bts-btn,
+    #bts-buttons.olt-bts-grid > .olt-bts-btn,
+    #radioBtsTabs > .radio-bts-cell { animation: none !important; }
+}
+</style>
+<style>
+/* ════ MOBILE: RADIO tab — Deleted Radio sits beside the last BTS (e.g. Joypara) instead of its own full-width row ════ */
+@media (max-width: 700px) {
+    #app-radio #radioBtsTabs.radio-bts-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+    #app-radio .radio-bts-cell.radio-deleted-cell { grid-column: auto !important; }
+    #app-radio .radio-bts-grid .olt-bts-btn.radio-deleted-btn { grid-column: auto !important; }
+}
+</style>
 </head>
 <body>
 
@@ -5591,13 +5711,12 @@ document.addEventListener('click', function(e) {
 </style>
 
 <script>
-/* DESKTOP: RADIO BTS dropdown always opens DOWNWARD (page scrolls a little if there is not enough room) */
+/* DESKTOP + MOBILE: RADIO BTS dropdown always opens DOWNWARD (page scrolls a little if there is not enough room) */
 (function () {
     var orig = window.positionRadioPop;
     if (typeof orig !== 'function') return;
     var busy = false;
     window.positionRadioPop = function () {
-        if (window.innerWidth <= 700) return orig.apply(this, arguments);
         if (busy) return;
         var cell = document.querySelector('#radioBtsTabs .radio-bts-cell.pop-open');
         if (!cell) return;
@@ -5608,11 +5727,24 @@ document.addEventListener('click', function(e) {
         var r = cell.getBoundingClientRect();
         var mr = mc ? mc.getBoundingClientRect() : { top: 0, bottom: vh };
         var bottomLimit = Math.min(vh, mr.bottom) - 8;
+        if (window.innerWidth <= 700) {      // mobile: stay above the fixed bottom nav bar
+            var nb = document.querySelector('.sidebar');
+            if (nb) { var nr = nb.getBoundingClientRect(); if (nr.top > 0) bottomLimit = Math.min(bottomLimit, nr.top - 8); }
+        }
         var below = bottomLimit - r.bottom - 6;
         var want = Math.min(pop.scrollHeight + 14, vh * 0.6, 340);
+        var appR = document.getElementById('app-radio');
+        if (appR) appR.style.paddingBottom = '';          // start from zero extra space
+        r = cell.getBoundingClientRect();
+        below = bottomLimit - r.bottom - 6;
         if (below < want && mc) {            // not enough room below -> scroll the page a bit
             busy = true;
-            mc.scrollTop += (want - below);
+            var need = want - below;
+            var room = mc.scrollHeight - mc.clientHeight - mc.scrollTop;
+            if (need > room && appR) {        // add ONLY the missing space, nothing more
+                appR.style.paddingBottom = Math.ceil(need - room) + 'px';
+            }
+            mc.scrollTop += need;
             setTimeout(function () { busy = false; }, 60);
             r = cell.getBoundingClientRect();
             below = bottomLimit - r.bottom - 6;
@@ -5624,6 +5756,20 @@ document.addEventListener('click', function(e) {
         pop.style.top = (r.bottom + 6) + 'px';
         pop.style.maxHeight = Math.max(120, Math.min(below, vh * 0.75)) + 'px';
     };
+})();
+</script>
+<script>
+/* remove the temporary extra space under the Radio list as soon as no sub menu is open */
+(function () {
+    var grid = document.getElementById('radioBtsTabs');
+    if (!grid) return;
+    function reset() {
+        if (!grid.querySelector('.radio-bts-cell.pop-open')) {
+            var a = document.getElementById('app-radio');
+            if (a) a.style.paddingBottom = '';
+        }
+    }
+    new MutationObserver(reset).observe(grid, { subtree: true, childList: true, attributes: true, attributeFilter: ['class'] });
 })();
 </script>
 </body>
