@@ -433,6 +433,16 @@
         select { cursor: pointer; color: #3730a3; }
         select option { color: #1e1b4b; font-weight: 500; }
 
+
+        /* ════ LINE PROFILE: FW toggle (CDATA 16 only) ════ */
+        .lp-label-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+        .lp-label-row label { margin-bottom: 0 !important; }
+        .lp-fw-tabs { display: none; gap: 5px; padding: 0; background: transparent; border: none; }
+        .lp-fw-tabs.show { display: inline-flex; }
+        .lp-fw-tab { border: 1.5px solid transparent; font-family: 'Exo 2', sans-serif; font-weight: 700; font-size: 0.78em; letter-spacing: 0.3px; text-transform: uppercase; padding: 4px 12px; border-radius: 8px; cursor: pointer; transition: all .2s; line-height: 1.3; opacity: 0.55; color: #fff; }
+        #lp-fw-old { background: linear-gradient(135deg,#ea580c,#f59e0b); }
+        #lp-fw-up { background: linear-gradient(135deg,#059669,#10b981); }
+        .lp-fw-tab.active { opacity: 1; box-shadow: 0 3px 9px rgba(0,0,0,0.25); transform: translateY(-1px); border-color: rgba(255,255,255,0.7); }
         .section-chip {
             display: inline-flex; align-items: center; gap: 5px;
             font-family: 'Orbitron', monospace; font-size: 0.62em; font-weight: 700;
@@ -2288,7 +2298,11 @@ body:not(.show-epon) .docs-grp-epon { display: none !important; }
                         <span class="card-head-text">Profile Parameters</span>
                     </div>
                     <div class="input-row" style="grid-template-columns:1fr">
-                        <div class="field"><label for="oltName">OLT Name</label>
+                        <div class="field"><div class="lp-label-row"><label for="oltName">OLT Name</label>
+                            <div class="lp-fw-tabs show" id="lp-fw-tabs">
+                                <button type="button" class="lp-fw-tab active" id="lp-fw-old" onclick="setLPFw('old')">Old-FW</button>
+                                <button type="button" class="lp-fw-tab" id="lp-fw-up" onclick="setLPFw('up')">Up-FW</button>
+                            </div></div>
                             <select id="oltName">
                                 <option value="cdata16">CDATA GPON 16-PON</option>
                                 <option value="cdata8">CDATA GPON 8-PON</option>
@@ -4479,6 +4493,26 @@ script += `onu ${onuId} eth ${i} upstream-rate-limit cir ${vsol_bw} pir ${vsol_b
     }
 
     // ════ LINE PROFILE ════
+    let lpFw = 'old';
+    function setLPFw(mode) {
+        lpFw = mode;
+        document.getElementById('lp-fw-old').classList.toggle('active', mode === 'old');
+        document.getElementById('lp-fw-up').classList.toggle('active', mode === 'up');
+        const out = document.getElementById('lp-output');
+        if (out && out.value.trim()) generateLineProfile(false);
+    }
+    function updateLPFwTabs() {
+        const tabs = document.getElementById('lp-fw-tabs');
+        if (!tabs) return;
+        const show = document.getElementById('oltName').value === 'cdata16';
+        tabs.classList.toggle('show', show);
+        const out = document.getElementById('lp-output');
+        if (out && out.value.trim()) generateLineProfile(false);
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+        const sel = document.getElementById('oltName');
+        if (sel) { sel.addEventListener('change', updateLPFwTabs); updateLPFwTabs(); }
+    });
     function generateLineProfile(autoCopy) {
         const olt = document.getElementById('oltName').value;
         const profileId = document.getElementById('profileId').value.trim() || '10';
@@ -4493,7 +4527,11 @@ script += `onu ${onuId} eth ${i} upstream-rate-limit cir ${vsol_bw} pir ${vsol_b
         } else if (olt === 'cdata16') {
             let gemMappings = '';
             vlans.forEach((vlan, idx) => { gemMappings += `gem mapping 1 ${gemMap + idx} vlan ${vlan}\n`; });
-            script = `ont-lineprofile gpon profile-id ${profileId}\ntcont 1 dba-profile-id 30\ngem add 1 tcont 1\n${gemMappings}mapping-mode vlan\ncommit\nexit`;
+            if (lpFw === 'up') {
+                script = `ont-line-profile gpon profile-id ${profileId}\ntcont 1 dba-profile-id 30\nno gem mapping 1 ${gemMap}\ncommit\n${gemMappings}commit\nexit`;
+            } else {
+                script = `ont-lineprofile gpon profile-id ${profileId}\ntcont 1 dba-profile-id 30\ngem add 1 tcont 1\n${gemMappings}mapping-mode vlan\ncommit\nexit`;
+            }
         } else if (olt === 'cdata8') {
             let gemMappings = '';
             vlans.forEach((vlan, idx) => { gemMappings += `gem mapping 1 ${gemMap + idx} vlan ${vlan}\n`; });
