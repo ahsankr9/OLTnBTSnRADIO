@@ -653,6 +653,16 @@
         .docs-card.delete-mode .docs-cmd-item { padding-right: 32px; border-radius: 8px; transition: background 0.15s ease; }
         .docs-card.delete-mode .docs-cmd-item:hover { background: rgba(239,68,68,0.05); }
         .docs-cmd-item.selected-for-delete { background: rgba(239,68,68,0.1); }
+
+        /* ════ DOCS REORDER (hold a heading & drag it up/down) ════ */
+        #app-docs .docs-cmd-label { -webkit-touch-callout: none; }
+        .docs-card.docs-sorting .docs-cmd-label + .docs-code { display: none !important; }
+        .docs-card.docs-sorting .docs-cmd-label { margin-top: 8px !important; margin-bottom: 0 !important; }
+        .docs-cmd-item.docs-drag-src { opacity: .35; outline: 2px dashed #8b5cf6; outline-offset: 2px; border-radius: 8px; }
+        .docs-drag-ghost { position: fixed; z-index: 2000; margin: 0 !important; pointer-events: none; box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+            background: #ede9fe !important; border-left-color: #8b5cf6 !important; box-shadow: 0 12px 28px rgba(139,92,246,.38); transform: scale(1.02); opacity: .97; color: #0f172a; }
+        .docs-drag-ghost::after { content: '\2630'; color: #8b5cf6; font-size: 1.05em; flex-shrink: 0; }
+        body.docs-dragging, body.docs-dragging * { cursor: grabbing !important; user-select: none !important; -webkit-user-select: none !important; }
         .docs-header-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
         .docs-add-cmd-btn { display: inline-flex; align-items: center; gap: 5px; padding: 5px 12px; background: transparent; color: #00A36C; border: 1.5px solid #00A36C; border-radius: 14px; font-weight: 700; font-size: 0.75rem; cursor: pointer; font-family: 'Exo 2', sans-serif; transition: all 0.2s ease; white-space: nowrap; }
         .docs-add-cmd-btn:hover { background: #00A36C; color: #fff; }
@@ -1770,6 +1780,22 @@ font-weight: 700; font-weight: 600; color: #1a3a5c; font-size: 13px; }
             #onu-saved-modal .onu-modal-close { flex: 0 0 auto; }
         }
     
+        /* ════ LINE PROFILE SAVED SCRIPTS modal (mobile): 2-line smaller title so search fits in the same row ════ */
+        #lp-saved-modal .sv-br { display: none; }
+        @media (max-width: 700px) {
+            #lp-saved-modal .sv-br { display: inline; }
+            #lp-saved-modal .onu-modal-head { flex-wrap: nowrap; gap: 6px; padding: 12px 12px; }
+            #lp-saved-modal .onu-modal-head > div:first-child { flex: 0 0 auto; gap: 6px !important; }
+            #lp-saved-modal .onu-modal-head .ch-icon { width: 26px; height: 26px; flex-shrink: 0; }
+            #lp-saved-modal .card-head-text { font-size: 0.6em !important; letter-spacing: 1px !important; line-height: 1.35; white-space: nowrap; }
+            #lp-saved-modal .onu-saved-right { flex: 1 1 0; min-width: 0; gap: 5px !important; }
+            #lp-saved-modal .onu-saved-search { flex: 1 1 0; min-width: 0; max-width: calc(100% - 14px); }
+            #lp-saved-modal .onu-saved-search input { font-size: 0.78em; padding: 6px 6px 6px 26px; min-width: 0; }
+            #lp-saved-modal .onu-saved-search .material-icons { left: 6px; font-size: 14px; }
+            #lp-saved-modal .onu-modal-close { flex: 0 0 auto; }
+        }
+    
+        
         /* ════ MOBILE: OLT TASK dropdown — same light style/size as OLT DOCS ════ */
         @media (max-width: 700px) {
             .nav-group-children {
@@ -2324,6 +2350,11 @@ body:not(.show-epon) .docs-grp-epon { display: none !important; }
                     <div class="btn-row" style="margin-top:16px">
                         <button class="btn btn-gen" onclick="generateLineProfile(true)"><i class="fas fa-cogs" style="font-size:14px"></i> Generate</button>
                         <button class="btn btn-clr" onclick="clearLPFields()"><i class="fas fa-broom" style="font-size:14px"></i> Clear</button>
+                        <button class="btn" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff;box-shadow:0 3px 12px rgba(167,139,250,0.32)" onclick="openLpSavedModal()">
+                            <span class="material-icons" style="font-size:16px">bookmarks</span>
+                            <span>Saved</span>
+                            <span id="lp-saved-badge" style="background:rgba(255,255,255,0.3);border-radius:20px;padding:1px 7px;font-size:0.85em;margin-left:2px">0</span>
+                        </button>
                     </div>
                 </div>
                 <div class="card sky-stripe">
@@ -2343,6 +2374,54 @@ body:not(.show-epon) .docs-grp-epon { display: none !important; }
                     </div>
                 </div>
             </div>
+
+        <!-- LINE PROFILE SAVED SCRIPTS MODAL -->
+        <div id="lp-saved-modal" class="onu-modal-overlay" onclick="if(event.target===this) closeLpSavedModal()">
+            <div class="onu-modal-box">
+                <div class="onu-modal-head">
+                    <div style="display:flex;align-items:center;gap:10px">
+                        <div class="ch-icon chi-v"><i class="material-icons" style="font-size:16px">bookmarks</i></div>
+                        <span class="card-head-text">Saved<br class="sv-br"> Scripts (<span id="lp-saved-count">0</span>)</span>
+                    </div>
+                    <div class="onu-saved-right" style="display:flex;gap:6px;align-items:center;flex:1;justify-content:flex-end;min-width:0">
+                        <div class="onu-saved-search">
+                            <span class="material-icons">search</span>
+                            <input type="text" id="lp-saved-search" placeholder="Search saved scripts..." autocomplete="off" oninput="renderLpSaved()">
+                        </div>
+                        <button class="onu-modal-close" onclick="closeLpSavedModal()"><span class="material-icons">close</span></button>
+                    </div>
+                </div>
+                <div id="lp-saved-list" class="onu-modal-list"></div>
+            </div>
+        </div>
+
+        <!-- LINE PROFILE SAVED SCRIPT FLOATING VIEWER -->
+        <div id="lp-script-view-modal" class="onu-modal-overlay" onclick="if(event.target===this) closeLpScriptView()">
+            <div class="onu-modal-box onu-script-view-box">
+                <div class="onu-modal-head">
+                    <div style="display:flex;align-items:center;gap:10px">
+                        <div class="ch-icon chi-v"><i class="material-icons" style="font-size:16px">terminal</i></div>
+                        <span class="card-head-text" id="lp-view-title">Profile</span>
+                    </div>
+                    <button class="onu-modal-close" onclick="closeLpScriptView()"><span class="material-icons">close</span></button>
+                </div>
+                <div class="onu-view-meta" id="lp-view-meta"></div>
+                <div class="onu-view-body">
+                    <textarea id="lp-view-script" class="onu-view-textarea" readonly></textarea>
+                </div>
+                <div class="onu-view-actions">
+                    <button class="btn" id="lp-view-edit-btn" style="background:rgba(125,211,252,0.14);color:#7dd3fc;box-shadow:none" onclick="toggleLpViewEdit()">
+                        <span class="material-icons" style="font-size:16px">edit</span> Edit
+                    </button>
+                    <button class="btn btn-cpy" onclick="copyLpViewScript()">
+                        <span class="material-icons" style="font-size:16px">content_copy</span> Copy
+                    </button>
+                    <button class="btn" style="background:rgba(239,68,68,0.18);color:#f87171;box-shadow:none" onclick="deleteLpViewScript()">
+                        <span class="material-icons" style="font-size:16px">delete_outline</span> Delete
+                    </button>
+                </div>
+            </div>
+        </div>
         </div>
 
         <!-- APP 3: OLT DOCS -->
@@ -3164,6 +3243,7 @@ system\configure# pon on 1 1</code>
         openDocsSubnav();
         setupAllSearches();
         initEditableDocsSections();
+        initDocsReorder();
     }
 
     function switchToRadioTab(btn) {
@@ -4196,7 +4276,10 @@ script += `onu ${onuId} eth ${i} upstream-rate-limit cir ${vsol_bw} pir ${vsol_b
         }
         document.getElementById('output-script').innerText = script;
         if (autoCopy && script.trim()) { copyOnuScript(); }
-        autoSaveOnuScript(script, oltType, pon, onuId, onuMac);
+        autoSaveOnuScript(script, oltType, pon, onuId, onuMac, {
+            oltType, ports: String(onuPorts), slot, pon, onuId, mac: onuMac, lineProfile,
+            gemId, bandwidth: String(bandwidth), vlans: vlanList
+        });
     }
 
     // ════ ONU SAVED SCRIPTS (localStorage) ════
@@ -4223,7 +4306,7 @@ script += `onu ${onuId} eth ${i} upstream-rate-limit cir ${vsol_bw} pir ${vsol_b
 
     // Auto-saves every successfully generated script, keyed by ONU MAC.
     // Re-generating with the same MAC updates that entry instead of duplicating it.
-    function autoSaveOnuScript(script, oltType, pon, onuId, onuMac) {
+    function autoSaveOnuScript(script, oltType, pon, onuId, onuMac, form) {
         if (!script || !script.trim()) return;
         const macClean = (onuMac || '').replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
         if (!macClean) return; // need a MAC to use as the heading/key
@@ -4234,7 +4317,7 @@ script += `onu ${onuId} eth ${i} upstream-rate-limit cir ${vsol_bw} pir ${vsol_b
             id: idx !== -1 ? list[idx].id : (Date.now().toString(36) + Math.random().toString(36).slice(2, 7)),
             name: macKey,
             macKey, oltType, pon, onuId,
-            script,
+            script, form: form || null,
             savedAt: new Date().toISOString()
         };
         if (idx !== -1) { list.splice(idx, 1); }
@@ -4355,25 +4438,76 @@ script += `onu ${onuId} eth ${i} upstream-rate-limit cir ${vsol_bw} pir ${vsol_b
         onuViewCurrentId = null;
     }
 
-    function toggleOnuViewEdit() {
-        const ta = document.getElementById('onu-view-script');
-        const btn = document.getElementById('onu-view-edit-btn');
-        if (ta.readOnly) {
-            ta.readOnly = false;
-            ta.focus();
-            btn.innerHTML = '<span class="material-icons" style="font-size:16px">save</span> Save';
-        } else {
-            const list = getOnuSaved();
-            const idx = list.findIndex(s => s.id === onuViewCurrentId);
-            if (idx !== -1) {
-                list[idx].script = ta.value;
-                setOnuSaved(list);
-                renderOnuSaved();
-                showToast('Script updated');
-            }
-            ta.readOnly = true;
-            btn.innerHTML = '<span class="material-icons" style="font-size:16px">edit</span> Edit';
+    // Legacy entries (saved before the form snapshot existed): rebuild the inputs from the script text
+    function parseOnuFormFromScript(item) {
+        const sc = item.script || '';
+        const t = item.oltType || 'cdata-gpon-16';
+        const f = { oltType: t, ports: '1', slot: '0', pon: item.pon || '', onuId: item.onuId || '', mac: item.macKey || '',
+                    lineProfile: '', gemId: '1', bandwidth: '', vlans: ['', '', '', ''] };
+        let m; const all = (re) => Array.from(sc.matchAll(re));
+        const kbToBw = (k) => k === 261120 ? '255' : k === 262144 ? '256' : String(Math.round(k / 1024));
+        const maxPort = (re) => all(re).reduce((a, x) => Math.max(a, parseInt(x[1], 10)), 0);
+        if (t === 'vsol-gpon') {
+            if ((m = sc.match(/profile\s+(\d+)_port_onu/))) f.ports = m[1];
+            if ((m = sc.match(/profile line id\s+(\d+)/))) f.lineProfile = m[1];
+            all(/eth\s+(\d+)\s+mode tag vlan\s+(\d+)/g).forEach(x => { f.vlans[x[1] - 1] = x[2]; });
+            if ((m = sc.match(/upstream-rate-limit cir\s+(\d+)/))) { const c = +m[1]; f.bandwidth = c === 512000 ? '255' : c === 1024000 ? '256' : String(Math.round(c / 1024)); }
+        } else if (t.startsWith('cdata-gpon')) {
+            if ((m = sc.match(/ont-lineprofile-id\s+(\d+)\s+ont-srvprofile-id\s+(\d+)/))) { f.lineProfile = m[1]; f.ports = m[2] === '1' ? '4' : '1'; }
+            all(/native-vlan\s+\S+\s+\S+\s+eth\s+(\d+)\s+vlan\s+(\d+)/g).forEach(x => { f.vlans[x[1] - 1] = x[2]; });
+            if ((m = sc.match(/inbound\s+(\d+)/))) f.bandwidth = m[1];
+            if ((m = sc.match(/gemport\s+(\d+)/))) f.gemId = m[1];
+        } else if (t === 'utstarcom') {
+            if ((m = sc.match(/interface epon-olt\s+(\d+)\/(\d+)/))) { f.slot = m[1]; f.pon = m[2]; }
+            all(/remote-mgmt eth\s+(\d+)\s+vlan-mode tag\s+(\d+)/g).forEach(x => { f.vlans[x[1] - 1] = x[2]; });
+            f.ports = String(maxPort(/remote-mgmt eth\s+(\d+)\s+admin/g) || 1);
+            if ((m = sc.match(/upstream maximum-bandwidth\s+(\d+)/))) f.bandwidth = kbToBw(+m[1]);
+        } else if (t === 'fh-net') {
+            if ((m = sc.match(/^onu\s+(\d+)\/(\d+)\/(\d+)/m))) { f.slot = m[1]; f.pon = m[2]; f.onuId = m[3]; }
+            f.ports = String(maxPort(/interface ethernet 0\/(\d+)/g) || 1);
+            let cur = 0;
+            sc.split(/\r?\n/).forEach(line => {
+                const a = line.match(/^interface ethernet 0\/(\d+)/); if (a) cur = +a[1];
+                const b = line.match(/onu-vlan-mode tag vlan\s+(\d+)/); if (b && cur) f.vlans[cur - 1] = b[1];
+            });
+            if ((m = sc.match(/upstream fir 0 cir 0 pir\s+(\d+)/))) f.bandwidth = kbToBw(+m[1]);
+        } else if (t === 'phyhome') {
+            all(/customer-vlan\s+(\d+)\s+(\d+)\s+(\d+)\s+1\s+(\d+)\s+tag 7 33024\s+(\d+)/g).forEach(x => {
+                f.slot = x[1]; f.pon = x[2]; f.onuId = x[3]; f.vlans[x[4] - 1] = x[5];
+            });
+            f.ports = String(maxPort(/onu-port-attribute\s+\d+\s+\d+\s+\d+\s+(\d+)/g) || 1);
         }
+        return f;
+    }
+
+    // Edit (from the saved-script viewer): put every saved value back into the ONU form + output box
+    function toggleOnuViewEdit() {
+        const item = getOnuSaved().find(s => s.id === onuViewCurrentId);
+        if (!item) return;
+        const f = item.form || parseOnuFormFromScript(item);
+        const setSel = (id, v) => {
+            const el = document.getElementById(id);
+            if (el && v !== undefined && v !== '' && Array.from(el.options).some(o => o.value === String(v))) el.value = String(v);
+        };
+        const setVal = (id, v) => { const el = document.getElementById(id); if (el) el.value = (v === undefined || v === null) ? '' : v; };
+        closeOnuScriptView();
+        closeOnuSavedModal();
+        const onuTab = document.getElementById('app-onu');
+        if (onuTab && !onuTab.classList.contains('active')) switchTab('app-onu', document.getElementById('nav-onu'));
+        setSel('olt-type', f.oltType || item.oltType);
+        setSel('onu-ports', f.ports);
+        setVal('slot', f.slot !== undefined && f.slot !== '' ? f.slot : '0');
+        setVal('pon', f.pon !== undefined && f.pon !== '' ? f.pon : item.pon);
+        setVal('onu-id', f.onuId !== undefined && f.onuId !== '' ? f.onuId : item.onuId);
+        setVal('onu-mac', f.mac || item.macKey);
+        setVal('line-profile', f.lineProfile);
+        setVal('gem-id', f.gemId || '1');
+        setSel('bandwidth', f.bandwidth);
+        ['vlan1', 'vlan2', 'vlan3', 'vlan4'].forEach((id, i) => setVal(id, (f.vlans && f.vlans[i]) || ''));
+        document.getElementById('output-script').innerText = item.script;
+        showToast(`Loaded "${item.name}" into the form`);
+        const mc = document.getElementById('main-content'); if (mc) mc.scrollTop = 0;
+        const firstField = document.getElementById('olt-type'); if (firstField) firstField.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
     function copyOnuViewScript() {
@@ -4538,8 +4672,161 @@ script += `onu ${onuId} eth ${i} upstream-rate-limit cir ${vsol_bw} pir ${vsol_b
             script = `ont-lineprofile profile-id ${profileId}\ntcont 1 dba-profile-id 30\ngem add 1 tcont 1\n${gemMappings}mapping-mode vlan\ncommit\nexit`;
         }
         document.getElementById('lp-output').value = script;
+        autoSaveLpScript(script, {
+            olt, profileId: document.getElementById('profileId').value.trim(), gemMap: String(gemMap), vlans, fw: lpFw
+        }, !!autoCopy);
         if (autoCopy && script.trim()) { copyLPScript(); }
     }
+
+
+    // ════ LINE PROFILE SAVED SCRIPTS (localStorage, same behaviour as ONU Add) ════
+    const LP_SAVED_KEY = 'nms_lp_saved_scripts_v1';
+    const LP_OLT_NAMES = { cdata16: 'CDATA GPON 16-PON', cdata8: 'CDATA GPON 8-PON', vsol: 'VSOL / ATOP' };
+
+    function getLpSaved() {
+        try { const l = JSON.parse(localStorage.getItem(LP_SAVED_KEY) || '[]'); return Array.isArray(l) ? l : []; }
+        catch (e) { return []; }
+    }
+    function setLpSaved(list) {
+        try { localStorage.setItem(LP_SAVED_KEY, JSON.stringify(list)); return true; }
+        catch (e) { showToast('Could not save (storage full or unavailable)', 'error'); return false; }
+    }
+    function lpMetaText(item) {
+        const d = new Date(item.savedAt);
+        const dateStr = isNaN(d) ? '' : d.toLocaleString();
+        const f = item.form || {};
+        const fw = item.olt === 'cdata16' ? (f.fw === 'up' ? ' (Up-FW)' : ' (Old-FW)') : '';
+        const v = (f.vlans && f.vlans.length) ? ' · VLAN ' + f.vlans.join(',') : '';
+        return `${LP_OLT_NAMES[item.olt] || item.olt}${fw}${v} · ${dateStr}`;
+    }
+    // Auto-saves every generated script (needs a Line Profile ID + at least one VLAN).
+    // Same OLT + same Profile ID => updates that entry instead of duplicating it.
+    function autoSaveLpScript(script, form, allowCreate) {
+        if (!script || !script.trim() || !form.profileId || !form.vlans.length) return;
+        const key = form.olt + '|' + form.profileId;
+        const list = getLpSaved();
+        const idx = list.findIndex(x => x.key === key);
+        if (idx === -1 && !allowCreate) return;
+        const entry = {
+            id: idx !== -1 ? list[idx].id : (Date.now().toString(36) + Math.random().toString(36).slice(2, 7)),
+            key, name: 'Profile ' + form.profileId, olt: form.olt, profileId: form.profileId,
+            script, form, savedAt: new Date().toISOString()
+        };
+        if (idx !== -1) list.splice(idx, 1);
+        list.unshift(entry);
+        setLpSaved(list);
+        renderLpSaved();
+    }
+    function copyLpSaved(id, ev) {
+        if (ev) ev.stopPropagation();
+        const item = getLpSaved().find(x => x.id === id);
+        if (!item) return;
+        const finish = () => showToast(`Copied "${item.name}"`);
+        if (navigator.clipboard && navigator.clipboard.writeText && window.isSecureContext) {
+            navigator.clipboard.writeText(item.script).then(finish).catch(() => fallbackCopyText(item.script, finish));
+        } else { fallbackCopyText(item.script, finish); }
+    }
+    function deleteLpSaved(id, ev) {
+        if (ev) ev.stopPropagation();
+        const list = getLpSaved();
+        const item = list.find(x => x.id === id);
+        if (!item) return;
+        if (!window.confirm(`Delete "${item.name}"?`)) return;
+        setLpSaved(list.filter(x => x.id !== id));
+        renderLpSaved();
+        showToast('Deleted');
+    }
+    function openLpSavedModal() {
+        const si = document.getElementById('lp-saved-search'); if (si) si.value = '';
+        renderLpSaved();
+        document.getElementById('lp-saved-modal').classList.add('open');
+    }
+    function closeLpSavedModal() { const m = document.getElementById('lp-saved-modal'); if (m) m.classList.remove('open'); }
+    function renderLpSaved() {
+        const list = getLpSaved();
+        const wrap = document.getElementById('lp-saved-list');
+        const countEl = document.getElementById('lp-saved-count');
+        const badgeEl = document.getElementById('lp-saved-badge');
+        if (badgeEl) badgeEl.textContent = list.length;
+        if (countEl) countEl.textContent = list.length;
+        if (!wrap) return;
+        if (!list.length) {
+            wrap.innerHTML = '<div class="onu-saved-empty">No saved scripts yet — click Generate to auto-save one (needs a Line Profile ID and a VLAN).</div>';
+            return;
+        }
+        const sq = ((document.getElementById('lp-saved-search') || {}).value || '').toLowerCase().trim();
+        const shown = sq ? list.filter(it => [it.name, LP_OLT_NAMES[it.olt], it.olt, it.script].some(v => String(v == null ? '' : v).toLowerCase().includes(sq))) : list;
+        if (!shown.length) { wrap.innerHTML = '<div class="onu-saved-empty">No matching scripts found.</div>'; return; }
+        wrap.innerHTML = shown.map(item => `<div class="onu-saved-item">
+                <div class="osi-info" onclick="openLpScriptView('${item.id}')" title="Click to view full script">
+                    <div class="osi-name">${escapeHtml(item.name)}</div>
+                    <div class="osi-meta">${escapeHtml(lpMetaText(item))}</div>
+                </div>
+                <div class="osi-actions">
+                    <button onclick="copyLpSaved('${item.id}', event)" title="Copy"><span class="material-icons" style="font-size:15px">content_copy</span></button>
+                    <button class="osi-del" onclick="deleteLpSaved('${item.id}', event)" title="Delete"><span class="material-icons" style="font-size:15px">delete_outline</span></button>
+                </div>
+            </div>`).join('');
+    }
+    let lpViewCurrentId = null;
+    function openLpScriptView(id) {
+        const item = getLpSaved().find(x => x.id === id);
+        if (!item) return;
+        lpViewCurrentId = id;
+        document.getElementById('lp-view-title').textContent = item.name;
+        document.getElementById('lp-view-meta').textContent = lpMetaText(item);
+        const ta = document.getElementById('lp-view-script');
+        ta.value = item.script; ta.readOnly = true;
+        document.getElementById('lp-view-edit-btn').innerHTML = '<span class="material-icons" style="font-size:16px">edit</span> Edit';
+        document.getElementById('lp-script-view-modal').classList.add('open');
+    }
+    function closeLpScriptView() {
+        const m = document.getElementById('lp-script-view-modal'); if (m) m.classList.remove('open');
+        lpViewCurrentId = null;
+    }
+    // Edit: put every saved value back into the Line Profile form + output box
+    function toggleLpViewEdit() {
+        const item = getLpSaved().find(x => x.id === lpViewCurrentId);
+        if (!item) return;
+        const f = item.form || {};
+        closeLpScriptView();
+        closeLpSavedModal();
+        const lpTab = document.getElementById('app-lp');
+        if (lpTab && !lpTab.classList.contains('active')) switchTab('app-lp', document.getElementById('nav-lp'));
+        const sel = document.getElementById('oltName');
+        if (Array.from(sel.options).some(o => o.value === item.olt)) sel.value = item.olt;
+        lpFw = f.fw === 'up' ? 'up' : 'old';
+        document.getElementById('lp-fw-old').classList.toggle('active', lpFw === 'old');
+        document.getElementById('lp-fw-up').classList.toggle('active', lpFw === 'up');
+        const tabs = document.getElementById('lp-fw-tabs'); if (tabs) tabs.classList.toggle('show', sel.value === 'cdata16');
+        document.getElementById('profileId').value = f.profileId || item.profileId || '';
+        document.getElementById('gemMap').value = f.gemMap || '1';
+        ['lp-vlan1','lp-vlan2','lp-vlan3','lp-vlan4'].forEach((id, i) => { document.getElementById(id).value = (f.vlans && f.vlans[i]) || ''; });
+        document.getElementById('lp-output').value = item.script;
+        showToast(`Loaded "${item.name}" into the form`);
+        const mc = document.getElementById('main-content'); if (mc) mc.scrollTop = 0;
+        sel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    function copyLpViewScript() {
+        const ta = document.getElementById('lp-view-script');
+        const finish = () => showToast('Copied');
+        if (navigator.clipboard && navigator.clipboard.writeText && window.isSecureContext) {
+            navigator.clipboard.writeText(ta.value).then(finish).catch(() => fallbackCopyText(ta.value, finish));
+        } else { fallbackCopyText(ta.value, finish); }
+    }
+    function deleteLpViewScript() {
+        if (!lpViewCurrentId) return;
+        const list = getLpSaved();
+        const item = list.find(x => x.id === lpViewCurrentId);
+        if (!item) return;
+        if (!window.confirm(`Delete "${item.name}"?`)) return;
+        setLpSaved(list.filter(x => x.id !== lpViewCurrentId));
+        renderLpSaved();
+        closeLpScriptView();
+        showToast('Deleted');
+    }
+    document.addEventListener('DOMContentLoaded', renderLpSaved);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeLpScriptView(); closeLpSavedModal(); } });
 
     function clearLPFields() {
         ['profileId','lp-vlan1','lp-vlan2','lp-vlan3','lp-vlan4'].forEach(id => document.getElementById(id).value = '');
@@ -4821,6 +5108,186 @@ script += `onu ${onuId} eth ${i} upstream-rate-limit cir ${vsol_bw} pir ${vsol_b
             });
         });
     }
+
+
+    // ════ DOCS — MOVE HEADINGS UP / DOWN (all docs sections) ════
+    const ALL_DOCS_SECTIONS = ['d_cdata_troubleshoot','d_cdata_installation','d_vsol_troubleshoot','d_vsol_installation','d_gpon8_troubleshoot','d_gpon8_installation','d_utstar_troubleshoot','d_utstar_installation','d_phyhome_troubleshoot','d_phyhome_installation','d_fhnet_troubleshoot','d_fhnet_installation'];
+    function docsOrderKey(sectionId) { return 'docsOrder_' + sectionId; }
+    function getDocsOrder(sectionId) {
+        try { const v = JSON.parse(localStorage.getItem(docsOrderKey(sectionId))); return Array.isArray(v) ? v : []; } catch (e) { return []; }
+    }
+    function saveDocsOrder(sectionId) {
+        const card = document.getElementById(sectionId).querySelector('.docs-card');
+        const uids = Array.from(card.querySelectorAll('.docs-cmd-item')).map(i => i.dataset.uid);
+        try { localStorage.setItem(docsOrderKey(sectionId), JSON.stringify(uids)); } catch (e) { showToast('Could not save order', 'error'); }
+    }
+    // non-editable sections (UTStarcom / Phyhome / FH-NET): wrap each label+code pair so it can be moved
+    function initDocsReorder() {
+        ALL_DOCS_SECTIONS.forEach(sectionId => {
+            const section = document.getElementById(sectionId);
+            const card = section && section.querySelector('.docs-card');
+            if (!card) return;
+            Array.from(card.querySelectorAll('.docs-cmd-label')).forEach((lbl, idx) => {
+                if (lbl.parentNode.classList.contains('docs-cmd-item')) return;
+                const code = lbl.nextElementSibling;
+                if (!code || !code.classList.contains('docs-code')) return;
+                const item = document.createElement('div');
+                item.className = 'docs-cmd-item';
+                item.dataset.uid = sectionId + '_d' + idx;
+                item.dataset.custom = '0';
+                lbl.parentNode.insertBefore(item, lbl);
+                item.appendChild(lbl);
+                item.appendChild(code);
+            });
+            applyDocsOrder(sectionId);
+        });
+    }
+    function applyDocsOrder(sectionId) {
+        const section = document.getElementById(sectionId);
+        const card = section && section.querySelector('.docs-card');
+        if (!card) return;
+        const items = Array.from(card.querySelectorAll('.docs-cmd-item'));
+        const order = getDocsOrder(sectionId);
+        if (items.length > 1 && order.length) {
+            const pos = u => { const i = order.indexOf(u); return i === -1 ? 1e6 : i; };
+            const sorted = items.map((it, i) => ({ it, i }))
+                .sort((a, b) => (pos(a.it.dataset.uid) - pos(b.it.dataset.uid)) || (a.i - b.i)).map(x => x.it);
+            const marker = document.createComment('');
+            items[items.length - 1].after(marker);
+            sorted.forEach(it => marker.parentNode.insertBefore(it, marker));
+            marker.remove();
+        }
+    }
+    // ════ HOLD a command heading & drag it up/down (mouse + touch) ════
+    (function docsHoldDrag() {
+        const HOLD_MS = 350, TOL = 8, EDGE = 70;
+        let st = null, suppressClick = false, lastTouch = 0;
+
+        function xy(e) {
+            const t = (e.touches && e.touches[0]) || (e.changedTouches && e.changedTouches[0]) || e;
+            return { x: t.clientX, y: t.clientY };
+        }
+        function sectionOf(card) {
+            let p = card;
+            while (p && p !== document.body) { if (ALL_DOCS_SECTIONS.indexOf(p.id) !== -1) return p.id; p = p.parentElement; }
+            return null;
+        }
+        function scroller(el) {
+            let p = el.parentElement;
+            while (p && p !== document.body && p !== document.documentElement) {
+                const o = getComputedStyle(p).overflowY;
+                if ((o === 'auto' || o === 'scroll') && p.scrollHeight > p.clientHeight + 1) return p;
+                p = p.parentElement;
+            }
+            return document.scrollingElement || document.documentElement;
+        }
+        function begin(e) {
+            if (st) return;
+            if (e.type === 'mousedown') { if (e.button !== 0 || Date.now() - lastTouch < 800) return; }
+            const lbl = e.target.closest && e.target.closest('#app-docs .docs-cmd-label');
+            if (!lbl) return;
+            const item = lbl.closest('.docs-cmd-item');
+            const card = item && item.closest('.docs-card');
+            if (!card || card.classList.contains('edit-mode') || card.classList.contains('delete-mode')) return;
+            const sectionId = sectionOf(card);
+            if (!sectionId) return;
+            const p = xy(e);
+            st = { lbl, item, card, sectionId, x0: p.x, y0: p.y, y: p.y, active: false, ghost: null, raf: 0, sc: null, offY: 0 };
+            st.timer = setTimeout(activate, HOLD_MS);
+        }
+        function activate() {
+            if (!st) return;
+            const r = st.lbl.getBoundingClientRect();
+            st.offY = st.y0 - r.top;
+            st.active = true;
+            st.sc = scroller(st.item);
+            const g = st.lbl.cloneNode(true);
+            g.className = 'docs-cmd-label docs-drag-ghost';
+            g.style.width = r.width + 'px';
+            g.style.left = r.left + 'px';
+            g.style.top = (st.y - st.offY) + 'px';
+            document.body.appendChild(g);
+            st.ghost = g;
+            st.card.classList.add('docs-sorting');
+            st.item.classList.add('docs-drag-src');
+            document.body.classList.add('docs-dragging');
+            if (navigator.vibrate) { try { navigator.vibrate(18); } catch (_) {} }
+            tick();
+        }
+        function reorder() {
+            const item = st.item, parent = item.parentNode, y = st.y;
+            const sibs = Array.from(parent.children).filter(c => c !== item && c.classList.contains('docs-cmd-item') && c.style.display !== 'none');
+            if (!sibs.length) return;
+            let before = null;
+            for (const c of sibs) {
+                const r = c.getBoundingClientRect();
+                if (y < r.top + r.height / 2) { before = c; break; }
+            }
+            const ref = before ? before : sibs[sibs.length - 1].nextSibling;
+            if (ref !== item && item.nextSibling !== ref) parent.insertBefore(item, ref);
+        }
+        function tick() {
+            if (!st || !st.active) return;
+            const sc = st.sc;
+            const isDoc = sc === document.scrollingElement || sc === document.documentElement;
+            const top = isDoc ? 0 : sc.getBoundingClientRect().top;
+            const bot = isDoc ? window.innerHeight : sc.getBoundingClientRect().bottom;
+            let dy = 0;
+            if (st.y < top + EDGE) dy = -Math.ceil((top + EDGE - st.y) / 5);
+            else if (st.y > bot - EDGE) dy = Math.ceil((st.y - (bot - EDGE)) / 5);
+            if (dy) {
+                const prevSB = sc.style.scrollBehavior; sc.style.scrollBehavior = 'auto';
+                sc.scrollTop += Math.max(-24, Math.min(24, dy));
+                sc.style.scrollBehavior = prevSB;
+            }
+            st.ghost.style.top = (st.y - st.offY) + 'px';
+            reorder();
+            st.raf = requestAnimationFrame(tick);
+        }
+        function move(e) {
+            if (!st) return;
+            const p = xy(e);
+            if (!st.active) {
+                if (Math.abs(p.x - st.x0) > TOL || Math.abs(p.y - st.y0) > TOL) { clearTimeout(st.timer); st = null; } // user is scrolling
+                return;
+            }
+            st.y = p.y;
+            if (e.cancelable) e.preventDefault();
+        }
+        function end() {
+            if (!st) return;
+            clearTimeout(st.timer);
+            cancelAnimationFrame(st.raf);
+            if (st.active) {
+                if (st.ghost) st.ghost.remove();
+                st.card.classList.remove('docs-sorting');
+                st.item.classList.remove('docs-drag-src');
+                document.body.classList.remove('docs-dragging');
+                saveDocsOrder(st.sectionId);
+                const it = st.item;
+                suppressClick = true; setTimeout(() => { suppressClick = false; }, 450);
+                setTimeout(() => { try { it.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); } catch (_) {} }, 30);
+                showToast('Order saved');
+            }
+            st = null;
+        }
+
+        document.addEventListener('touchstart', e => { lastTouch = Date.now(); begin(e); }, { passive: true });
+        document.addEventListener('touchmove', move, { passive: false });
+        document.addEventListener('touchend', () => { lastTouch = Date.now(); end(); });
+        document.addEventListener('touchcancel', end);
+        document.addEventListener('mousedown', begin);
+        document.addEventListener('mousemove', move);
+        document.addEventListener('mouseup', end);
+        window.addEventListener('blur', end);
+        document.addEventListener('contextmenu', e => { if (st) e.preventDefault(); });
+        document.addEventListener('selectstart', e => { if (st && st.active) e.preventDefault(); });
+        // a drag-drop must not also count as a "click" that opens/closes the heading
+        document.addEventListener('click', e => {
+            if (!suppressClick) return;
+            e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation();
+        }, true);
+    })();
 
     let currentDocsEditItem = null;
 
@@ -5400,7 +5867,7 @@ document.addEventListener('click', function(e) {
     (function cloudSync() {
         const statusEl = document.getElementById('cloud-status');
         const setStatus = (txt, cls) => { if (statusEl) { statusEl.textContent = txt; statusEl.className = 'cloud-status ' + (cls || ''); } };
-        const SYNC_KEY = /^(mzr_radio_data_v1|mzr_radio_deleted_v1|mzr_bts_data_v1|mzr_olt_ips_v1|nms_onu_saved_scripts_v1|docsDeleted_.+|docsCustom_.+|docsEdited_.+)$/;
+        const SYNC_KEY = /^(mzr_radio_data_v1|mzr_radio_deleted_v1|mzr_bts_data_v1|mzr_olt_ips_v1|nms_onu_saved_scripts_v1|nms_lp_saved_scripts_v1|docsDeleted_.+|docsCustom_.+|docsEdited_.+|docsOrder_.+)$/;
 
         if (!FIREBASE_CONFIG.apiKey || !FIREBASE_CONFIG.databaseURL || typeof firebase === 'undefined') {
             setStatus('☁ Local only');
@@ -5441,6 +5908,7 @@ document.addEventListener('click', function(e) {
                 });
                 custom.forEach(c => card.appendChild(buildDocsCmdItem(c.uid, c.label, c.code, true, sectionId)));
             });
+            if (typeof ALL_DOCS_SECTIONS !== 'undefined') ALL_DOCS_SECTIONS.forEach(applyDocsOrder);
         }
 
         function applyRemote(key) {
@@ -5458,6 +5926,8 @@ document.addEventListener('click', function(e) {
                     loadOltIpData(); refreshOltIpView();
                 } else if (key === 'nms_onu_saved_scripts_v1') {
                     renderOnuSaved();
+                } else if (key === 'nms_lp_saved_scripts_v1') {
+                    renderLpSaved();
                 } else {
                     refreshDocsFromStorage();
                 }
