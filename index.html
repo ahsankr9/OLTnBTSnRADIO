@@ -6497,5 +6497,231 @@ document.addEventListener('click', function(e) {
     mq.addEventListener && mq.addEventListener('change', function (e) { if (e.matches) { if (pip) pip.close(); close(); } });
 })();
 </script>
+<script>
+/* ════ DRAG & DROP: BTS name buttons reorder (OLT DOCS IP, BTS INFO, RADIO) ════
+   Mouse: click-and-drag. Touch: long-press (~0.35s) then drag. Order is saved + cloud-synced.
+   Edit / Delete mode on thakle drag off thake. */
+(function () {
+    var HOLD_MS = 350, MOVE_PX = 6;
+
+    function makeSortable(opts) {
+        var box = document.getElementById(opts.id);
+        if (!box) return;
+        var st = null, justDragged = false;
+
+        function items() { return Array.prototype.filter.call(box.children, function (c) { return c.matches(opts.item); }); }
+        function blocked() { return typeof opts.blocked === 'function' && opts.blocked(); }
+
+        function begin(e, el, x, y) {
+            var r = el.getBoundingClientRect();
+            var ghost = el.cloneNode(true);
+            ghost.style.cssText = 'position:fixed;z-index:99999;pointer-events:none;margin:0;opacity:.92;width:' + r.width + 'px;height:' + r.height + 'px;left:' + r.left + 'px;top:' + r.top + 'px;transform:scale(1.05) rotate(-1.5deg);box-shadow:0 14px 30px rgba(0,0,0,.35);transition:none;animation:none;';
+            var pop = ghost.querySelector('.radio-pop'); if (pop) pop.remove();
+            document.body.appendChild(ghost);
+            el.style.opacity = '0.3';
+            el.style.outline = '2px dashed #00d4ff';
+            st.active = true; st.ghost = ghost; st.dx = x - r.left; st.dy = y - r.top;
+            if (opts.onStart) opts.onStart();
+            if (navigator.vibrate) { try { navigator.vibrate(20); } catch (z) {} }
+        }
+
+        function move(x, y) {
+            var s = st; if (!s || !s.active) return;
+            s.ghost.style.left = (x - s.dx) + 'px';
+            s.ghost.style.top = (y - s.dy) + 'px';
+            var under = document.elementFromPoint(x, y);
+            var tgt = under && under.closest ? under.closest(opts.item) : null;
+            if (!tgt || tgt === s.el || tgt.parentNode !== box) return;
+            var r = tgt.getBoundingClientRect();
+            var after;
+            // grid friendly: compare along the row first, then vertical
+            var sameRow = Math.abs((s.el.getBoundingClientRect().top) - r.top) < r.height / 2;
+            after = sameRow ? (x > r.left + r.width / 2) : (y > r.top + r.height / 2);
+            var elBefore = !!(s.el.compareDocumentPosition(tgt) & Node.DOCUMENT_POSITION_FOLLOWING);
+            if (sameRow) {
+                if (elBefore && after) box.insertBefore(s.el, tgt.nextSibling);
+                else if (!elBefore && !after) box.insertBefore(s.el, tgt);
+            } else {
+                box.insertBefore(s.el, elBefore ? tgt.nextSibling : tgt);
+            }
+        }
+
+        function end(commit) {
+            var s = st; st = null;
+            document.removeEventListener('mousemove', onMouseMove, true);
+            document.removeEventListener('mouseup', onMouseUp, true);
+            document.removeEventListener('touchmove', onTouchMove, { capture: true });
+            document.removeEventListener('touchend', onTouchEnd, true);
+            document.removeEventListener('touchcancel', onTouchEnd, true);
+            if (!s) return;
+            clearTimeout(s.timer);
+            if (!s.active) return;
+            if (s.ghost) s.ghost.remove();
+            s.el.style.opacity = ''; s.el.style.outline = '';
+            justDragged = true; setTimeout(function () { justDragged = false; }, 350);
+            if (commit) {
+                var order = items().map(function (c) { return c.getAttribute(opts.keyAttr); });
+                if (order.join('\u0001') !== s.before) opts.onReorder(order);
+            }
+            if (opts.onEnd) opts.onEnd();
+        }
+
+        function pick(t) {
+            var el = t && t.closest ? t.closest(opts.item) : null;
+            return (el && el.parentNode === box && el.getAttribute(opts.keyAttr) != null && !(opts.skip && opts.skip(el))) ? el : null;
+        }
+        function arm(el, x, y, touch) {
+            st = { el: el, x: x, y: y, active: false, touch: touch, before: items().map(function (c) { return c.getAttribute(opts.keyAttr); }).join('\u0001') };
+            if (touch) st.timer = setTimeout(function () { if (st && !st.active) begin(null, el, st.x, st.y); }, HOLD_MS);
+        }
+
+        function onMouseMove(e) {
+            if (!st) return;
+            if (!st.active) {
+                if (Math.abs(e.clientX - st.x) + Math.abs(e.clientY - st.y) < MOVE_PX) return;
+                begin(e, st.el, e.clientX, e.clientY);
+            }
+            e.preventDefault(); move(e.clientX, e.clientY);
+        }
+        function onMouseUp() { end(true); }
+        function onTouchMove(e) {
+            if (!st) return;
+            var t = e.touches[0];
+            if (!st.active) {
+                if (Math.abs(t.clientX - st.x) + Math.abs(t.clientY - st.y) > 10) end(false); // user is scrolling
+                return;
+            }
+            e.preventDefault(); move(t.clientX, t.clientY);
+        }
+        function onTouchEnd() { end(true); }
+
+        box.addEventListener('mousedown', function (e) {
+            if (e.button !== 0 || blocked()) return;
+            var el = pick(e.target); if (!el) return;
+            arm(el, e.clientX, e.clientY, false);
+            document.addEventListener('mousemove', onMouseMove, true);
+            document.addEventListener('mouseup', onMouseUp, true);
+        });
+        box.addEventListener('touchstart', function (e) {
+            if (blocked() || e.touches.length !== 1) return;
+            var el = pick(e.target); if (!el) return;
+            var t = e.touches[0];
+            arm(el, t.clientX, t.clientY, true);
+            st.x = t.clientX; st.y = t.clientY;
+            document.addEventListener('touchmove', onTouchMove, { capture: true, passive: false });
+            document.addEventListener('touchend', onTouchEnd, true);
+            document.addEventListener('touchcancel', onTouchEnd, true);
+        }, { passive: true });
+        // swallow the click that follows a drag
+        box.addEventListener('click', function (e) {
+            if (justDragged) { e.stopPropagation(); e.preventDefault(); }
+        }, true);
+        box.addEventListener('contextmenu', function (e) { if (st && st.active) e.preventDefault(); });
+        box.classList.add('bts-sortable');
+    }
+
+    /* small style: grab cursor, no text selection / native drag while sorting */
+    var css = document.createElement('style');
+    css.textContent = '.bts-sortable .olt-bts-btn{cursor:grab;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-user-drag:none}' +
+        '.bts-sortable.mode-edit .olt-bts-btn,.bts-sortable.mode-del .olt-bts-btn{cursor:pointer}' +
+        '.bts-sortable .olt-bts-btn:active{cursor:grabbing}';
+    document.head.appendChild(css);
+
+    function reorderBy(arr, order, keyFn) {
+        var rank = {}; order.forEach(function (k, i) { rank[k] = i; });
+        var sorted = arr.map(function (o, i) { return { o: o, i: i }; }).sort(function (a, b) {
+            var ra = rank[keyFn(a.o)], rb = rank[keyFn(b.o)];
+            ra = ra === undefined ? 1e9 : ra; rb = rb === undefined ? 1e9 : rb;
+            return ra - rb || a.i - b.i;
+        }).map(function (x) { return x.o; });
+        return sorted;
+    }
+
+    /* 1) OLT DOCS -> OLT IP BTS list */
+    makeSortable({
+        id: 'olt-bts-buttons', item: '.olt-bts-btn', keyAttr: 'data-bts',
+        blocked: function () { return !!oltToolMode || !!currentOltBts; },
+        onReorder: function (order) {
+            oltIpData = reorderBy(oltIpData, order, function (o) { return o.bts; });
+            saveOltIpData(); renderOltBtsButtons();
+            if (typeof showToast === 'function') showToast('BTS order saved');
+        }
+    });
+
+    /* 2) BTS INFO list */
+    makeSortable({
+        id: 'bts-buttons', item: '.olt-bts-btn', keyAttr: 'data-bts',
+        blocked: function () { return !!btsToolMode || !!btsOpen; },
+        onReorder: function (order) {
+            var sorted = reorderBy(btsData.slice(), order, function (r) { return r.bts; });
+            btsData.length = 0; sorted.forEach(function (r) { btsData.push(r); });
+            saveBtsDataToStorage(); renderBtsButtons();
+            if (typeof showToast === 'function') showToast('BTS order saved');
+        }
+    });
+
+    /* 3) RADIO list (Deleted Radio cell stays last, not draggable) */
+    makeSortable({
+        id: 'radioBtsTabs', item: '.radio-bts-cell', keyAttr: 'data-id',
+        blocked: function () { return !!radioToolMode; },
+        skip: function (el) { return el.classList.contains('radio-deleted-cell'); },
+        onStart: function () { if (typeof closeRadioPop === 'function') closeRadioPop(); },
+        onReorder: function (order) {
+            order = order.filter(function (id) { return id !== RADIO_DELETED_ID && radioData[id]; });
+            var copy = {}; Object.keys(radioData).forEach(function (k) { copy[k] = radioData[k]; });
+            Object.keys(radioData).forEach(function (k) { delete radioData[k]; });
+            order.forEach(function (id) { radioData[id] = copy[id]; });
+            Object.keys(copy).forEach(function (k) { if (!(k in radioData)) radioData[k] = copy[k]; });
+            saveRadioDataToStorage(); renderRadioBtsTabs();
+            if (typeof populateRadioBtsSelect === 'function') populateRadioBtsSelect();
+            if (typeof showToast === 'function') showToast('BTS order saved');
+        }
+    });
+})();
+</script>
+<script>
+/* MOBILE ONLY - BTS INFO: IP-r upor TAP = Termius e SSH2 (ahsanul.kabir@IP:22), HOLD 1 second = copy. */
+(function () {
+    var timer = null, fired = false, sx = 0, sy = 0;
+    var st = document.createElement('style');
+    st.textContent = '#app-bts .ip-copy{touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}';
+    document.head.appendChild(st);
+    function btsIpEl(t) {
+        if (window.innerWidth > 700) return null;            // web view: normal click-to-copy
+        var el = t && t.closest && t.closest('#app-bts .ip-copy');
+        if (!el) return null;
+        var tb = el.closest('#bts-table-body, #bts-cards-mobile');
+        if (tb && (tb.classList.contains('mode-edit') || tb.classList.contains('mode-del'))) return null;
+        return el;
+    }
+    function ipOf(el) { return (el.dataset.ip || el.textContent).trim(); }
+    document.addEventListener('pointerdown', function (e) {
+        var el = btsIpEl(e.target); if (!el) return;
+        fired = false; sx = e.clientX; sy = e.clientY; clearTimeout(timer);
+        timer = setTimeout(function () {
+            fired = true;
+            if (navigator.vibrate) { try { navigator.vibrate(40); } catch (x) {} }
+            copyIpToClipboard(ipOf(el), el);
+        }, 1000);
+    }, true);
+    ['pointerup', 'pointercancel', 'pointerleave'].forEach(function (n) {
+        document.addEventListener(n, function () { clearTimeout(timer); }, true);
+    });
+    document.addEventListener('pointermove', function (e) {
+        if (Math.abs(e.clientX - sx) > 10 || Math.abs(e.clientY - sy) > 10) clearTimeout(timer);
+    }, true);
+    document.addEventListener('contextmenu', function (e) { if (btsIpEl(e.target)) e.preventDefault(); }, true);
+    document.addEventListener('click', function (e) {
+        var el = btsIpEl(e.target); if (!el) return;
+        e.stopImmediatePropagation(); e.preventDefault();          // no copy on a plain tap
+        if (fired) { fired = false; return; }                      // long-press (already copied)
+        var ip = ipOf(el);
+        if (/^\d{1,3}(\.\d{1,3}){3}$/.test(ip)) {
+            if (typeof showToast === 'function') showToast('Termius SSH: ahsanul.kabir@' + ip);
+            window.location.href = 'ssh://ahsanul.kabir@' + ip + ':22';
+        }
+    }, true);
+})();
+</script>
 </body>
 </html>
