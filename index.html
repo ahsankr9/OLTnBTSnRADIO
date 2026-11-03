@@ -5569,7 +5569,7 @@ script += `onu ${onuId} eth ${i} upstream-rate-limit cir ${vsol_bw} pir ${vsol_b
                     <span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:20px;border:1px solid ${dc.border};background:${dc.bg};color:${dc.color};font-family:'Outfit',sans-serif;font-size:0.72em;font-weight:700;">${row.device}</span>
                 </td>
                 <td style="padding:7px 10px;font-family:'Outfit',sans-serif;font-size:0.85em;color:#1e1b4b;border-bottom:1px solid #e8eaff;font-weight:700;">
-                    <span style="display:inline-flex;align-items:center;gap:5px;"><i class="material-icons" style="font-size:12px;color:#38bdf8;">lan</i><span class="ip-copy" data-ip="${row.ip}" title="Click to copy">${row.ip}</span></span>
+                    <span style="display:inline-flex;align-items:center;gap:5px;"><i class="material-icons" style="font-size:12px;color:#38bdf8;">lan</i><span class="ip-copy" data-ip="${row.ip}" title="Click: open Termius SSH | Hold 1s: copy">${row.ip}</span></span>
                 </td>
             </tr>`;
         }).join('');
@@ -5582,7 +5582,7 @@ script += `onu ${onuId} eth ${i} upstream-rate-limit cir ${vsol_bw} pir ${vsol_b
                 const realIdx = btsData.indexOf(row);
                 return `<div class="bts-mobile-row" data-idx="${realIdx}">
                     <span class="bts-mobile-device" style="background:${dc.bg};color:${dc.color};border:1px solid ${dc.border};">${row.device}</span>
-                    <span class="bts-mobile-ip"><i class="material-icons" style="font-size:12px;color:#38bdf8;">lan</i><span class="ip-copy" data-ip="${row.ip}" title="Tap to copy">${row.ip}</span></span>
+                    <span class="bts-mobile-ip"><i class="material-icons" style="font-size:12px;color:#38bdf8;">lan</i><span class="ip-copy" data-ip="${row.ip}" title="Tap: open Termius SSH | Hold 1s: copy">${row.ip}</span></span>
                 </div>`;
             }).join('');
             return `<div class="bts-mobile-site"><div class="bts-mobile-site-header"><i class="material-icons" style="font-size:14px;color:#f59e0b;">cell_tower</i><span class="bts-mobile-site-name">${btsName}</span></div>${rowsHtml}</div>`;
@@ -6051,11 +6051,10 @@ document.addEventListener('click', function(e) {
         else { last.docs = now; docsSingle(); }
     });
 })();
-/* MOBILE ONLY - OLT IP column: TAP = open Termius (telnet://IP), HOLD 1 sec = copy the IP. (Web view: single click copies, as before) */
+/* OLT IP column (WEB + MOBILE): CLICK/TAP = open Termius (telnet://IP), HOLD 1 sec = copy the IP. */
 (function () {
     var timer = null, fired = false, sx = 0, sy = 0;
     function oltIpEl(t) {
-        if (window.innerWidth > 700) return null;      // web view: keep the normal click-to-copy
         var el = t && t.closest && t.closest('.ip-copy');
         if (!el) return null;
         var td = el.closest('td');
@@ -6680,14 +6679,13 @@ document.addEventListener('click', function(e) {
 })();
 </script>
 <script>
-/* MOBILE ONLY - BTS INFO: IP-r upor TAP = Termius e SSH2 (ahsanul.kabir@IP:22), HOLD 1 second = copy. */
+/* BTS INFO (WEB + MOBILE): IP-r upor CLICK/TAP = Termius e SSH2 (ahsanul.kabir@IP:22), HOLD 1 second = copy. */
 (function () {
     var timer = null, fired = false, sx = 0, sy = 0;
     var st = document.createElement('style');
     st.textContent = '#app-bts .ip-copy{touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}';
     document.head.appendChild(st);
     function btsIpEl(t) {
-        if (window.innerWidth > 700) return null;            // web view: normal click-to-copy
         var el = t && t.closest && t.closest('#app-bts .ip-copy');
         if (!el) return null;
         var tb = el.closest('#bts-table-body, #bts-cards-mobile');
@@ -6722,6 +6720,15 @@ document.addEventListener('click', function(e) {
         }
     }, true);
 })();
+</script>
+<script>
+/* tooltip for OLT IP column: click = Termius, hold = copy */
+document.addEventListener('mouseover', function (e) {
+    var el = e.target.closest && e.target.closest('#docs-olt-ip-tbody .ip-copy');
+    if (!el) return;
+    var td = el.closest('td');
+    if (td && td.cellIndex === 1) el.title = 'Click: open Termius (telnet) | Hold 1s: copy';
+}, true);
 </script>
 </body>
 </html>
