@@ -2001,6 +2001,123 @@ body:not(.show-epon) .docs-grp-epon { display: none !important; }
     #app-docs .docs-cmd-label.open + .docs-code, #app-docs .docs-cmd-label.open.closing + .docs-code { animation: none; }
 }
 </style>
+
+<style>
+/* ═════ ONU NOTEBOOK (Notepad++ style) ═════ */
+#onu-notebook-modal .onu-modal-box { max-width: 900px; height: min(82vh, 680px); max-height: none; }
+#onu-notebook-modal .nb-wrap { flex:1; min-height:0; display:flex; flex-direction:column; background:#fff; }
+.nb-tabbar { display:flex; align-items:flex-end; gap:3px; padding:8px 8px 0; background:#dfe3ea; overflow-x:auto; flex-shrink:0; scrollbar-width:thin; }
+.nb-tab { display:flex; align-items:center; gap:6px; padding:7px 7px 7px 10px; background:#eef0f4; border:1px solid #c3c8d2; border-bottom:none; border-top:3px solid transparent; border-radius:6px 6px 0 0; cursor:pointer; white-space:nowrap; font-family:'Outfit',sans-serif; font-weight:600; font-size:0.84em; color:#334155; flex-shrink:0; max-width:180px; }
+.nb-tab:hover { background:#f8f9fb; }
+.nb-tab.active { background:#fff; border-top-color:#f59e0b; color:#0f172a; }
+.nb-tab .nb-tab-ico { font-size:15px; color:#7c3aed; }
+.nb-tab .nb-tab-name { overflow:hidden; text-overflow:ellipsis; }
+.nb-tab .nb-tab-x { font-size:15px; color:#94a3b8; border-radius:4px; }
+.nb-tab .nb-tab-x:hover { color:#fff; background:#ef4444; }
+.nb-tab-add { flex-shrink:0; width:30px; height:30px; margin-bottom:2px; border:none; border-radius:6px; background:transparent; color:#475569; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+.nb-tab-add:hover { background:#fff; color:#059669; }
+.nb-editor-box { flex:1; min-height:0; display:flex; background:#fff; border-top:1px solid #c3c8d2; }
+.nb-gutter { width:48px; flex-shrink:0; background:#e6e8ec; overflow:hidden; cursor:pointer; user-select:none; -webkit-user-select:none; border-right:1px solid #d0d4db; }
+.nb-g-in { padding:10px 0 40px; }
+.nb-g-ln { height:24px; line-height:24px; text-align:right; padding-right:9px; font-family:'JetBrains Mono',monospace; font-size:13px; color:#7b8494; }
+.nb-g-ln:hover { background:#fde68a; color:#92400e; font-weight:700; }
+.nb-g-ln.flash { background:#34d399; color:#fff; }
+#nb-textarea { flex:1; min-width:0; border:none; outline:none; resize:none; background:#fff; color:#0f172a; padding:10px 14px 40px 12px; font-family:'JetBrains Mono',monospace; font-size:14px; line-height:24px; white-space:pre; overflow:auto; tab-size:4; box-sizing:border-box; }
+.nb-status { display:flex; align-items:center; gap:6px; padding:6px 10px; background:#eef0f4; border-top:1px solid #c3c8d2; flex-shrink:0; font-family:'Outfit',sans-serif; font-size:0.8em; color:#475569; flex-wrap:wrap; }
+.nb-status .nb-info { flex:1; min-width:140px; }
+.nb-sbtn { display:flex; align-items:center; gap:4px; padding:5px 10px; border:1px solid #c3c8d2; background:#fff; border-radius:7px; cursor:pointer; font-family:'Outfit',sans-serif; font-weight:600; font-size:1em; color:#334155; }
+.nb-sbtn:hover { background:#f1f5f9; }
+.nb-sbtn.del:hover { background:#fee2e2; color:#dc2626; border-color:#fca5a5; }
+.nb-sbtn .material-icons { font-size:15px; }
+@media (max-width:640px){ #onu-notebook-modal .onu-modal-box{ height:90vh; } #nb-textarea{ font-size:13px; } }
+</style>
+
+<style>
+/* Note: easy line copy + mobile friendly */
+#onu-notebook-modal { --nb-lh: 24px; }
+#nb-textarea { line-height: var(--nb-lh) !important; }
+.nb-gutter { width: 60px !important; }
+.nb-g-ln { height: var(--nb-lh) !important; line-height: var(--nb-lh) !important; display:flex; align-items:center; justify-content:space-between; padding:0 9px 0 8px !important; }
+.nb-g-c { font-size:14px; color:#9aa3b2; opacity:0; }
+.nb-g-ln:hover .nb-g-c { opacity:1; color:#92400e; }
+.nb-g-ln.flash .nb-g-c { color:#fff; opacity:1; }
+.nb-g-ln:active { background:#fcd34d; }
+@media (hover:none) { .nb-g-c { opacity:.75; } }
+@media (max-width:640px){
+  #onu-notebook-modal { padding:0 !important; align-items:stretch !important; --nb-lh: 30px; }
+  #onu-notebook-modal .onu-modal-box { height:100vh !important; height:100dvh !important; max-height:none !important; border-radius:0 !important; max-width:none !important; }
+  #onu-notebook-modal .onu-modal-head { padding:10px 12px; flex-wrap:nowrap; }
+  .nb-tab { font-size:0.9em; padding:9px 8px 9px 10px; max-width:150px; }
+  .nb-tab-add { width:38px; height:38px; }
+  .nb-gutter { width:64px !important; }
+  .nb-g-ln { font-size:14px; padding:0 10px 0 9px !important; }
+  .nb-g-c { font-size:17px; }
+  #nb-textarea { font-size:15px !important; padding-bottom:120px !important; }
+  .nb-g-in { padding-bottom:120px !important; }
+  .nb-status { padding:8px 10px; }
+  .nb-status .nb-info { flex:1 1 100%; order:2; font-size:0.9em; }
+  .nb-sbtn { flex:1; justify-content:center; padding:9px 10px; font-size:1em; }
+}
+</style>
+
+<style>
+/* Note: compact header, tab rename/delete, mobile */
+#onu-notebook-modal .onu-modal-head { padding:6px 12px !important; min-height:0 !important; }
+#onu-notebook-modal .onu-modal-head .ch-icon { width:22px !important; height:22px !important; }
+#onu-notebook-modal .onu-modal-head .ch-icon .material-icons { font-size:14px !important; }
+#onu-notebook-modal .card-head-text { font-size:0.78em !important; letter-spacing:1.5px !important; }
+#onu-notebook-modal .onu-modal-close { width:26px !important; height:26px !important; }
+#onu-notebook-modal .onu-modal-close .material-icons { font-size:17px; }
+.nb-tab-act { font-size:16px !important; color:#64748b; border-radius:5px; padding:3px; margin-left:1px; }
+.nb-tab-act:hover { background:#e2e8f0; color:#0f172a; }
+.nb-tab-act.x:hover { background:#ef4444; color:#fff; }
+.nb-tab.renaming { padding:4px 6px; }
+.nb-rename-input { width:120px; font-family:'Outfit',sans-serif; font-weight:600; font-size:0.95em; color:#0f172a; border:1.5px solid #f59e0b; border-radius:5px; padding:4px 7px; outline:none; background:#fffbeb; }
+@media (max-width:640px){
+  #onu-notebook-modal .onu-modal-head { padding:5px 10px !important; flex-wrap:nowrap !important; }
+  .nb-tab { padding:8px 6px 8px 10px; max-width:none; }
+  .nb-tab-act { font-size:20px !important; padding:5px; }
+  .nb-rename-input { font-size:16px; width:130px; padding:6px 8px; }
+  #nb-textarea, .nb-g-in { padding-bottom:140px !important; }
+}
+</style>
+
+<style>
+/* ONU buttons: 4 in one row (web), 2x2 (mobile) — original font, count badge inside */
+#app-onu .onu-btn-row { display:flex !important; flex-wrap:nowrap !important; gap:7px; }
+#app-onu .onu-btn-row .btn { flex:1 1 auto; min-width:0; justify-content:center; white-space:nowrap; padding:9px 8px; gap:5px; font-size:0.92em; letter-spacing:1px; }
+#app-onu .onu-btn-row .btn { font-weight:700 !important; -webkit-text-stroke:0.3px currentColor; }
+#app-onu .onu-btn-row .btn .material-icons { font-size:16px !important; flex-shrink:0; }
+#app-onu .onu-btn-row .btn .material-icons { -webkit-text-stroke:0; }
+#app-onu .onu-btn-row .btn span[id$="-badge"] { flex-shrink:0; }
+@media (max-width:700px) {
+  #app-onu .onu-btn-row { display:grid !important; grid-template-columns:repeat(2, minmax(0,1fr)); }
+  #app-onu .onu-btn-row .btn { padding:10px 8px; font-size:0.9em; }
+}
+
+/* Note window header = Note button colour */
+#onu-notebook-modal .onu-modal-head { background:linear-gradient(135deg,#f59e0b,#f97316) !important; border-bottom:1px solid rgba(255,255,255,0.3) !important; }
+#onu-notebook-modal .onu-modal-box .card-head-text { color:#fff !important; }
+#onu-notebook-modal .onu-modal-box .ch-icon { background:rgba(255,255,255,0.25) !important; color:#fff !important; }
+#onu-notebook-modal .onu-modal-close { border-color:rgba(255,255,255,0.55) !important; color:#fff !important; }
+#onu-notebook-modal .onu-modal-close:hover { background:rgba(255,255,255,0.25) !important; }
+
+/* compact tabs */
+.nb-tabbar { gap:2px !important; padding:6px 6px 0 !important; }
+.nb-tab { gap:3px !important; padding:5px 4px 5px 7px !important; font-size:0.8em !important; border-top-width:2px !important; max-width:130px !important; }
+.nb-tab .nb-tab-ico { font-size:13px !important; }
+.nb-tab-act { font-size:14px !important; padding:2px !important; margin-left:0 !important; }
+.nb-tab-add { width:26px !important; height:26px !important; margin-bottom:3px !important; }
+.nb-tab-add .material-icons { font-size:18px; }
+.nb-tab.renaming { padding:3px 5px !important; }
+.nb-rename-input { width:100px !important; font-size:0.9em !important; padding:3px 6px !important; }
+@media (max-width:700px){
+  .nb-tab { padding:6px 4px 6px 8px !important; font-size:0.84em !important; }
+  .nb-tab-act { font-size:18px !important; padding:3px !important; }
+  .nb-tab-add { width:32px !important; height:32px !important; }
+  .nb-rename-input { font-size:16px !important; width:115px !important; }
+}
+</style>
 </head>
 <body>
 
@@ -2234,13 +2351,18 @@ body:not(.show-epon) .docs-grp-epon { display: none !important; }
                         <div class="field"><input type="text" id="vlan3" placeholder="VLAN 3" inputmode="numeric" pattern="[0-9]*" enterkeyhint="next" autocomplete="off"></div>
                         <div class="field"><input type="text" id="vlan4" placeholder="VLAN 4" inputmode="numeric" pattern="[0-9]*" enterkeyhint="next" autocomplete="off"></div>
                     </div>
-                    <div class="btn-row">
+                    <div class="btn-row onu-btn-row">
                         <button class="btn btn-gen" onclick="generateOnuScript(true)"><span class="material-icons" style="font-size:16px">play_arrow</span> Generate</button>
                         <button class="btn btn-clr" onclick="clearOnuForm()"><span class="material-icons" style="font-size:16px">delete_outline</span> Clear</button>
-                        <button class="btn" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff;box-shadow:0 3px 12px rgba(167,139,250,0.32)" onclick="openOnuSavedModal()">
+                        <button class="btn" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff;box-shadow:0 3px 12px rgba(167,139,250,0.32)" onclick="openOnuSavedModal()" aria-label="Saved" title="Saved">
                             <span class="material-icons" style="font-size:16px">bookmarks</span>
-                            <span>Saved</span>
+                            <span class="btn-lbl">Saved</span>
                             <span id="onu-saved-badge" style="background:rgba(255,255,255,0.3);border-radius:20px;padding:1px 7px;font-size:0.85em;margin-left:2px">0</span>
+                        </button>
+                        <button class="btn" style="background:linear-gradient(135deg,#f59e0b,#f97316);color:#fff;box-shadow:0 3px 12px rgba(245,158,11,0.35)" onclick="openOnuNotebook()" aria-label="Note" title="Note">
+                            <span class="material-icons" style="font-size:16px">menu_book</span>
+                            <span class="btn-lbl">Note</span>
+                            <span id="onu-nb-badge" style="background:rgba(255,255,255,0.3);border-radius:20px;padding:1px 7px;font-size:0.85em;margin-left:2px">1</span>
                         </button>
                     </div>
                 </div>
@@ -2258,6 +2380,26 @@ body:not(.show-epon) .docs-grp-epon { display: none !important; }
                             <span class="material-icons" style="font-size:16px">content_copy</span>
                             <span class="copy-text">Copy Script</span>
                         </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ONU NOTEBOOK MODAL -->
+        <div id="onu-notebook-modal" class="onu-modal-overlay" onclick="if(event.target===this) closeOnuNotebook()">
+            <div class="onu-modal-box">
+                <div class="onu-modal-head">
+                    <div style="display:flex;align-items:center;gap:10px">
+                        <div class="ch-icon chi-v"><i class="material-icons" style="font-size:16px">menu_book</i></div>
+                        <span class="card-head-text">Note</span>
+                    </div>
+                    <button class="onu-modal-close" onclick="closeOnuNotebook()"><span class="material-icons">close</span></button>
+                </div>
+                <div class="nb-wrap">
+                    <div class="nb-tabbar" id="nb-tabbar"></div>
+                    <div class="nb-editor-box">
+                        <div class="nb-gutter" id="nb-gutter" title="Line number e tap/click korle oi line copy hobe" onclick="nbGutterClick(event)"></div>
+                        <textarea id="nb-textarea" wrap="off" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" oninput="nbInput()" onscroll="nbSyncScroll()"></textarea>
                     </div>
                 </div>
             </div>
@@ -4861,6 +5003,166 @@ script += `onu ${onuId} eth ${i} upstream-rate-limit cir ${vsol_bw} pir ${vsol_b
         } else { fallback(); }
     }
 
+    // ════ ONU NOTEBOOK (Notepad++ style tabs, auto-save) ════
+    const ONU_NB_KEY = 'nms_onu_notebook_v1';
+    let nbState = { tabs: [], active: null };
+    let nbSaveTimer = null, nbLineCount = -1;
+
+    function nbUid() { return 'nb' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5); }
+    function nbEsc(t) { return String(t == null ? '' : t).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+    function nbNextName() {
+        let n = 1; const names = nbState.tabs.map(t => t.name);
+        while (names.includes('new ' + n)) n++;
+        return 'new ' + n;
+    }
+    function nbLoad() {
+        let st = null;
+        try { st = JSON.parse(localStorage.getItem(ONU_NB_KEY) || 'null'); } catch (e) {}
+        let tabs = [], active = null;
+        if (Array.isArray(st)) { tabs = st.map(n => ({ id: n.id || nbUid(), name: n.title || n.name || 'note', body: n.body || '' })); }
+        else if (st && Array.isArray(st.tabs)) { tabs = st.tabs; active = st.active; }
+        nbState.tabs = tabs;
+        if (!nbState.tabs.length) nbState.tabs.push({ id: nbUid(), name: 'new 1', body: '' });
+        nbState.active = nbState.tabs.some(t => t.id === active) ? active : nbState.tabs[0].id;
+    }
+    function nbPersist() {
+        try { localStorage.setItem(ONU_NB_KEY, JSON.stringify({ tabs: nbState.tabs, active: nbState.active })); }
+        catch (e) { showToast('Could not save (storage full)', 'error'); }
+    }
+    function nbCur() { return nbState.tabs.find(t => t.id === nbState.active) || nbState.tabs[0]; }
+
+    let nbRenaming = null;
+    function nbRenderTabs() {
+        const bar = document.getElementById('nb-tabbar'); if (!bar) return;
+        bar.innerHTML = nbState.tabs.map(t => {
+            if (nbRenaming === t.id) {
+                return '<div class="nb-tab active renaming"><input id="nb-rename-input" class="nb-rename-input" type="text" maxlength="30" value="' + nbEsc(t.name) + '" onkeydown="nbRenameKey(event)" onblur="nbRenameCommit()" onclick="event.stopPropagation()"></div>';
+            }
+            const act = t.id === nbState.active;
+            return '<div class="nb-tab' + (act ? ' active' : '') + '" onclick="nbSwitch(\'' + t.id + '\')" ondblclick="nbStartRename(\'' + t.id + '\')">' +
+                '<span class="material-icons nb-tab-ico">save</span><span class="nb-tab-name">' + nbEsc(t.name) + '</span>' +
+                (act ? '<span class="material-icons nb-tab-act" title="Rename" onclick="event.stopPropagation();nbStartRename(\'' + t.id + '\')">edit</span>' +
+                       '<span class="material-icons nb-tab-act x" title="Delete" onclick="event.stopPropagation();nbCloseTab(\'' + t.id + '\')">close</span>' : '') +
+                '</div>';
+        }).join('') + '<button class="nb-tab-add" title="New tab" onclick="nbAddTab()"><span class="material-icons">add</span></button>';
+        const act = bar.querySelector('.nb-tab.active'); if (act && act.scrollIntoView) act.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+        const b = document.getElementById('onu-nb-badge'); if (b) b.textContent = nbState.tabs.length;
+        const inp = document.getElementById('nb-rename-input');
+        if (inp) setTimeout(() => { inp.focus(); inp.select(); }, 30);
+    }
+    function nbStartRename(id) {
+        const ta = document.getElementById('nb-textarea');
+        if (id !== nbState.active) { nbCur().body = ta.value; nbState.active = id; nbPersist(); nbRenderEditor(); }
+        nbRenaming = id; nbRenderTabs();
+    }
+    function nbRenameCommit() {
+        const inp = document.getElementById('nb-rename-input');
+        if (!inp || !nbRenaming) return;
+        const id = nbRenaming; nbRenaming = null;
+        const t = nbState.tabs.find(x => x.id === id);
+        const v = inp.value.trim();
+        if (t && v) { t.name = v; nbPersist(); }
+        nbRenderTabs();
+    }
+    function nbRenameKey(e) {
+        if (e.key === 'Enter') { e.preventDefault(); nbRenameCommit(); }
+        else if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); nbRenaming = null; nbRenderTabs(); }
+    }
+    function nbUpdateGutter(force) {
+        const ta = document.getElementById('nb-textarea'), g = document.getElementById('nb-gutter');
+        if (!ta || !g) return;
+        const n = ta.value.split('\n').length;
+        if (n !== nbLineCount || force) {
+            let h = '<div class="nb-g-in">';
+            for (let i = 0; i < n; i++) h += '<div class="nb-g-ln" data-i="' + i + '"><span class="material-icons nb-g-c">content_copy</span><span class="nb-g-n">' + (i + 1) + '</span></div>';
+            g.innerHTML = h + '</div>';
+            nbLineCount = n;
+        }
+        nbSyncScroll();
+    }
+    function nbSyncScroll() {
+        const ta = document.getElementById('nb-textarea'), g = document.getElementById('nb-gutter');
+        if (ta && g) g.scrollTop = ta.scrollTop;
+    }
+    function nbRenderEditor() {
+        const ta = document.getElementById('nb-textarea'); if (!ta) return;
+        ta.value = nbCur().body || '';
+        nbUpdateGutter(true);
+    }
+    function nbRender() { nbRenderTabs(); nbRenderEditor(); }
+
+    function nbInput() {
+        const ta = document.getElementById('nb-textarea');
+        nbCur().body = ta.value;
+        nbUpdateGutter(false);
+        clearTimeout(nbSaveTimer);
+        nbSaveTimer = setTimeout(nbPersist, 350);   // auto-save
+    }
+    function nbSwitch(id) {
+        if (id === nbState.active) return;
+        nbCur().body = document.getElementById('nb-textarea').value;
+        nbState.active = id; nbPersist(); nbRender();
+        document.getElementById('nb-textarea').focus();
+    }
+    function nbAddTab() {
+        nbCur().body = document.getElementById('nb-textarea').value;
+        const t = { id: nbUid(), name: nbNextName(), body: '' };
+        nbState.tabs.push(t); nbState.active = t.id; nbPersist(); nbRender();
+        document.getElementById('nb-textarea').focus();
+    }
+    function nbCloseTab(id) {
+        const t = nbState.tabs.find(x => x.id === id); if (!t) return;
+        if (id === nbState.active) t.body = document.getElementById('nb-textarea').value;
+        if ((t.body || '').trim() && !window.confirm('Delete "' + t.name + '"?')) return;
+        const i = nbState.tabs.indexOf(t);
+        nbState.tabs.splice(i, 1);
+        if (!nbState.tabs.length) nbState.tabs.push({ id: nbUid(), name: 'new 1', body: '' });
+        if (nbState.active === id) nbState.active = nbState.tabs[Math.max(0, i - 1)].id;
+        nbPersist(); nbRender();
+    }
+    function nbCopy(text, done) {
+        const ok = () => { if (done) done(); };
+        const fb = () => {
+            try {
+                const ta = document.createElement('textarea');
+                ta.value = text; ta.setAttribute('readonly', '');
+                ta.style.cssText = 'position:fixed;left:-9999px;top:0;opacity:0;font-size:16px;';
+                document.body.appendChild(ta); ta.focus(); ta.select(); ta.setSelectionRange(0, text.length);
+                const r = document.execCommand('copy'); document.body.removeChild(ta);
+                r ? ok() : showToast('Copy failed', 'error');
+            } catch (e) { showToast('Copy failed', 'error'); }
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText && window.isSecureContext) navigator.clipboard.writeText(text).then(ok).catch(fb);
+        else fb();
+    }
+    function nbGutterClick(e) {
+        const el = e.target.closest ? e.target.closest('.nb-g-ln') : null; if (!el) return;
+        const i = +el.dataset.i;
+        const line = document.getElementById('nb-textarea').value.split('\n')[i] || '';
+        if (!line.trim()) { showToast('Line ' + (i + 1) + ' khali', 'error'); return; }
+        nbCopy(line.replace(/\s+$/, ''), () => {
+            el.classList.add('flash'); setTimeout(() => el.classList.remove('flash'), 600);
+            showToast('Line ' + (i + 1) + ' copied');
+        });
+    }
+    function openOnuNotebook() {
+        nbLoad(); nbRender();
+        document.getElementById('onu-notebook-modal').classList.add('open');
+    }
+    function closeOnuNotebook() {
+        clearTimeout(nbSaveTimer);
+        const ta = document.getElementById('nb-textarea');
+        if (ta && nbState.tabs.length) { nbCur().body = ta.value; nbPersist(); }
+        document.getElementById('onu-notebook-modal').classList.remove('open');
+    }
+    // called when another device changes the notebook (cloud sync)
+    function nbRemote() {
+        const ta = document.getElementById('nb-textarea');
+        if (ta && document.activeElement === ta) return;  // don't disturb typing
+        nbLoad(); nbRender();
+    }
+    document.addEventListener('DOMContentLoaded', () => { try { nbLoad(); nbRenderTabs(); } catch (e) {} });
+
     // ════ TOAST ════
     function showToast(msg, type = 'success') {
         const t = document.getElementById('toast');
@@ -5867,7 +6169,7 @@ document.addEventListener('click', function(e) {
     (function cloudSync() {
         const statusEl = document.getElementById('cloud-status');
         const setStatus = (txt, cls) => { if (statusEl) { statusEl.textContent = txt; statusEl.className = 'cloud-status ' + (cls || ''); } };
-        const SYNC_KEY = /^(mzr_radio_data_v1|mzr_radio_deleted_v1|mzr_bts_data_v1|mzr_olt_ips_v1|nms_onu_saved_scripts_v1|nms_lp_saved_scripts_v1|docsDeleted_.+|docsCustom_.+|docsEdited_.+|docsOrder_.+)$/;
+        const SYNC_KEY = /^(mzr_radio_data_v1|mzr_radio_deleted_v1|mzr_bts_data_v1|mzr_olt_ips_v1|nms_onu_saved_scripts_v1|nms_lp_saved_scripts_v1|nms_onu_notebook_v1|docsDeleted_.+|docsCustom_.+|docsEdited_.+|docsOrder_.+)$/;
 
         if (!FIREBASE_CONFIG.apiKey || !FIREBASE_CONFIG.databaseURL || typeof firebase === 'undefined') {
             setStatus('☁ Local only');
@@ -5928,6 +6230,8 @@ document.addEventListener('click', function(e) {
                     renderOnuSaved();
                 } else if (key === 'nms_lp_saved_scripts_v1') {
                     renderLpSaved();
+                } else if (key === 'nms_onu_notebook_v1') {
+                    nbRemote();
                 } else {
                     refreshDocsFromStorage();
                 }
@@ -6730,5 +7034,6 @@ document.addEventListener('mouseover', function (e) {
     if (td && td.cellIndex === 1) el.title = 'Click: open Termius (telnet) | Hold 1s: copy';
 }, true);
 </script>
+<script>document.addEventListener('keydown',function(e){if(e.key==='Escape'){var m=document.getElementById('onu-notebook-modal');if(m&&m.classList.contains('open')&&!document.getElementById('nb-rename-input'))closeOnuNotebook();}});</script>
 </body>
 </html>
